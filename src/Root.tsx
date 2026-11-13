@@ -1,4 +1,5 @@
 import { Composition, Folder } from "remotion";
+import { NvidiaCompositions } from "./nvidia/NvidiaRoot";
 import { CAFFEINE_DURATION, CAFFEINE_SHOTS, CaffeineAudio, CaffeineFull } from "./caffeine/Full";
 import { FULL_DURATION, FullVideo, SHOTS } from "./FullVideo";
 import { HERO_DURATION, HeroPreview } from "./HeroPreview";
@@ -14,6 +15,7 @@ const CINE_FPS = 30;
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <NvidiaCompositions />
       <Composition
         id="CaffeineFull"
         component={CaffeineFull}

@@ -1,97 +1,82 @@
 [
  {
-  "text": "পরীক্ষার",
-  "startMs": 100.0,
-  "endMs": 580.75
+  "text": "বিকেল",
+  "startMs": 60.0,
+  "endMs": 365.6
  },
  {
-  "text": "আগের",
-  "startMs": 580.75,
-  "endMs": 845.166
+  "text": "চারটা",
+  "startMs": 399.6,
+  "endMs": 727.9
  },
  {
-  "text": "রাতে",
-  "startMs": 845.208,
-  "endMs": 1073.583
+  "text": "বাজলেই",
+  "startMs": 739.2,
+  "endMs": 1101.5
  },
  {
-  "text": "চা",
-  "startMs": 1085.583,
-  "endMs": 1241.833
+  "text": "এক",
+  "startMs": 1124.1,
+  "endMs": 1260.0
  },
  {
-  "text": "খেয়ে",
-  "startMs": 1253.833,
-  "endMs": 1446.124
- },
- {
-  "text": "জেগে",
-  "startMs": 1446.166,
-  "endMs": 1686.541
- },
- {
-  "text": "থাকেন",
-  "startMs": 1698.541,
-  "endMs": 2035.082
- },
- {
-  "text": "পরদিন",
-  "startMs": 2946.625,
-  "endMs": 3331.25
- },
- {
-  "text": "হলে",
-  "startMs": 3343.25,
-  "endMs": 3559.583
- },
- {
-  "text": "বসে",
-  "startMs": 3583.666,
-  "endMs": 3848.082
- },
- {
-  "text": "ঝিমানোর",
-  "startMs": 3860.083,
-  "endMs": 4304.791
- },
- {
-  "text": "কারণটাও",
-  "startMs": 4316.833,
-  "endMs": 4785.583
- },
- {
-  "text": "ওই",
-  "startMs": 4821.625,
-  "endMs": 4941.833
+  "text": "কাপ",
+  "startMs": 1271.3,
+  "endMs": 1463.7
  },
  {
   "text": "চা",
-  "startMs": 4965.875,
-  "endMs": 5146.166
+  "startMs": 1475.0,
+  "endMs": 1610.9
  },
  {
-  "text": "কীভাবে",
-  "startMs": 6106.75,
-  "endMs": 6515.416
+  "text": "লাগে",
+  "startMs": 1622.2,
+  "endMs": 1848.6
  },
  {
-  "text": "সেটা",
-  "startMs": 6611.541,
-  "endMs": 6887.999
+  "text": "না",
+  "startMs": 2418.6,
+  "endMs": 2528.3
  },
  {
-  "text": "সহজ",
-  "startMs": 6900.0,
-  "endMs": 7248.541
+  "text": "পেলে",
+  "startMs": 2583.1,
+  "endMs": 2802.6
+ },
+ {
+  "text": "মাথা",
+  "startMs": 2813.6,
+  "endMs": 3033.0
+ },
+ {
+  "text": "কাজ",
+  "startMs": 3033.0,
+  "endMs": 3230.5
  },
  {
   "text": "করে",
-  "startMs": 7272.583,
-  "endMs": 7488.916
+  "startMs": 3252.5,
+  "endMs": 3439.1
  },
  {
-  "text": "বলি",
-  "startMs": 7500.958,
-  "endMs": 7741.333
+  "text": "না",
+  "startMs": 3450.0,
+  "endMs": 3548.8
+ },
+ {
+  "text": "কারণটা",
+  "startMs": 4118.8,
+  "endMs": 4520.8
+ },
+ {
+  "text": "আপনার",
+  "startMs": 4543.1,
+  "endMs": 4811.1
+ },
+ {
+  "text": "মগজে",
+  "startMs": 4811.1,
+  "endMs": 5168.4
  }
 ]

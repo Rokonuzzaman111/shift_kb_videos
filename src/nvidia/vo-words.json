@@ -1,0 +1,4022 @@
+[
+{
+"text": "এক",
+"startMs": 1972,
+"endMs": 2219
+},
+{
+"text": "মাসে",
+"startMs": 2241,
+"endMs": 2487
+},
+{
+"text": "এক",
+"startMs": 2509,
+"endMs": 2756
+},
+{
+"text": "দশমিক",
+"startMs": 2777,
+"endMs": 3170
+},
+{
+"text": "ছয়",
+"startMs": 3204,
+"endMs": 3400
+},
+{
+"text": "ট্রিলিয়ন",
+"startMs": 3417,
+"endMs": 3785
+},
+{
+"text": "ডলার",
+"startMs": 3817,
+"endMs": 4038
+},
+{
+"text": "হারিয়েছে",
+"startMs": 4057,
+"endMs": 4507
+},
+{
+"text": "একটা",
+"startMs": 4547,
+"endMs": 5008
+},
+{
+"text": "কোম্পানি।",
+"startMs": 5037,
+"endMs": 5495
+},
+{
+"text": "এটা",
+"startMs": 5535,
+"endMs": 6008
+},
+{
+"text": "বাংলাদেশের",
+"startMs": 6024,
+"endMs": 6464
+},
+{
+"text": "প্রায়",
+"startMs": 6502,
+"endMs": 6766
+},
+{
+"text": "তিন",
+"startMs": 6789,
+"endMs": 7122
+},
+{
+"text": "বছরের",
+"startMs": 7137,
+"endMs": 7567
+},
+{
+"text": "পুরো",
+"startMs": 7604,
+"endMs": 8158
+},
+{
+"text": "অর্থনীতির",
+"startMs": 8177,
+"endMs": 8793
+},
+{
+"text": "সমান।",
+"startMs": 8847,
+"endMs": 9648
+},
+{
+"text": "কোম্পানির",
+"startMs": 9686,
+"endMs": 10470
+},
+{
+"text": "নাম",
+"startMs": 10515,
+"endMs": 10720
+},
+{
+"text": "এনভিডিয়া।",
+"startMs": 10738,
+"endMs": 11915
+},
+{
+"text": "আপনি",
+"startMs": 11970,
+"endMs": 12971
+},
+{
+"text": "AI-কে",
+"startMs": 12998,
+"endMs": 13306
+},
+{
+"text": "যে",
+"startMs": 13333,
+"endMs": 13487
+},
+{
+"text": "প্রশ্নই",
+"startMs": 13500,
+"endMs": 14014
+},
+{
+"text": "করেন,",
+"startMs": 14058,
+"endMs": 14490
+},
+{
+"text": "উত্তরটা",
+"startMs": 14527,
+"endMs": 15041
+},
+{
+"text": "বেশিরভাগ",
+"startMs": 15085,
+"endMs": 15599
+},
+{
+"text": "সময়",
+"startMs": 15643,
+"endMs": 15952
+},
+{
+"text": "বানায়",
+"startMs": 15978,
+"endMs": 16286
+},
+{
+"text": "এদের",
+"startMs": 16313,
+"endMs": 16788
+},
+{
+"text": "চিপ।",
+"startMs": 16814,
+"endMs": 17143
+},
+{
+"text": "আর",
+"startMs": 17172,
+"endMs": 17805
+},
+{
+"text": "গত",
+"startMs": 17823,
+"endMs": 18028
+},
+{
+"text": "বৃহস্পতিবার,",
+"startMs": 18046,
+"endMs": 18888
+},
+{
+"text": "এই",
+"startMs": 18961,
+"endMs": 19167
+},
+{
+"text": "কোম্পানির",
+"startMs": 19185,
+"endMs": 19849
+},
+{
+"text": "প্রতিষ্ঠাতা,",
+"startMs": 19894,
+"endMs": 20633
+},
+{
+"text": "৩৩",
+"startMs": 20955,
+"endMs": 21109
+},
+{
+"text": "বছরের",
+"startMs": 21123,
+"endMs": 21533
+},
+{
+"text": "সিইও,",
+"startMs": 21569,
+"endMs": 22000
+},
+{
+"text": "হঠাৎ",
+"startMs": 22038,
+"endMs": 22346
+},
+{
+"text": "পদত্যাগ",
+"startMs": 22373,
+"endMs": 23041
+},
+{
+"text": "করেছেন।",
+"startMs": 23086,
+"endMs": 23620
+},
+{
+"text": "কেন?",
+"startMs": 23666,
+"endMs": 24585
+},
+{
+"text": "আর",
+"startMs": 24614,
+"endMs": 24819
+},
+{
+"text": "এখন",
+"startMs": 24837,
+"endMs": 25313
+},
+{
+"text": "কী",
+"startMs": 25340,
+"endMs": 25494
+},
+{
+"text": "হবে?",
+"startMs": 25508,
+"endMs": 25836
+},
+{
+"text": "শুরু",
+"startMs": 25865,
+"endMs": 26070
+},
+{
+"text": "থেকে",
+"startMs": 26088,
+"endMs": 26588
+},
+{
+"text": "বলি।",
+"startMs": 26605,
+"endMs": 26934
+},
+{
+"text": "কম্পিউটারের",
+"startMs": 26963,
+"endMs": 28811
+},
+{
+"text": "মগজ",
+"startMs": 28874,
+"endMs": 29182
+},
+{
+"text": "হলো",
+"startMs": 29208,
+"endMs": 29414
+},
+{
+"text": "সিপিইউ।",
+"startMs": 29432,
+"endMs": 30125
+},
+{
+"text": "ধরুন",
+"startMs": 30171,
+"endMs": 30693
+},
+{
+"text": "একজন",
+"startMs": 30720,
+"endMs": 31130
+},
+{
+"text": "প্রফেসর।",
+"startMs": 31166,
+"endMs": 32124
+},
+{
+"text": "খুব",
+"startMs": 32172,
+"endMs": 32352
+},
+{
+"text": "জ্ঞানী,",
+"startMs": 32368,
+"endMs": 32999
+},
+{
+"text": "কিন্তু",
+"startMs": 33032,
+"endMs": 33302
+},
+{
+"text": "কাজ",
+"startMs": 33325,
+"endMs": 33505
+},
+{
+"text": "করেন",
+"startMs": 33521,
+"endMs": 33791
+},
+{
+"text": "একটা",
+"startMs": 33814,
+"endMs": 34084
+},
+{
+"text": "একটা",
+"startMs": 34107,
+"endMs": 34377
+},
+{
+"text": "করে।",
+"startMs": 34401,
+"endMs": 34689
+},
+{
+"text": "এনভিডিয়া",
+"startMs": 34714,
+"endMs": 35371
+},
+{
+"text": "বানায়",
+"startMs": 35410,
+"endMs": 35680
+},
+{
+"text": "জিপিইউ।",
+"startMs": 35703,
+"endMs": 36399
+},
+{
+"text": "এটা",
+"startMs": 36440,
+"endMs": 36620
+},
+{
+"text": "হাজার",
+"startMs": 36636,
+"endMs": 36905
+},
+{
+"text": "জন",
+"startMs": 36929,
+"endMs": 37109
+},
+{
+"text": "ছাত্রের",
+"startMs": 37124,
+"endMs": 37484
+},
+{
+"text": "মতো।",
+"startMs": 37516,
+"endMs": 37803
+},
+{
+"text": "প্রত্যেকে",
+"startMs": 37828,
+"endMs": 38278
+},
+{
+"text": "ছোট",
+"startMs": 38317,
+"endMs": 38497
+},
+{
+"text": "একটা",
+"startMs": 38513,
+"endMs": 39053
+},
+{
+"text": "হিসাব",
+"startMs": 39076,
+"endMs": 39346
+},
+{
+"text": "করে,",
+"startMs": 39370,
+"endMs": 39976
+},
+{
+"text": "কিন্তু",
+"startMs": 40001,
+"endMs": 40271
+},
+{
+"text": "সবাই",
+"startMs": 40294,
+"endMs": 40564
+},
+{
+"text": "একসাথে।",
+"startMs": 40587,
+"endMs": 41288
+},
+{
+"text": "শুরুতে",
+"startMs": 41329,
+"endMs": 41599
+},
+{
+"text": "এটা",
+"startMs": 41622,
+"endMs": 41802
+},
+{
+"text": "বানানো",
+"startMs": 41818,
+"endMs": 42088
+},
+{
+"text": "হয়েছিল",
+"startMs": 42111,
+"endMs": 42471
+},
+{
+"text": "গেমের",
+"startMs": 42502,
+"endMs": 43436
+},
+{
+"text": "জন্য।",
+"startMs": 43460,
+"endMs": 43837
+},
+{
+"text": "কারণ",
+"startMs": 43870,
+"endMs": 44140
+},
+{
+"text": "স্ক্রিনের",
+"startMs": 44164,
+"endMs": 44613
+},
+{
+"text": "লক্ষ",
+"startMs": 44652,
+"endMs": 44922
+},
+{
+"text": "লক্ষ",
+"startMs": 44946,
+"endMs": 45450
+},
+{
+"text": "বিন্দু",
+"startMs": 45474,
+"endMs": 45744
+},
+{
+"text": "একসাথে",
+"startMs": 45767,
+"endMs": 46127
+},
+{
+"text": "আঁকতে",
+"startMs": 46158,
+"endMs": 46428
+},
+{
+"text": "হয়।",
+"startMs": 46451,
+"endMs": 46739
+},
+{
+"text": "পরে",
+"startMs": 46764,
+"endMs": 46944
+},
+{
+"text": "দেখা",
+"startMs": 46960,
+"endMs": 47140
+},
+{
+"text": "গেল,",
+"startMs": 47155,
+"endMs": 47443
+},
+{
+"text": "AI",
+"startMs": 47468,
+"endMs": 47964
+},
+{
+"text": "শেখানোর",
+"startMs": 47979,
+"endMs": 48339
+},
+{
+"text": "কাজটাও",
+"startMs": 48370,
+"endMs": 48730
+},
+{
+"text": "ঠিক",
+"startMs": 49396,
+"endMs": 50259
+},
+{
+"text": "এমন।",
+"startMs": 50275,
+"endMs": 50825
+},
+{
+"text": "কোটি",
+"startMs": 51033,
+"endMs": 51213
+},
+{
+"text": "কোটি",
+"startMs": 51228,
+"endMs": 51408
+},
+{
+"text": "ছোট",
+"startMs": 51424,
+"endMs": 51604
+},
+{
+"text": "হিসাব,",
+"startMs": 51619,
+"endMs": 51997
+},
+{
+"text": "একসাথে।",
+"startMs": 52030,
+"endMs": 52498
+},
+{
+"text": "ফলে",
+"startMs": 52538,
+"endMs": 52718
+},
+{
+"text": "আজ",
+"startMs": 52734,
+"endMs": 52914
+},
+{
+"text": "চ্যাটজিপিটির",
+"startMs": 52929,
+"endMs": 53857
+},
+{
+"text": "মতো",
+"startMs": 53912,
+"endMs": 54448
+},
+{
+"text": "বেশিরভাগ",
+"startMs": 54463,
+"endMs": 54913
+},
+{
+"text": "বড়",
+"startMs": 54952,
+"endMs": 55132
+},
+{
+"text": "AI",
+"startMs": 55148,
+"endMs": 55328
+},
+{
+"text": "চলে",
+"startMs": 55343,
+"endMs": 55806
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 55821,
+"endMs": 56812
+},
+{
+"text": "চিপে।",
+"startMs": 56859,
+"endMs": 57920
+},
+{
+"text": "বিশ্লেষকদের",
+"startMs": 57945,
+"endMs": 58575
+},
+{
+"text": "হিসাবে,",
+"startMs": 58630,
+"endMs": 59008
+},
+{
+"text": "AI",
+"startMs": 59040,
+"endMs": 59220
+},
+{
+"text": "চিপের",
+"startMs": 59236,
+"endMs": 59506
+},
+{
+"text": "বাজারের",
+"startMs": 59529,
+"endMs": 59889
+},
+{
+"text": "প্রায়",
+"startMs": 59920,
+"endMs": 60190
+},
+{
+"text": "৭৫",
+"startMs": 60214,
+"endMs": 60349
+},
+{
+"text": "থেকে",
+"startMs": 60360,
+"endMs": 60540
+},
+{
+"text": "৯০",
+"startMs": 60556,
+"endMs": 60691
+},
+{
+"text": "শতাংশ",
+"startMs": 60702,
+"endMs": 60972
+},
+{
+"text": "এদের",
+"startMs": 60996,
+"endMs": 61421
+},
+{
+"text": "দখলে।",
+"startMs": 61445,
+"endMs": 61823
+},
+{
+"text": "১৯৯৩",
+"startMs": 61856,
+"endMs": 61991
+},
+{
+"text": "সাল।",
+"startMs": 62002,
+"endMs": 62624
+},
+{
+"text": "আমেরিকার",
+"startMs": 62649,
+"endMs": 63098
+},
+{
+"text": "স্যান",
+"startMs": 63137,
+"endMs": 63407
+},
+{
+"text": "হোসে",
+"startMs": 63431,
+"endMs": 63611
+},
+{
+"text": "শহরের",
+"startMs": 63626,
+"endMs": 64108
+},
+{
+"text": "একটা",
+"startMs": 64139,
+"endMs": 64409
+},
+{
+"text": "রেস্টুরেন্ট।",
+"startMs": 64433,
+"endMs": 65080
+},
+{
+"text": "তিনজন",
+"startMs": 65137,
+"endMs": 65670
+},
+{
+"text": "ইঞ্জিনিয়ার",
+"startMs": 65701,
+"endMs": 66241
+},
+{
+"text": "বসে",
+"startMs": 66288,
+"endMs": 66468
+},
+{
+"text": "ঠিক",
+"startMs": 66483,
+"endMs": 66663
+},
+{
+"text": "করলেন,",
+"startMs": 66679,
+"endMs": 67147
+},
+{
+"text": "কোম্পানি",
+"startMs": 67187,
+"endMs": 67719
+},
+{
+"text": "খুলবেন।",
+"startMs": 67751,
+"endMs": 68218
+},
+{
+"text": "তাদের",
+"startMs": 68259,
+"endMs": 69512
+},
+{
+"text": "একজন",
+"startMs": 69535,
+"endMs": 70892
+},
+{
+"text": "জেনসেন",
+"startMs": 70924,
+"endMs": 71283
+},
+{
+"text": "হুয়াং।",
+"startMs": 71315,
+"endMs": 71603
+},
+{
+"text": "শুরুটা",
+"startMs": 71628,
+"endMs": 71897
+},
+{
+"text": "সহজ",
+"startMs": 71921,
+"endMs": 72611
+},
+{
+"text": "ছিল",
+"startMs": 72634,
+"endMs": 72814
+},
+{
+"text": "না।",
+"startMs": 72830,
+"endMs": 73073
+},
+{
+"text": "১৯৯৬",
+"startMs": 73094,
+"endMs": 73229
+},
+{
+"text": "সালে",
+"startMs": 73240,
+"endMs": 73420
+},
+{
+"text": "টাকার",
+"startMs": 73436,
+"endMs": 73706
+},
+{
+"text": "অভাবে",
+"startMs": 73729,
+"endMs": 73999
+},
+{
+"text": "অর্ধেকের",
+"startMs": 74023,
+"endMs": 74472
+},
+{
+"text": "বেশি",
+"startMs": 74511,
+"endMs": 74691
+},
+{
+"text": "কর্মী",
+"startMs": 74707,
+"endMs": 74977
+},
+{
+"text": "ছাঁটাই",
+"startMs": 75000,
+"endMs": 75270
+},
+{
+"text": "করতে",
+"startMs": 75294,
+"endMs": 75563
+},
+{
+"text": "হয়।",
+"startMs": 75587,
+"endMs": 75875
+},
+{
+"text": "তখন",
+"startMs": 75900,
+"endMs": 76169
+},
+{
+"text": "থেকে",
+"startMs": 76193,
+"endMs": 76373
+},
+{
+"text": "হুয়াং",
+"startMs": 76388,
+"endMs": 76568
+},
+{
+"text": "বহু",
+"startMs": 76584,
+"endMs": 76764
+},
+{
+"text": "বছর",
+"startMs": 76780,
+"endMs": 77049
+},
+{
+"text": "মিটিং",
+"startMs": 77073,
+"endMs": 77253
+},
+{
+"text": "শুরু",
+"startMs": 77268,
+"endMs": 77448
+},
+{
+"text": "করতেন",
+"startMs": 77464,
+"endMs": 77824
+},
+{
+"text": "একটা",
+"startMs": 77855,
+"endMs": 78478
+},
+{
+"text": "কথা",
+"startMs": 78501,
+"endMs": 78681
+},
+{
+"text": "দিয়ে:",
+"startMs": 78697,
+"endMs": 78876
+},
+{
+"text": "আমাদের",
+"startMs": 78892,
+"endMs": 79406
+},
+{
+"text": "কোম্পানি",
+"startMs": 79437,
+"endMs": 79797
+},
+{
+"text": "দেউলিয়া",
+"startMs": 79828,
+"endMs": 81394
+},
+{
+"text": "হওয়া",
+"startMs": 81426,
+"endMs": 82539
+},
+{
+"text": "থেকে",
+"startMs": 82562,
+"endMs": 82742
+},
+{
+"text": "মাত্র",
+"startMs": 82758,
+"endMs": 83027
+},
+{
+"text": "তিরিশ",
+"startMs": 83051,
+"endMs": 83321
+},
+{
+"text": "দিন",
+"startMs": 83344,
+"endMs": 83524
+},
+{
+"text": "দূরে।",
+"startMs": 83540,
+"endMs": 83977
+},
+{
+"text": "তারপর",
+"startMs": 84002,
+"endMs": 84362
+},
+{
+"text": "তিনটা",
+"startMs": 84393,
+"endMs": 84663
+},
+{
+"text": "মোড়।",
+"startMs": 84687,
+"endMs": 84974
+},
+{
+"text": "১৯৯৯",
+"startMs": 84999,
+"endMs": 85255
+},
+{
+"text": "সালে",
+"startMs": 85267,
+"endMs": 85447
+},
+{
+"text": "তারা",
+"startMs": 85462,
+"endMs": 85642
+},
+{
+"text": "বাজারে",
+"startMs": 85658,
+"endMs": 85928
+},
+{
+"text": "আনে",
+"startMs": 85951,
+"endMs": 86302
+},
+{
+"text": "প্রথম",
+"startMs": 86317,
+"endMs": 86677
+},
+{
+"text": "জিপিইউ।",
+"startMs": 86709,
+"endMs": 87176
+},
+{
+"text": "২০০৬",
+"startMs": 87217,
+"endMs": 87352
+},
+{
+"text": "সালে",
+"startMs": 87364,
+"endMs": 87543
+},
+{
+"text": "আনে",
+"startMs": 87559,
+"endMs": 87739
+},
+{
+"text": "কুডা",
+"startMs": 87755,
+"endMs": 87935
+},
+{
+"text": "নামের",
+"startMs": 87950,
+"endMs": 88220
+},
+{
+"text": "একটা",
+"startMs": 88243,
+"endMs": 88513
+},
+{
+"text": "সফটওয়্যার।",
+"startMs": 88537,
+"endMs": 91385
+},
+{
+"text": "এর",
+"startMs": 91717,
+"endMs": 91897
+},
+{
+"text": "ফলে",
+"startMs": 91913,
+"endMs": 92092
+},
+{
+"text": "গেমের",
+"startMs": 92108,
+"endMs": 92378
+},
+{
+"text": "চিপ",
+"startMs": 92401,
+"endMs": 92581
+},
+{
+"text": "দিয়ে",
+"startMs": 92597,
+"endMs": 92777
+},
+{
+"text": "বিজ্ঞানীরা",
+"startMs": 92792,
+"endMs": 93242
+},
+{
+"text": "অন্য",
+"startMs": 93281,
+"endMs": 93551
+},
+{
+"text": "হিসাবও",
+"startMs": 93575,
+"endMs": 93934
+},
+{
+"text": "করতে",
+"startMs": 93966,
+"endMs": 94235
+},
+{
+"text": "পারলেন।",
+"startMs": 94259,
+"endMs": 94727
+},
+{
+"text": "আর",
+"startMs": 94767,
+"endMs": 94947
+},
+{
+"text": "২০১২",
+"startMs": 94963,
+"endMs": 95229
+},
+{
+"text": "সালে",
+"startMs": 95241,
+"endMs": 95421
+},
+{
+"text": "একদল",
+"startMs": 95436,
+"endMs": 95796
+},
+{
+"text": "গবেষক",
+"startMs": 95827,
+"endMs": 96187
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 96218,
+"endMs": 96758
+},
+{
+"text": "মাত্র",
+"startMs": 96805,
+"endMs": 97075
+},
+{
+"text": "দুটো",
+"startMs": 97098,
+"endMs": 97491
+},
+{
+"text": "গেমিং",
+"startMs": 97507,
+"endMs": 97687
+},
+{
+"text": "কার্ড",
+"startMs": 97703,
+"endMs": 97972
+},
+{
+"text": "দিয়ে",
+"startMs": 97996,
+"endMs": 98176
+},
+{
+"text": "এমন",
+"startMs": 98191,
+"endMs": 98461
+},
+{
+"text": "একটা",
+"startMs": 98485,
+"endMs": 99585
+},
+{
+"text": "AI",
+"startMs": 99609,
+"endMs": 100567
+},
+{
+"text": "বানালেন,",
+"startMs": 100583,
+"endMs": 101050
+},
+{
+"text": "যেটা",
+"startMs": 101091,
+"endMs": 102191
+},
+{
+"text": "ছবি",
+"startMs": 102207,
+"endMs": 102387
+},
+{
+"text": "চেনায়",
+"startMs": 102402,
+"endMs": 102672
+},
+{
+"text": "সবাইকে",
+"startMs": 102696,
+"endMs": 103056
+},
+{
+"text": "হারিয়ে",
+"startMs": 103087,
+"endMs": 103357
+},
+{
+"text": "দিল।",
+"startMs": 103380,
+"endMs": 103901
+},
+{
+"text": "সেদিন",
+"startMs": 103926,
+"endMs": 104196
+},
+{
+"text": "থেকেই",
+"startMs": 104220,
+"endMs": 104490
+},
+{
+"text": "আধুনিক",
+"startMs": 104513,
+"endMs": 104873
+},
+{
+"text": "AI-এর",
+"startMs": 104904,
+"endMs": 105264
+},
+{
+"text": "দৌড়",
+"startMs": 105295,
+"endMs": 105475
+},
+{
+"text": "শুরু।",
+"startMs": 105491,
+"endMs": 105967
+},
+{
+"text": "২০২২",
+"startMs": 105992,
+"endMs": 106127
+},
+{
+"text": "সালে",
+"startMs": 106139,
+"endMs": 106319
+},
+{
+"text": "এলো",
+"startMs": 106334,
+"endMs": 106514
+},
+{
+"text": "চ্যাটজিপিটি।",
+"startMs": 106530,
+"endMs": 107178
+},
+{
+"text": "তখন",
+"startMs": 107234,
+"endMs": 107504
+},
+{
+"text": "পৃথিবীর",
+"startMs": 107527,
+"endMs": 107887
+},
+{
+"text": "সব",
+"startMs": 107918,
+"endMs": 108098
+},
+{
+"text": "বড়",
+"startMs": 108114,
+"endMs": 108294
+},
+{
+"text": "কোম্পানি",
+"startMs": 108309,
+"endMs": 108669
+},
+{
+"text": "একসাথে",
+"startMs": 108700,
+"endMs": 109060
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 109091,
+"endMs": 109631
+},
+{
+"text": "চিপ",
+"startMs": 109678,
+"endMs": 109858
+},
+{
+"text": "কিনতে",
+"startMs": 109874,
+"endMs": 110143
+},
+{
+"text": "লাইনে",
+"startMs": 110167,
+"endMs": 110437
+},
+{
+"text": "দাঁড়াল।",
+"startMs": 110460,
+"endMs": 110838
+},
+{
+"text": "শুধু",
+"startMs": 110871,
+"endMs": 111051
+},
+{
+"text": "এ",
+"startMs": 111066,
+"endMs": 111201
+},
+{
+"text": "বছরের",
+"startMs": 111213,
+"endMs": 111573
+},
+{
+"text": "এপ্রিল",
+"startMs": 111604,
+"endMs": 111964
+},
+{
+"text": "থেকে",
+"startMs": 111995,
+"endMs": 112175
+},
+{
+"text": "জুলাই,",
+"startMs": 112191,
+"endMs": 112568
+},
+{
+"text": "এই",
+"startMs": 112601,
+"endMs": 112781
+},
+{
+"text": "তিন",
+"startMs": 112797,
+"endMs": 112977
+},
+{
+"text": "মাসে",
+"startMs": 112992,
+"endMs": 113172
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 113188,
+"endMs": 114554
+},
+{
+"text": "আয়",
+"startMs": 114601,
+"endMs": 115150
+},
+{
+"text": "ছিল",
+"startMs": 115166,
+"endMs": 115346
+},
+{
+"text": "প্রায়",
+"startMs": 115361,
+"endMs": 116630
+},
+{
+"text": "৯৬",
+"startMs": 116654,
+"endMs": 116788
+},
+{
+"text": "বিলিয়ন",
+"startMs": 116800,
+"endMs": 117160
+},
+{
+"text": "ডলার।",
+"startMs": 117191,
+"endMs": 117569
+},
+{
+"text": "এক",
+"startMs": 117602,
+"endMs": 117782
+},
+{
+"text": "বছর",
+"startMs": 117797,
+"endMs": 118067
+},
+{
+"text": "আগের",
+"startMs": 118091,
+"endMs": 118361
+},
+{
+"text": "চেয়ে",
+"startMs": 118384,
+"endMs": 118564
+},
+{
+"text": "দ্বিগুণের",
+"startMs": 118580,
+"endMs": 119029
+},
+{
+"text": "বেশি।",
+"startMs": 119068,
+"endMs": 119356
+},
+{
+"text": "এর",
+"startMs": 119381,
+"endMs": 119561
+},
+{
+"text": "প্রায়",
+"startMs": 119577,
+"endMs": 119847
+},
+{
+"text": "পুরোটাই",
+"startMs": 119870,
+"endMs": 120230
+},
+{
+"text": "এসেছে",
+"startMs": 120261,
+"endMs": 120681
+},
+{
+"text": "AI",
+"startMs": 120705,
+"endMs": 120885
+},
+{
+"text": "ডেটা",
+"startMs": 120900,
+"endMs": 121080
+},
+{
+"text": "সেন্টারের",
+"startMs": 121096,
+"endMs": 121546
+},
+{
+"text": "চিপ",
+"startMs": 121585,
+"endMs": 121765
+},
+{
+"text": "থেকে।",
+"startMs": 121780,
+"endMs": 122068
+},
+{
+"text": "আর",
+"startMs": 122093,
+"endMs": 122273
+},
+{
+"text": "অক্টোবরে",
+"startMs": 122289,
+"endMs": 122738
+},
+{
+"text": "শেয়ারবাজারে",
+"startMs": 122778,
+"endMs": 123317
+},
+{
+"text": "এই",
+"startMs": 123364,
+"endMs": 123544
+},
+{
+"text": "কোম্পানির",
+"startMs": 123560,
+"endMs": 124009
+},
+{
+"text": "দাম",
+"startMs": 124049,
+"endMs": 124228
+},
+{
+"text": "উঠেছিল",
+"startMs": 124244,
+"endMs": 124912
+},
+{
+"text": "প্রায়",
+"startMs": 124943,
+"endMs": 125213
+},
+{
+"text": "পাঁচ",
+"startMs": 125236,
+"endMs": 125416
+},
+{
+"text": "দশমিক",
+"startMs": 125432,
+"endMs": 125792
+},
+{
+"text": "আট",
+"startMs": 125823,
+"endMs": 126003
+},
+{
+"text": "ট্রিলিয়ন",
+"startMs": 126019,
+"endMs": 126468
+},
+{
+"text": "ডলার।",
+"startMs": 126507,
+"endMs": 127016
+},
+{
+"text": "বাংলাদেশের",
+"startMs": 127049,
+"endMs": 129116
+},
+{
+"text": "এক",
+"startMs": 129155,
+"endMs": 129506
+},
+{
+"text": "বছরের",
+"startMs": 129522,
+"endMs": 129881
+},
+{
+"text": "পুরো",
+"startMs": 129913,
+"endMs": 130093
+},
+{
+"text": "অর্থনীতির",
+"startMs": 130108,
+"endMs": 130648
+},
+{
+"text": "প্রায়",
+"startMs": 130695,
+"endMs": 130965
+},
+{
+"text": "এগারো",
+"startMs": 130988,
+"endMs": 131640
+},
+{
+"text": "গুণ।",
+"startMs": 131664,
+"endMs": 131951
+},
+{
+"text": "ইতিহাসে",
+"startMs": 131976,
+"endMs": 132336
+},
+{
+"text": "কোনো",
+"startMs": 132367,
+"endMs": 132547
+},
+{
+"text": "কোম্পানি",
+"startMs": 132563,
+"endMs": 132964
+},
+{
+"text": "এর",
+"startMs": 132999,
+"endMs": 133354
+},
+{
+"text": "আগে",
+"startMs": 133371,
+"endMs": 133571
+},
+{
+"text": "এত",
+"startMs": 133589,
+"endMs": 133789
+},
+{
+"text": "কাছে",
+"startMs": 133806,
+"endMs": 134007
+},
+{
+"text": "যায়নি",
+"startMs": 134024,
+"endMs": 134325
+},
+{
+"text": "ছয়",
+"startMs": 134351,
+"endMs": 134551
+},
+{
+"text": "ট্রিলিয়নের।",
+"startMs": 134569,
+"endMs": 135290
+},
+{
+"text": "এখন",
+"startMs": 135353,
+"endMs": 135653
+},
+{
+"text": "তারা",
+"startMs": 135679,
+"endMs": 136654
+},
+{
+"text": "নতুন",
+"startMs": 136671,
+"endMs": 136972
+},
+{
+"text": "চিপ",
+"startMs": 136998,
+"endMs": 137198
+},
+{
+"text": "পাঠানো",
+"startMs": 137216,
+"endMs": 137516
+},
+{
+"text": "শুরু",
+"startMs": 137542,
+"endMs": 137743
+},
+{
+"text": "করেছে,",
+"startMs": 137760,
+"endMs": 138181
+},
+{
+"text": "নাম",
+"startMs": 138217,
+"endMs": 138418
+},
+{
+"text": "ভেরা",
+"startMs": 138435,
+"endMs": 138636
+},
+{
+"text": "রুবিন।",
+"startMs": 138653,
+"endMs": 139074
+},
+{
+"text": "চাহিদা",
+"startMs": 139110,
+"endMs": 139411
+},
+{
+"text": "এত",
+"startMs": 139437,
+"endMs": 139637
+},
+{
+"text": "বেশি",
+"startMs": 139655,
+"endMs": 139855
+},
+{
+"text": "যে",
+"startMs": 139872,
+"endMs": 140023
+},
+{
+"text": "কোম্পানি",
+"startMs": 140036,
+"endMs": 140437
+},
+{
+"text": "নিজেই",
+"startMs": 140471,
+"endMs": 140772
+},
+{
+"text": "বলছে,",
+"startMs": 140798,
+"endMs": 141586
+},
+{
+"text": "যত",
+"startMs": 141622,
+"endMs": 141823
+},
+{
+"text": "চিপ",
+"startMs": 141840,
+"endMs": 142040
+},
+{
+"text": "চাওয়া",
+"startMs": 142058,
+"endMs": 142358
+},
+{
+"text": "হচ্ছে,",
+"startMs": 142384,
+"endMs": 142805
+},
+{
+"text": "তত",
+"startMs": 142842,
+"endMs": 143042
+},
+{
+"text": "বানানো",
+"startMs": 143060,
+"endMs": 144196
+},
+{
+"text": "যাচ্ছে",
+"startMs": 144222,
+"endMs": 144523
+},
+{
+"text": "না।",
+"startMs": 144549,
+"endMs": 144819
+},
+{
+"text": "জেনসেন",
+"startMs": 144843,
+"endMs": 145243
+},
+{
+"text": "হুয়াংয়ের",
+"startMs": 145278,
+"endMs": 145679
+},
+{
+"text": "জন্ম",
+"startMs": 145714,
+"endMs": 146014
+},
+{
+"text": "তাইওয়ানে।",
+"startMs": 146040,
+"endMs": 146661
+},
+{
+"text": "ছোটবেলায়",
+"startMs": 146716,
+"endMs": 147743
+},
+{
+"text": "চলে",
+"startMs": 147786,
+"endMs": 147987
+},
+{
+"text": "যান",
+"startMs": 148004,
+"endMs": 148204
+},
+{
+"text": "আমেরিকায়।",
+"startMs": 148222,
+"endMs": 149029
+},
+{
+"text": "কিশোর",
+"startMs": 149083,
+"endMs": 149384
+},
+{
+"text": "বয়সে",
+"startMs": 149410,
+"endMs": 149710
+},
+{
+"text": "কাজ",
+"startMs": 149737,
+"endMs": 149937
+},
+{
+"text": "করতেন",
+"startMs": 149954,
+"endMs": 150989
+},
+{
+"text": "রেস্টুরেন্টে,",
+"startMs": 151837,
+"endMs": 153284
+},
+{
+"text": "টেবিলে",
+"startMs": 153347,
+"endMs": 153647
+},
+{
+"text": "খাবার",
+"startMs": 153673,
+"endMs": 153974
+},
+{
+"text": "দিতেন।",
+"startMs": 154000,
+"endMs": 154566
+},
+{
+"text": "পরে",
+"startMs": 154603,
+"endMs": 154803
+},
+{
+"text": "নিজেই",
+"startMs": 154821,
+"endMs": 155121
+},
+{
+"text": "বলেছেন,",
+"startMs": 155147,
+"endMs": 155668
+},
+{
+"text": "সেই",
+"startMs": 155713,
+"endMs": 155914
+},
+{
+"text": "কাজটাই",
+"startMs": 155931,
+"endMs": 156566
+},
+{
+"text": "তাকে",
+"startMs": 156601,
+"endMs": 156801
+},
+{
+"text": "লাজুক",
+"startMs": 156819,
+"endMs": 157119
+},
+{
+"text": "স্বভাব",
+"startMs": 157145,
+"endMs": 157546
+},
+{
+"text": "থেকে",
+"startMs": 157581,
+"endMs": 157781
+},
+{
+"text": "বের",
+"startMs": 157799,
+"endMs": 157999
+},
+{
+"text": "করে",
+"startMs": 158017,
+"endMs": 158454
+},
+{
+"text": "এনেছিল।",
+"startMs": 158471,
+"endMs": 158992
+},
+{
+"text": "৩৩",
+"startMs": 159171,
+"endMs": 159321
+},
+{
+"text": "বছর",
+"startMs": 159334,
+"endMs": 159635
+},
+{
+"text": "তিনি",
+"startMs": 159661,
+"endMs": 159861
+},
+{
+"text": "একটানা",
+"startMs": 159879,
+"endMs": 160279
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 160314,
+"endMs": 161099
+},
+{
+"text": "সিইও",
+"startMs": 161151,
+"endMs": 161452
+},
+{
+"text": "ছিলেন।",
+"startMs": 161478,
+"endMs": 161899
+},
+{
+"text": "সবসময়",
+"startMs": 161935,
+"endMs": 162856
+},
+{
+"text": "কালো",
+"startMs": 162900,
+"endMs": 163100
+},
+{
+"text": "চামড়ার",
+"startMs": 163118,
+"endMs": 163518
+},
+{
+"text": "জ্যাকেট।",
+"startMs": 163553,
+"endMs": 164074
+},
+{
+"text": "আর",
+"startMs": 164119,
+"endMs": 164320
+},
+{
+"text": "প্রতিটা",
+"startMs": 164337,
+"endMs": 164738
+},
+{
+"text": "অনুষ্ঠানে",
+"startMs": 164773,
+"endMs": 165274
+},
+{
+"text": "একটাই",
+"startMs": 165317,
+"endMs": 165718
+},
+{
+"text": "কথা:",
+"startMs": 165753,
+"endMs": 165953
+},
+{
+"text": "AI",
+"startMs": 165970,
+"endMs": 166171
+},
+{
+"text": "হলো",
+"startMs": 166188,
+"endMs": 166389
+},
+{
+"text": "নতুন",
+"startMs": 166406,
+"endMs": 166707
+},
+{
+"text": "যুগের",
+"startMs": 166733,
+"endMs": 167033
+},
+{
+"text": "বিদ্যুৎ",
+"startMs": 167059,
+"endMs": 169382
+},
+{
+"text": "কেন্দ্র।",
+"startMs": 169417,
+"endMs": 170730
+},
+{
+"text": "তার",
+"startMs": 170775,
+"endMs": 170975
+},
+{
+"text": "একটা",
+"startMs": 170993,
+"endMs": 171293
+},
+{
+"text": "কথা",
+"startMs": 171319,
+"endMs": 171520
+},
+{
+"text": "খুব",
+"startMs": 171537,
+"endMs": 171738
+},
+{
+"text": "পরিচিত।",
+"startMs": 171755,
+"endMs": 172276
+},
+{
+"text": "AI",
+"startMs": 172321,
+"endMs": 172522
+},
+{
+"text": "আপনার",
+"startMs": 172539,
+"endMs": 173109
+},
+{
+"text": "চাকরি",
+"startMs": 173299,
+"endMs": 173600
+},
+{
+"text": "নেবে",
+"startMs": 173626,
+"endMs": 173826
+},
+{
+"text": "না।",
+"startMs": 173843,
+"endMs": 174478
+},
+{
+"text": "আপনার",
+"startMs": 174501,
+"endMs": 174902
+},
+{
+"text": "চাকরি",
+"startMs": 174937,
+"endMs": 175237
+},
+{
+"text": "নেবে",
+"startMs": 175264,
+"endMs": 175464
+},
+{
+"text": "এমন",
+"startMs": 175481,
+"endMs": 175922
+},
+{
+"text": "কেউ,",
+"startMs": 175948,
+"endMs": 176269
+},
+{
+"text": "যে",
+"startMs": 176297,
+"endMs": 176447
+},
+{
+"text": "AI",
+"startMs": 176460,
+"endMs": 176660
+},
+{
+"text": "ব্যবহার",
+"startMs": 176678,
+"endMs": 177179
+},
+{
+"text": "করতে",
+"startMs": 177222,
+"endMs": 177523
+},
+{
+"text": "জানে।",
+"startMs": 177549,
+"endMs": 177869
+},
+{
+"text": "এ",
+"startMs": 177897,
+"endMs": 178048
+},
+{
+"text": "বছরও",
+"startMs": 178061,
+"endMs": 178461
+},
+{
+"text": "তিনি",
+"startMs": 178496,
+"endMs": 178697
+},
+{
+"text": "বলেছেন,",
+"startMs": 178714,
+"endMs": 179451
+},
+{
+"text": "AI",
+"startMs": 179497,
+"endMs": 179697
+},
+{
+"text": "আসায়",
+"startMs": 179715,
+"endMs": 181616
+},
+{
+"text": "প্রোগ্রামার",
+"startMs": 181642,
+"endMs": 182243
+},
+{
+"text": "কমবে",
+"startMs": 182296,
+"endMs": 182596
+},
+{
+"text": "না,",
+"startMs": 182622,
+"endMs": 182893
+},
+{
+"text": "বরং",
+"startMs": 182916,
+"endMs": 183117
+},
+{
+"text": "আরো",
+"startMs": 183134,
+"endMs": 183334
+},
+{
+"text": "বেশি",
+"startMs": 183352,
+"endMs": 183552
+},
+{
+"text": "মানুষ",
+"startMs": 183570,
+"endMs": 183870
+},
+{
+"text": "প্রোগ্রাম",
+"startMs": 183896,
+"endMs": 184397
+},
+{
+"text": "লিখবে।",
+"startMs": 184441,
+"endMs": 184862
+},
+{
+"text": "৮",
+"startMs": 184898,
+"endMs": 185048
+},
+{
+"text": "নভেম্বর,",
+"startMs": 185061,
+"endMs": 185838
+},
+{
+"text": "রবিবার।",
+"startMs": 185892,
+"endMs": 186701
+},
+{
+"text": "জেনসেন",
+"startMs": 186746,
+"endMs": 187611
+},
+{
+"text": "হুয়াং",
+"startMs": 187664,
+"endMs": 187968
+},
+{
+"text": "কর্মীদের",
+"startMs": 187995,
+"endMs": 189016
+},
+{
+"text": "কাছে",
+"startMs": 189082,
+"endMs": 189386
+},
+{
+"text": "একটা",
+"startMs": 189413,
+"endMs": 189870
+},
+{
+"text": "চিঠি",
+"startMs": 189909,
+"endMs": 190214
+},
+{
+"text": "লেখেন।",
+"startMs": 190240,
+"endMs": 190880
+},
+{
+"text": "সেখানে",
+"startMs": 190936,
+"endMs": 191392
+},
+{
+"text": "তিনি",
+"startMs": 191432,
+"endMs": 193032
+},
+{
+"text": "নিজেই",
+"startMs": 193059,
+"endMs": 193824
+},
+{
+"text": "স্বীকার",
+"startMs": 193864,
+"endMs": 194473
+},
+{
+"text": "করেন,",
+"startMs": 194526,
+"endMs": 195166
+},
+{
+"text": "তিনি",
+"startMs": 195221,
+"endMs": 195818
+},
+{
+"text": "স্ত্রীর",
+"startMs": 195844,
+"endMs": 196453
+},
+{
+"text": "প্রতি",
+"startMs": 196506,
+"endMs": 197207
+},
+{
+"text": "অবিশ্বস্ত",
+"startMs": 197247,
+"endMs": 200369
+},
+{
+"text": "ছিলেন।",
+"startMs": 200448,
+"endMs": 201088
+},
+{
+"text": "লিখেছেন,",
+"startMs": 201144,
+"endMs": 201935
+},
+{
+"text": "এর",
+"startMs": 202004,
+"endMs": 202309
+},
+{
+"text": "কোনো",
+"startMs": 202335,
+"endMs": 202640
+},
+{
+"text": "অজুহাত",
+"startMs": 202666,
+"endMs": 203580
+},
+{
+"text": "নেই,",
+"startMs": 203633,
+"endMs": 204532
+},
+{
+"text": "দায়",
+"startMs": 204575,
+"endMs": 204879
+},
+{
+"text": "পুরোটাই",
+"startMs": 204906,
+"endMs": 205717
+},
+{
+"text": "তার।",
+"startMs": 205770,
+"endMs": 206257
+},
+{
+"text": "একই",
+"startMs": 206300,
+"endMs": 207177
+},
+{
+"text": "সময়ে",
+"startMs": 207365,
+"endMs": 208489
+},
+{
+"text": "এনভিডিয়া",
+"startMs": 208529,
+"endMs": 209452
+},
+{
+"text": "জানায়,",
+"startMs": 209519,
+"endMs": 210451
+},
+{
+"text": "হুয়াং",
+"startMs": 210507,
+"endMs": 210812
+},
+{
+"text": "কোনো",
+"startMs": 210838,
+"endMs": 211304
+},
+{
+"text": "বিদেশি",
+"startMs": 211331,
+"endMs": 211788
+},
+{
+"text": "গোয়েন্দা",
+"startMs": 211827,
+"endMs": 212436
+},
+{
+"text": "তৎপরতার",
+"startMs": 212489,
+"endMs": 213554
+},
+{
+"text": "লক্ষ্য",
+"startMs": 213633,
+"endMs": 214242
+},
+{
+"text": "হয়েছিলেন",
+"startMs": 214295,
+"endMs": 215057
+},
+{
+"text": "কি",
+"startMs": 215123,
+"endMs": 215351
+},
+{
+"text": "না,",
+"startMs": 215371,
+"endMs": 215782
+},
+{
+"text": "সেটা",
+"startMs": 215818,
+"endMs": 216123
+},
+{
+"text": "তদন্ত",
+"startMs": 216149,
+"endMs": 216758
+},
+{
+"text": "করা",
+"startMs": 216811,
+"endMs": 217313
+},
+{
+"text": "হচ্ছে।",
+"startMs": 217340,
+"endMs": 218174
+},
+{
+"text": "এর",
+"startMs": 218230,
+"endMs": 218534
+},
+{
+"text": "পেছনে",
+"startMs": 218561,
+"endMs": 219017
+},
+{
+"text": "ছিল",
+"startMs": 219057,
+"endMs": 219527
+},
+{
+"text": "কিছু",
+"startMs": 219553,
+"endMs": 219858
+},
+{
+"text": "মার্কিন",
+"startMs": 219884,
+"endMs": 220493
+},
+{
+"text": "সংবাদমাধ্যমের",
+"startMs": 220546,
+"endMs": 223040
+},
+{
+"text": "রিপোর্ট।",
+"startMs": 223146,
+"endMs": 223937
+},
+{
+"text": "সেখানে",
+"startMs": 224006,
+"endMs": 224463
+},
+{
+"text": "অভিযোগ",
+"startMs": 224503,
+"endMs": 225112
+},
+{
+"text": "ওঠে,",
+"startMs": 225165,
+"endMs": 225652
+},
+{
+"text": "যে",
+"startMs": 225695,
+"endMs": 225923
+},
+{
+"text": "নারীর",
+"startMs": 225943,
+"endMs": 226400
+},
+{
+"text": "সাথে",
+"startMs": 226439,
+"endMs": 226744
+},
+{
+"text": "তার",
+"startMs": 226770,
+"endMs": 227243
+},
+{
+"text": "সম্পর্কের",
+"startMs": 227269,
+"endMs": 228183
+},
+{
+"text": "কথা",
+"startMs": 228682,
+"endMs": 229921
+},
+{
+"text": "বলা",
+"startMs": 229948,
+"endMs": 230252
+},
+{
+"text": "হচ্ছে,",
+"startMs": 230279,
+"endMs": 230918
+},
+{
+"text": "তার",
+"startMs": 230974,
+"endMs": 231278
+},
+{
+"text": "সাথে",
+"startMs": 231305,
+"endMs": 231609
+},
+{
+"text": "চীনা",
+"startMs": 231636,
+"endMs": 231940
+},
+{
+"text": "গোয়েন্দাদের",
+"startMs": 231967,
+"endMs": 233373
+},
+{
+"text": "যোগ",
+"startMs": 233452,
+"endMs": 235435
+},
+{
+"text": "থাকতে",
+"startMs": 235462,
+"endMs": 235918
+},
+{
+"text": "পারে।",
+"startMs": 235958,
+"endMs": 236613
+},
+{
+"text": "মনে",
+"startMs": 236655,
+"endMs": 236960
+},
+{
+"text": "রাখবেন,",
+"startMs": 236986,
+"endMs": 237778
+},
+{
+"text": "এটা",
+"startMs": 237847,
+"endMs": 238152
+},
+{
+"text": "এখনো",
+"startMs": 238178,
+"endMs": 238635
+},
+{
+"text": "প্রমাণিত",
+"startMs": 238675,
+"endMs": 239856
+},
+{
+"text": "নয়।",
+"startMs": 239922,
+"endMs": 240410
+},
+{
+"text": "চীন",
+"startMs": 240452,
+"endMs": 240756
+},
+{
+"text": "এই",
+"startMs": 240783,
+"endMs": 241088
+},
+{
+"text": "অভিযোগ",
+"startMs": 241114,
+"endMs": 242442
+},
+{
+"text": "অস্বীকার",
+"startMs": 243078,
+"endMs": 243840
+},
+{
+"text": "করেছে।",
+"startMs": 243906,
+"endMs": 244545
+},
+{
+"text": "আর",
+"startMs": 244601,
+"endMs": 245078
+},
+{
+"text": "কোম্পানির",
+"startMs": 245104,
+"endMs": 245549
+},
+{
+"text": "বোর্ড",
+"startMs": 245588,
+"endMs": 245855
+},
+{
+"text": "বলেছে,",
+"startMs": 245878,
+"endMs": 246252
+},
+{
+"text": "কোম্পানির",
+"startMs": 246284,
+"endMs": 246960
+},
+{
+"text": "গোপন",
+"startMs": 247006,
+"endMs": 247323
+},
+{
+"text": "তথ্য",
+"startMs": 247351,
+"endMs": 247668
+},
+{
+"text": "বা",
+"startMs": 247695,
+"endMs": 247854
+},
+{
+"text": "আমেরিকার",
+"startMs": 247868,
+"endMs": 248396
+},
+{
+"text": "নিরাপত্তা",
+"startMs": 248442,
+"endMs": 248971
+},
+{
+"text": "ঝুঁকিতে",
+"startMs": 249017,
+"endMs": 249334
+},
+{
+"text": "পড়েছে,",
+"startMs": 249361,
+"endMs": 249805
+},
+{
+"text": "এমন",
+"startMs": 249844,
+"endMs": 250285
+},
+{
+"text": "কোনো",
+"startMs": 250312,
+"endMs": 250524
+},
+{
+"text": "প্রমাণ",
+"startMs": 250542,
+"endMs": 250965
+},
+{
+"text": "তারা",
+"startMs": 251002,
+"endMs": 251213
+},
+{
+"text": "পায়নি।",
+"startMs": 251231,
+"endMs": 251675
+},
+{
+"text": "হুয়াং",
+"startMs": 251714,
+"endMs": 251925
+},
+{
+"text": "নিজেও",
+"startMs": 251944,
+"endMs": 252261
+},
+{
+"text": "এই",
+"startMs": 252288,
+"endMs": 252500
+},
+{
+"text": "অভিযোগ",
+"startMs": 252518,
+"endMs": 252941
+},
+{
+"text": "অস্বীকার",
+"startMs": 252978,
+"endMs": 253628
+},
+{
+"text": "করেছেন।",
+"startMs": 253674,
+"endMs": 254644
+},
+{
+"text": "এরপর",
+"startMs": 254917,
+"endMs": 255939
+},
+{
+"text": "১২",
+"startMs": 255976,
+"endMs": 256134
+},
+{
+"text": "নভেম্বর,",
+"startMs": 256148,
+"endMs": 256804
+},
+{
+"text": "বৃহস্পতিবার।",
+"startMs": 256861,
+"endMs": 257961
+},
+{
+"text": "এনভিডিয়া",
+"startMs": 258254,
+"endMs": 258782
+},
+{
+"text": "জানায়,",
+"startMs": 258828,
+"endMs": 259272
+},
+{
+"text": "জেনসেন",
+"startMs": 259311,
+"endMs": 259734
+},
+{
+"text": "হুয়াং",
+"startMs": 259770,
+"endMs": 259982
+},
+{
+"text": "সিইও",
+"startMs": 260000,
+"endMs": 260317
+},
+{
+"text": "এবং",
+"startMs": 260345,
+"endMs": 260556
+},
+{
+"text": "বোর্ড,",
+"startMs": 260575,
+"endMs": 261019
+},
+{
+"text": "দুই",
+"startMs": 261057,
+"endMs": 261269
+},
+{
+"text": "জায়গা",
+"startMs": 261287,
+"endMs": 261604
+},
+{
+"text": "থেকেই",
+"startMs": 261632,
+"endMs": 262151
+},
+{
+"text": "পদত্যাগ",
+"startMs": 262179,
+"endMs": 262707
+},
+{
+"text": "করেছেন।",
+"startMs": 262753,
+"endMs": 263303
+},
+{
+"text": "কারণ",
+"startMs": 263351,
+"endMs": 264311
+},
+{
+"text": "হিসেবে",
+"startMs": 264338,
+"endMs": 264655
+},
+{
+"text": "কোম্পানি",
+"startMs": 264683,
+"endMs": 265106
+},
+{
+"text": "আনুষ্ঠানিকভাবে",
+"startMs": 265142,
+"endMs": 265988
+},
+{
+"text": "কিছু",
+"startMs": 266062,
+"endMs": 266273
+},
+{
+"text": "বলেনি।",
+"startMs": 266291,
+"endMs": 266735
+},
+{
+"text": "আপাতত",
+"startMs": 266774,
+"endMs": 267197
+},
+{
+"text": "দায়িত্ব",
+"startMs": 267233,
+"endMs": 267656
+},
+{
+"text": "নিয়েছেন",
+"startMs": 267693,
+"endMs": 268116
+},
+{
+"text": "কোম্পানির",
+"startMs": 268152,
+"endMs": 268681
+},
+{
+"text": "অর্থ",
+"startMs": 268727,
+"endMs": 269044
+},
+{
+"text": "প্রধান",
+"startMs": 269072,
+"endMs": 269754
+},
+{
+"text": "কলেট",
+"startMs": 269791,
+"endMs": 270108
+},
+{
+"text": "ক্রেস।",
+"startMs": 270136,
+"endMs": 270713
+},
+{
+"text": "নতুন",
+"startMs": 270751,
+"endMs": 271068
+},
+{
+"text": "স্থায়ী",
+"startMs": 271096,
+"endMs": 271413
+},
+{
+"text": "সিইও",
+"startMs": 271441,
+"endMs": 271893
+},
+{
+"text": "খোঁজা",
+"startMs": 271921,
+"endMs": 272132
+},
+{
+"text": "হচ্ছে।",
+"startMs": 272151,
+"endMs": 273852
+},
+{
+"text": "খবর",
+"startMs": 273891,
+"endMs": 274208
+},
+{
+"text": "আসার",
+"startMs": 274235,
+"endMs": 274552
+},
+{
+"text": "পর",
+"startMs": 274580,
+"endMs": 274791
+},
+{
+"text": "শেয়ারের",
+"startMs": 274810,
+"endMs": 275232
+},
+{
+"text": "দাম",
+"startMs": 275269,
+"endMs": 275481
+},
+{
+"text": "শুরুতেই",
+"startMs": 275499,
+"endMs": 275980
+},
+{
+"text": "প্রায়",
+"startMs": 276022,
+"endMs": 276383
+},
+{
+"text": "তেরো",
+"startMs": 276415,
+"endMs": 276655
+},
+{
+"text": "শতাংশ",
+"startMs": 276676,
+"endMs": 277037
+},
+{
+"text": "পড়ে",
+"startMs": 277069,
+"endMs": 277310
+},
+{
+"text": "যায়।",
+"startMs": 277330,
+"endMs": 277716
+},
+{
+"text": "দিনের",
+"startMs": 277749,
+"endMs": 279490
+},
+{
+"text": "শেষে",
+"startMs": 279521,
+"endMs": 279762
+},
+{
+"text": "ক্ষতি",
+"startMs": 279783,
+"endMs": 280144
+},
+{
+"text": "দাঁড়ায়",
+"startMs": 280176,
+"endMs": 280537
+},
+{
+"text": "চার",
+"startMs": 280568,
+"endMs": 280809
+},
+{
+"text": "শতাংশের",
+"startMs": 280830,
+"endMs": 281311
+},
+{
+"text": "মতো।",
+"startMs": 281353,
+"endMs": 281738
+},
+{
+"text": "আর",
+"startMs": 281772,
+"endMs": 282012
+},
+{
+"text": "অক্টোবরের",
+"startMs": 282033,
+"endMs": 282986
+},
+{
+"text": "চূড়া",
+"startMs": 283049,
+"endMs": 283289
+},
+{
+"text": "থেকে",
+"startMs": 283310,
+"endMs": 283551
+},
+{
+"text": "এখন",
+"startMs": 283572,
+"endMs": 283933
+},
+{
+"text": "পর্যন্ত",
+"startMs": 283964,
+"endMs": 284769
+},
+{
+"text": "কোম্পানির",
+"startMs": 284821,
+"endMs": 285261
+},
+{
+"text": "দাম",
+"startMs": 285299,
+"endMs": 285475
+},
+{
+"text": "কমেছে",
+"startMs": 285490,
+"endMs": 285754
+},
+{
+"text": "প্রায়",
+"startMs": 285777,
+"endMs": 286040
+},
+{
+"text": "এক",
+"startMs": 286063,
+"endMs": 286239
+},
+{
+"text": "দশমিক",
+"startMs": 286255,
+"endMs": 287035
+},
+{
+"text": "ছয়",
+"startMs": 287065,
+"endMs": 287241
+},
+{
+"text": "ট্রিলিয়ন",
+"startMs": 287256,
+"endMs": 287696
+},
+{
+"text": "ডলার।",
+"startMs": 287734,
+"endMs": 288278
+},
+{
+"text": "আমেরিকার",
+"startMs": 288310,
+"endMs": 288749
+},
+{
+"text": "কংগ্রেসও",
+"startMs": 288788,
+"endMs": 291313
+},
+{
+"text": "হুয়াংকে",
+"startMs": 291780,
+"endMs": 292463
+},
+{
+"text": "ডেকে",
+"startMs": 292486,
+"endMs": 292662
+},
+{
+"text": "প্রশ্ন",
+"startMs": 292677,
+"endMs": 293029
+},
+{
+"text": "করতে",
+"startMs": 293060,
+"endMs": 293323
+},
+{
+"text": "চাইছে।",
+"startMs": 293346,
+"endMs": 293716
+},
+{
+"text": "তারিখ",
+"startMs": 293748,
+"endMs": 294012
+},
+{
+"text": "এখনো",
+"startMs": 294034,
+"endMs": 294298
+},
+{
+"text": "ঠিক",
+"startMs": 294321,
+"endMs": 294497
+},
+{
+"text": "হয়নি।",
+"startMs": 294512,
+"endMs": 294882
+},
+{
+"text": "ভালো",
+"startMs": 294914,
+"endMs": 295090
+},
+{
+"text": "দিক",
+"startMs": 295105,
+"endMs": 295559
+},
+{
+"text": "আগে",
+"startMs": 295574,
+"endMs": 295894
+},
+{
+"text": "বলি।",
+"startMs": 295910,
+"endMs": 296191
+},
+{
+"text": "চিপের",
+"startMs": 296216,
+"endMs": 296479
+},
+{
+"text": "চাহিদা",
+"startMs": 296502,
+"endMs": 296766
+},
+{
+"text": "এখনো",
+"startMs": 296789,
+"endMs": 298252
+},
+{
+"text": "আকাশছোঁয়া।",
+"startMs": 298275,
+"endMs": 298820
+},
+{
+"text": "কোম্পানি",
+"startMs": 298868,
+"endMs": 299219
+},
+{
+"text": "বলেছে,",
+"startMs": 299250,
+"endMs": 299619
+},
+{
+"text": "পরের",
+"startMs": 299651,
+"endMs": 300103
+},
+{
+"text": "তিন",
+"startMs": 300126,
+"endMs": 300302
+},
+{
+"text": "মাসে",
+"startMs": 300317,
+"endMs": 300493
+},
+{
+"text": "আয়",
+"startMs": 300508,
+"endMs": 300684
+},
+{
+"text": "হতে",
+"startMs": 301120,
+"endMs": 301295
+},
+{
+"text": "পারে",
+"startMs": 301311,
+"endMs": 302375
+},
+{
+"text": "প্রায়",
+"startMs": 302390,
+"endMs": 302654
+},
+{
+"text": "১০৮",
+"startMs": 302677,
+"endMs": 302809
+},
+{
+"text": "বিলিয়ন",
+"startMs": 302820,
+"endMs": 303318
+},
+{
+"text": "ডলার।",
+"startMs": 303348,
+"endMs": 303717
+},
+{
+"text": "আর",
+"startMs": 303750,
+"endMs": 304308
+},
+{
+"text": "সামনের",
+"startMs": 304324,
+"endMs": 304675
+},
+{
+"text": "বছরে",
+"startMs": 304706,
+"endMs": 304970
+},
+{
+"text": "আয়",
+"startMs": 304993,
+"endMs": 305168
+},
+{
+"text": "বাড়তে",
+"startMs": 305184,
+"endMs": 305447
+},
+{
+"text": "পারে",
+"startMs": 305470,
+"endMs": 305646
+},
+{
+"text": "প্রায়",
+"startMs": 305661,
+"endMs": 305925
+},
+{
+"text": "সত্তর",
+"startMs": 305948,
+"endMs": 306300
+},
+{
+"text": "শতাংশ।",
+"startMs": 306330,
+"endMs": 307091
+},
+{
+"text": "প্রযুক্তিতে",
+"startMs": 307123,
+"endMs": 307651
+},
+{
+"text": "তারা",
+"startMs": 307697,
+"endMs": 307872
+},
+{
+"text": "এখনো",
+"startMs": 307888,
+"endMs": 308151
+},
+{
+"text": "সবার",
+"startMs": 308174,
+"endMs": 308438
+},
+{
+"text": "আগে।",
+"startMs": 308461,
+"endMs": 308742
+},
+{
+"text": "এবার",
+"startMs": 308767,
+"endMs": 309215
+},
+{
+"text": "ঝুঁকি।",
+"startMs": 309238,
+"endMs": 309519
+},
+{
+"text": "এক,",
+"startMs": 309543,
+"endMs": 310316
+},
+{
+"text": "নেতৃত্ব।",
+"startMs": 310340,
+"endMs": 310798
+},
+{
+"text": "বড়",
+"startMs": 310837,
+"endMs": 311013
+},
+{
+"text": "বড়",
+"startMs": 311893,
+"endMs": 312069
+},
+{
+"text": "চুক্তির",
+"startMs": 312084,
+"endMs": 312436
+},
+{
+"text": "পেছনে",
+"startMs": 312467,
+"endMs": 312730
+},
+{
+"text": "ছিলেন",
+"startMs": 312753,
+"endMs": 313017
+},
+{
+"text": "হুয়াং",
+"startMs": 313040,
+"endMs": 313216
+},
+{
+"text": "নিজে।",
+"startMs": 313231,
+"endMs": 313513
+},
+{
+"text": "তার",
+"startMs": 313894,
+"endMs": 314313
+},
+{
+"text": "জায়গা",
+"startMs": 314329,
+"endMs": 315021
+},
+{
+"text": "পূরণ",
+"startMs": 315044,
+"endMs": 315308
+},
+{
+"text": "করা",
+"startMs": 315331,
+"endMs": 315507
+},
+{
+"text": "সহজ",
+"startMs": 315522,
+"endMs": 315786
+},
+{
+"text": "না।",
+"startMs": 315809,
+"endMs": 316046
+},
+{
+"text": "দুই,",
+"startMs": 316067,
+"endMs": 316348
+},
+{
+"text": "টাকার",
+"startMs": 316373,
+"endMs": 316636
+},
+{
+"text": "চক্র।",
+"startMs": 316659,
+"endMs": 317028
+},
+{
+"text": "এনভিডিয়া",
+"startMs": 317061,
+"endMs": 317704
+},
+{
+"text": "অনেক",
+"startMs": 317742,
+"endMs": 318006
+},
+{
+"text": "AI",
+"startMs": 318028,
+"endMs": 318204
+},
+{
+"text": "কোম্পানিতে",
+"startMs": 318220,
+"endMs": 318659
+},
+{
+"text": "টাকা",
+"startMs": 318697,
+"endMs": 318873
+},
+{
+"text": "বিনিয়োগ",
+"startMs": 318889,
+"endMs": 319240
+},
+{
+"text": "করেছে।",
+"startMs": 319271,
+"endMs": 319640
+},
+{
+"text": "সেই",
+"startMs": 319672,
+"endMs": 319848
+},
+{
+"text": "কোম্পানিগুলো",
+"startMs": 319863,
+"endMs": 321596
+},
+{
+"text": "আবার",
+"startMs": 321641,
+"endMs": 322109
+},
+{
+"text": "এনভিডিয়ারই",
+"startMs": 322132,
+"endMs": 323664
+},
+{
+"text": "চিপ",
+"startMs": 323717,
+"endMs": 323893
+},
+{
+"text": "কেনে।",
+"startMs": 324801,
+"endMs": 325082
+},
+{
+"text": "সমালোচকরা",
+"startMs": 325106,
+"endMs": 325634
+},
+{
+"text": "বলছেন,",
+"startMs": 325680,
+"endMs": 326137
+},
+{
+"text": "AI-এর",
+"startMs": 326177,
+"endMs": 326529
+},
+{
+"text": "চাহিদা",
+"startMs": 326559,
+"endMs": 326823
+},
+{
+"text": "কমলে",
+"startMs": 326846,
+"endMs": 327110
+},
+{
+"text": "এই",
+"startMs": 327132,
+"endMs": 327308
+},
+{
+"text": "চক্র",
+"startMs": 327324,
+"endMs": 327587
+},
+{
+"text": "বিপদে",
+"startMs": 327610,
+"endMs": 327874
+},
+{
+"text": "পড়তে",
+"startMs": 327897,
+"endMs": 328161
+},
+{
+"text": "পারে।",
+"startMs": 328184,
+"endMs": 328465
+},
+{
+"text": "তিন,",
+"startMs": 328490,
+"endMs": 329191
+},
+{
+"text": "চীন।",
+"startMs": 329215,
+"endMs": 329497
+},
+{
+"text": "আমেরিকার",
+"startMs": 329521,
+"endMs": 329961
+},
+{
+"text": "নিয়মে",
+"startMs": 329999,
+"endMs": 330651
+},
+{
+"text": "চীনে",
+"startMs": 330674,
+"endMs": 330850
+},
+{
+"text": "সেরা",
+"startMs": 330865,
+"endMs": 331609
+},
+{
+"text": "চিপ",
+"startMs": 331625,
+"endMs": 331801
+},
+{
+"text": "বিক্রি",
+"startMs": 331816,
+"endMs": 332080
+},
+{
+"text": "বন্ধ।",
+"startMs": 332103,
+"endMs": 332628
+},
+{
+"text": "আর",
+"startMs": 332660,
+"endMs": 332836
+},
+{
+"text": "চার,",
+"startMs": 332851,
+"endMs": 333384
+},
+{
+"text": "প্রতিযোগী।",
+"startMs": 333408,
+"endMs": 333953
+},
+{
+"text": "এএমডি,",
+"startMs": 334001,
+"endMs": 334849
+},
+{
+"text": "ব্রডকমের",
+"startMs": 334888,
+"endMs": 335416
+},
+{
+"text": "মতো",
+"startMs": 335462,
+"endMs": 335785
+},
+{
+"text": "কোম্পানির",
+"startMs": 335800,
+"endMs": 336240
+},
+{
+"text": "শেয়ার",
+"startMs": 336278,
+"endMs": 336542
+},
+{
+"text": "এই",
+"startMs": 336565,
+"endMs": 337438
+},
+{
+"text": "খবরে",
+"startMs": 337453,
+"endMs": 337717
+},
+{
+"text": "উল্টো",
+"startMs": 337740,
+"endMs": 338004
+},
+{
+"text": "বেড়েছে।",
+"startMs": 338027,
+"endMs": 338396
+},
+{
+"text": "সামনে",
+"startMs": 338428,
+"endMs": 338692
+},
+{
+"text": "বড়",
+"startMs": 338715,
+"endMs": 338890
+},
+{
+"text": "পরীক্ষা",
+"startMs": 338906,
+"endMs": 339257
+},
+{
+"text": "১৭",
+"startMs": 339288,
+"endMs": 339420
+},
+{
+"text": "নভেম্বর।",
+"startMs": 339431,
+"endMs": 339977
+},
+{
+"text": "সেদিন",
+"startMs": 340024,
+"endMs": 340990
+},
+{
+"text": "কোম্পানি",
+"startMs": 341013,
+"endMs": 341807
+},
+{
+"text": "তিন",
+"startMs": 341837,
+"endMs": 342853
+},
+{
+"text": "মাসের",
+"startMs": 342869,
+"endMs": 343132
+},
+{
+"text": "হিসাব",
+"startMs": 343155,
+"endMs": 343677
+},
+{
+"text": "দেবে।",
+"startMs": 343700,
+"endMs": 343982
+},
+{
+"text": "হুয়াংকে",
+"startMs": 344006,
+"endMs": 344270
+},
+{
+"text": "ছাড়া",
+"startMs": 344293,
+"endMs": 344469
+},
+{
+"text": "এটাই",
+"startMs": 344484,
+"endMs": 344748
+},
+{
+"text": "তাদের",
+"startMs": 344771,
+"endMs": 345034
+},
+{
+"text": "প্রথম",
+"startMs": 345057,
+"endMs": 345409
+},
+{
+"text": "বড়",
+"startMs": 345440,
+"endMs": 345615
+},
+{
+"text": "পরীক্ষা।",
+"startMs": 345631,
+"endMs": 346088
+},
+{
+"text": "এবার",
+"startMs": 347090,
+"endMs": 347354
+},
+{
+"text": "প্রশ্ন,",
+"startMs": 347377,
+"endMs": 347834
+},
+{
+"text": "বাংলাদেশে",
+"startMs": 347874,
+"endMs": 348954
+},
+{
+"text": "বসে",
+"startMs": 348984,
+"endMs": 349160
+},
+{
+"text": "এগুলো",
+"startMs": 349175,
+"endMs": 349439
+},
+{
+"text": "জেনে",
+"startMs": 349462,
+"endMs": 349638
+},
+{
+"text": "আমার",
+"startMs": 349653,
+"endMs": 349917
+},
+{
+"text": "কী",
+"startMs": 349940,
+"endMs": 350072
+},
+{
+"text": "লাভ?",
+"startMs": 350083,
+"endMs": 350365
+},
+{
+"text": "আপনি",
+"startMs": 350389,
+"endMs": 350788
+},
+{
+"text": "যে",
+"startMs": 350811,
+"endMs": 350943
+},
+{
+"text": "AI",
+"startMs": 350954,
+"endMs": 351130
+},
+{
+"text": "দিয়ে",
+"startMs": 351145,
+"endMs": 351321
+},
+{
+"text": "পড়া",
+"startMs": 351336,
+"endMs": 351512
+},
+{
+"text": "বোঝেন,",
+"startMs": 351528,
+"endMs": 351897
+},
+{
+"text": "ছবি",
+"startMs": 351929,
+"endMs": 352105
+},
+{
+"text": "বানান,",
+"startMs": 352120,
+"endMs": 352707
+},
+{
+"text": "ফ্রিল্যান্সিংয়ের",
+"startMs": 352739,
+"endMs": 353442
+},
+{
+"text": "কাজ",
+"startMs": 353503,
+"endMs": 353679
+},
+{
+"text": "করেন,",
+"startMs": 353694,
+"endMs": 354292
+},
+{
+"text": "তার",
+"startMs": 354324,
+"endMs": 354500
+},
+{
+"text": "বেশিরভাগ",
+"startMs": 354515,
+"endMs": 354955
+},
+{
+"text": "চলে",
+"startMs": 354993,
+"endMs": 355328
+},
+{
+"text": "এনভিডিয়ার",
+"startMs": 355343,
+"endMs": 355871
+},
+{
+"text": "চিপে।",
+"startMs": 355916,
+"endMs": 357649
+},
+{
+"text": "এই",
+"startMs": 357674,
+"endMs": 357850
+},
+{
+"text": "এক",
+"startMs": 357865,
+"endMs": 358041
+},
+{
+"text": "কোম্পানি",
+"startMs": 358056,
+"endMs": 358544
+},
+{
+"text": "দুলে",
+"startMs": 358586,
+"endMs": 358830
+},
+{
+"text": "উঠলে,",
+"startMs": 358852,
+"endMs": 359497
+},
+{
+"text": "দুলে",
+"startMs": 359541,
+"endMs": 359785
+},
+{
+"text": "ওঠে",
+"startMs": 359807,
+"endMs": 360051
+},
+{
+"text": "পুরো",
+"startMs": 360072,
+"endMs": 360316
+},
+{
+"text": "AI",
+"startMs": 360337,
+"endMs": 360581
+},
+{
+"text": "দুনিয়া।",
+"startMs": 360602,
+"endMs": 361115
+},
+{
+"text": "AI",
+"startMs": 361159,
+"endMs": 361700
+},
+{
+"text": "কত",
+"startMs": 361721,
+"endMs": 361965
+},
+{
+"text": "সস্তা",
+"startMs": 361986,
+"endMs": 362352
+},
+{
+"text": "হবে,",
+"startMs": 362384,
+"endMs": 362775
+},
+{
+"text": "কত",
+"startMs": 362809,
+"endMs": 363053
+},
+{
+"text": "দ্রুত",
+"startMs": 363074,
+"endMs": 363440
+},
+{
+"text": "হবে,",
+"startMs": 363472,
+"endMs": 363862
+},
+{
+"text": "অনেকটাই",
+"startMs": 363896,
+"endMs": 364679
+},
+{
+"text": "এর",
+"startMs": 364721,
+"endMs": 364913
+},
+{
+"text": "উপর",
+"startMs": 364930,
+"endMs": 365219
+},
+{
+"text": "নির্ভর",
+"startMs": 365245,
+"endMs": 365810
+},
+{
+"text": "করে।",
+"startMs": 365843,
+"endMs": 366152
+},
+{
+"text": "আর",
+"startMs": 366178,
+"endMs": 367369
+},
+{
+"text": "একটা",
+"startMs": 367386,
+"endMs": 367675
+},
+{
+"text": "শিক্ষা।",
+"startMs": 367700,
+"endMs": 368105
+},
+{
+"text": "একটা",
+"startMs": 368140,
+"endMs": 368726
+},
+{
+"text": "কোম্পানি",
+"startMs": 368751,
+"endMs": 369152
+},
+{
+"text": "যত",
+"startMs": 369186,
+"endMs": 369387
+},
+{
+"text": "বড়ই",
+"startMs": 369404,
+"endMs": 369705
+},
+{
+"text": "হোক,",
+"startMs": 369731,
+"endMs": 370224
+},
+{
+"text": "একজন",
+"startMs": 370252,
+"endMs": 370653
+},
+{
+"text": "মানুষের",
+"startMs": 370687,
+"endMs": 371088
+},
+{
+"text": "উপর",
+"startMs": 371123,
+"endMs": 371423
+},
+{
+"text": "বেশি",
+"startMs": 371450,
+"endMs": 371650
+},
+{
+"text": "নির্ভর",
+"startMs": 371667,
+"endMs": 372068
+},
+{
+"text": "করলে,",
+"startMs": 372103,
+"endMs": 372523
+},
+{
+"text": "তার",
+"startMs": 372560,
+"endMs": 372760
+},
+{
+"text": "একটা",
+"startMs": 372778,
+"endMs": 373078
+},
+{
+"text": "ভুলে",
+"startMs": 373104,
+"endMs": 373305
+},
+{
+"text": "পুরো",
+"startMs": 373322,
+"endMs": 373754
+},
+{
+"text": "কোম্পানি",
+"startMs": 373771,
+"endMs": 374213
+},
+{
+"text": "নড়ে",
+"startMs": 374252,
+"endMs": 374473
+},
+{
+"text": "যায়।",
+"startMs": 374492,
+"endMs": 375707
+},
+{
+"text": "এনভিডিয়া",
+"startMs": 375738,
+"endMs": 376478
+},
+{
+"text": "কি",
+"startMs": 376526,
+"endMs": 376692
+},
+{
+"text": "হুয়াংকে",
+"startMs": 376706,
+"endMs": 377038
+},
+{
+"text": "ছাড়াও",
+"startMs": 377067,
+"endMs": 377398
+},
+{
+"text": "AI-এর",
+"startMs": 377427,
+"endMs": 377869
+},
+{
+"text": "রাজা",
+"startMs": 377908,
+"endMs": 378129
+},
+{
+"text": "থাকবে?",
+"startMs": 378148,
+"endMs": 378964
+},
+{
+"text": "আপনার",
+"startMs": 379004,
+"endMs": 379446
+},
+{
+"text": "মত",
+"startMs": 379485,
+"endMs": 379706
+},
+{
+"text": "কমেন্টে",
+"startMs": 379725,
+"endMs": 379832
+},
+{
+"text": "লিখুন।",
+"startMs": 379842,
+"endMs": 379955
+}
+]

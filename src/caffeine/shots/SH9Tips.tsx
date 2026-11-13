@@ -4,7 +4,7 @@
  *              drifts to the matching prop:
  *                ছয়-সাত  ✅ রাতে ৬–৭ ঘণ্টা ঘুম        → camera settles on the alarm clock
  *                সন্ধ্যার ✅ চা সন্ধ্যার আগে            → camera moves to the tea glass
- *                সকালে   ✅ পরীক্ষার দিন সকালে ১ কাপ  → closer on the tea glass
+ *                দুই-তিন ✅ দিনে ২–৩ কাপের বেশি না   → closer on the tea glass
  *  তাহলে → end  Card slides away; wide on clock + lamp. Clock hands wind back 2:00 → 11:00 ("রাত ১১টা"),
  *              lamp clicks off to moonlight; the reel ends on that calm frame.
  */
@@ -20,14 +20,14 @@ import { shotDuration, wordAt } from "../vo";
 
 export const SH9_DURATION = shotDuration("tips");
 /** Caption words (exact VO tokens) to highlight. */
-export const SH9_KEYWORDS: string[] = ["ছয়-সাত", "সন্ধ্যার", "সকালে", "কমবে"];
+export const SH9_KEYWORDS: string[] = ["ছয়-সাত", "সন্ধ্যার", "দুই-তিন", "পরিষ্কার"];
 
 const T = {
   sleep: wordAt("tips", "ছয়-সাত"),
   evening: wordAt("tips", "সন্ধ্যার"),
-  morning: wordAt("tips", "সকালে"),
+  morning: wordAt("tips", "দুই-তিন"),
   then: wordAt("tips", "তাহলে"),
-  less: wordAt("tips", "কমবে"),
+  less: wordAt("tips", "থাকবে"),
 };
 const WIND_A = T.then + 0.35;
 const WIND_B = T.then + 1.15;
@@ -115,7 +115,7 @@ const Card: React.FC<{ t: number }> = ({ t }) => {
       >
         <Check at={T.sleep}>রাতে ৬–৭ ঘণ্টা ঘুম</Check>
         <Check at={T.evening}>চা সন্ধ্যার আগে</Check>
-        <Check at={T.morning}>পরীক্ষার দিন সকালে ১ কাপ</Check>
+        <Check at={T.morning}>দিনে ২–৩ কাপের বেশি না</Check>
       </div>
     </AbsoluteFill>
   );

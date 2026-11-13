@@ -1,162 +1,162 @@
 [
  {
   "text": "চা",
-  "startMs": 124.041,
-  "endMs": 280.291
+  "startMs": 60.0,
+  "endMs": 237.2
  },
  {
   "text": "খাওয়ার",
-  "startMs": 328.375,
-  "endMs": 676.916
+  "startMs": 291.7,
+  "endMs": 687.0
  },
  {
   "text": "বিশ",
-  "startMs": 676.916,
-  "endMs": 857.207
+  "startMs": 687.0,
+  "endMs": 891.5
  },
  {
   "text": "থেকে",
-  "startMs": 881.25,
-  "endMs": 1121.625
+  "startMs": 918.7,
+  "endMs": 1191.3
  },
  {
   "text": "ত্রিশ",
-  "startMs": 1133.666,
-  "endMs": 1410.124
+  "startMs": 1205.0,
+  "endMs": 1518.5
  },
  {
   "text": "মিনিট",
-  "startMs": 1434.125,
-  "endMs": 1698.541
+  "startMs": 1545.8,
+  "endMs": 1845.6
  },
  {
   "text": "পর",
-  "startMs": 1698.541,
-  "endMs": 1902.874
+  "startMs": 1845.6,
+  "endMs": 2077.4
  },
  {
   "text": "ক্যাফেইন",
-  "startMs": 1914.916,
-  "endMs": 2311.541
+  "startMs": 2091.0,
+  "endMs": 2540.8
  },
  {
   "text": "কাজ",
-  "startMs": 2323.541,
-  "endMs": 2551.916
+  "startMs": 2554.4,
+  "endMs": 2813.4
  },
  {
   "text": "শুরু",
-  "startMs": 2563.958,
-  "endMs": 2792.333
+  "startMs": 2827.1,
+  "endMs": 3086.1
  },
  {
   "text": "করে",
-  "startMs": 2804.333,
-  "endMs": 3032.708
+  "startMs": 3099.7,
+  "endMs": 3358.7
  },
  {
   "text": "আর",
-  "startMs": 3980.291,
-  "endMs": 4172.582
+  "startMs": 3928.7,
+  "endMs": 4204.3
  },
  {
   "text": "শরীর",
-  "startMs": 4184.625,
-  "endMs": 4509.125
+  "startMs": 4221.6,
+  "endMs": 4686.8
  },
  {
   "text": "থেকে",
-  "startMs": 4509.125,
-  "endMs": 4761.541
+  "startMs": 4686.8,
+  "endMs": 5048.6
  },
  {
   "text": "এর",
-  "startMs": 4773.541,
-  "endMs": 4905.749
+  "startMs": 5065.8,
+  "endMs": 5255.4
  },
  {
   "text": "অর্ধেক",
-  "startMs": 4917.791,
-  "endMs": 5266.332
+  "startMs": 5272.6,
+  "endMs": 5772.3
  },
  {
   "text": "বের",
-  "startMs": 5266.333,
-  "endMs": 5470.666
+  "startMs": 5772.3,
+  "endMs": 6065.2
  },
  {
   "text": "হতে",
-  "startMs": 5482.708,
-  "endMs": 5711.083
+  "startMs": 6082.4,
+  "endMs": 6409.8
  },
  {
   "text": "লাগে",
-  "startMs": 5723.083,
-  "endMs": 5951.458
+  "startMs": 6427.0,
+  "endMs": 6754.4
  },
  {
   "text": "প্রায়",
-  "startMs": 5975.5,
-  "endMs": 6155.791
+  "startMs": 6788.9,
+  "endMs": 7047.3
  },
  {
   "text": "পাঁচ",
-  "startMs": 6179.791,
-  "endMs": 6420.166
+  "startMs": 7081.7,
+  "endMs": 7426.3
  },
  {
   "text": "ঘণ্টা",
-  "startMs": 6432.208,
-  "endMs": 6768.749
+  "startMs": 7443.6,
+  "endMs": 7926.0
  },
  {
   "text": "মানে",
-  "startMs": 7718.25,
-  "endMs": 7958.625
+  "startMs": 8496.0,
+  "endMs": 8822.7
  },
  {
   "text": "রাত",
-  "startMs": 7994.708,
-  "endMs": 8211.041
+  "startMs": 8871.8,
+  "endMs": 9165.9
  },
  {
   "text": "দশটায়",
-  "startMs": 8211.041,
-  "endMs": 8547.582
+  "startMs": 9165.9,
+  "endMs": 9623.3
  },
  {
   "text": "চা",
-  "startMs": 8559.625,
-  "endMs": 8715.875
+  "startMs": 9639.7,
+  "endMs": 9852.1
  },
  {
   "text": "খেলে",
-  "startMs": 8739.916,
-  "endMs": 8992.332
+  "startMs": 9884.7,
+  "endMs": 10227.9
  },
  {
   "text": "রাত",
-  "startMs": 9112.5,
-  "endMs": 9376.916
+  "startMs": 10391.2,
+  "endMs": 10750.6
  },
  {
   "text": "তিনটাতেও",
-  "startMs": 9376.916,
-  "endMs": 9869.707
+  "startMs": 10750.6,
+  "endMs": 11420.5
  },
  {
   "text": "অর্ধেকটা",
-  "startMs": 9893.75,
-  "endMs": 10302.416
+  "startMs": 11453.2,
+  "endMs": 12008.7
  },
  {
   "text": "থেকে",
-  "startMs": 10314.416,
-  "endMs": 10566.832
+  "startMs": 12025.0,
+  "endMs": 12368.1
  },
  {
   "text": "যায়",
-  "startMs": 10566.833,
-  "endMs": 10795.208
+  "startMs": 12368.1,
+  "endMs": 12678.5
  }
 ]

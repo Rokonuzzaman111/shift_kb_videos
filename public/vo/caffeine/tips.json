@@ -1,147 +1,117 @@
 [
  {
   "text": "তাই",
-  "startMs": 100.0,
-  "endMs": 304.333
- },
- {
-  "text": "পরীক্ষার",
-  "startMs": 328.375,
-  "endMs": 797.125
- },
- {
-  "text": "আগে",
-  "startMs": 797.125,
-  "endMs": 1025.5
+  "startMs": 60.0,
+  "endMs": 268.5
  },
  {
   "text": "রাতে",
-  "startMs": 1037.5,
-  "endMs": 1289.916
+  "startMs": 280.7,
+  "endMs": 562.9
  },
  {
   "text": "অন্তত",
-  "startMs": 1313.958,
-  "endMs": 1638.458
+  "startMs": 575.1,
+  "endMs": 906.2
  },
  {
   "text": "ছয়-সাত",
-  "startMs": 1650.5,
-  "endMs": 2047.125
+  "startMs": 918.5,
+  "endMs": 1323.2
  },
  {
   "text": "ঘণ্টা",
-  "startMs": 2047.125,
-  "endMs": 2347.625
+  "startMs": 1323.3,
+  "endMs": 1629.9
  },
  {
   "text": "ঘুমান",
-  "startMs": 2359.625,
-  "endMs": 2696.166
+  "startMs": 1642.2,
+  "endMs": 1997.8
  },
  {
   "text": "চা",
-  "startMs": 3631.75,
-  "endMs": 3812.041
+  "startMs": 2567.8,
+  "endMs": 2728.8
  },
  {
   "text": "খেলে",
-  "startMs": 3848.083,
-  "endMs": 4100.499
+  "startMs": 2761.0,
+  "endMs": 2986.4
  },
  {
   "text": "খান",
-  "startMs": 4112.5,
-  "endMs": 4328.833
+  "startMs": 2997.1,
+  "endMs": 3190.3
  },
  {
   "text": "সন্ধ্যার",
-  "startMs": 4340.875,
-  "endMs": 4713.458
+  "startMs": 3201.0,
+  "endMs": 3533.7
  },
  {
   "text": "আগে",
-  "startMs": 4725.5,
-  "endMs": 4953.875
+  "startMs": 3544.5,
+  "endMs": 3748.4
  },
  {
   "text": "আর",
-  "startMs": 5915.375,
-  "endMs": 6119.708
+  "startMs": 4318.4,
+  "endMs": 4535.3
  },
  {
-  "text": "দরকার",
-  "startMs": 6143.75,
-  "endMs": 6516.333
+  "text": "দিনে",
+  "startMs": 4576.0,
+  "endMs": 4847.1
  },
  {
-  "text": "হলে",
-  "startMs": 6516.333,
-  "endMs": 6720.666
+  "text": "দুই-তিন",
+  "startMs": 4874.2,
+  "endMs": 5281.0
  },
  {
-  "text": "পরীক্ষার",
-  "startMs": 6756.75,
-  "endMs": 7189.416
+  "text": "কাপের",
+  "startMs": 5294.5,
+  "endMs": 5660.5
  },
  {
-  "text": "দিন",
-  "startMs": 7189.416,
-  "endMs": 7369.707
+  "text": "বেশি",
+  "startMs": 5660.5,
+  "endMs": 5945.3
  },
  {
-  "text": "সকালে",
-  "startMs": 7381.75,
-  "endMs": 7754.333
- },
- {
-  "text": "এক",
-  "startMs": 7778.375,
-  "endMs": 7946.625
- },
- {
-  "text": "কাপ",
-  "startMs": 7958.666,
-  "endMs": 8162.999
- },
- {
-  "text": "চা",
-  "startMs": 8175.0,
-  "endMs": 8319.25
- },
- {
-  "text": "খান",
-  "startMs": 8331.25,
-  "endMs": 8571.625
+  "text": "নয়",
+  "startMs": 5958.8,
+  "endMs": 6148.6
  },
  {
   "text": "তাহলে",
-  "startMs": 9497.125,
-  "endMs": 9857.708
+  "startMs": 6718.6,
+  "endMs": 7106.3
  },
  {
-  "text": "হলে",
-  "startMs": 9869.708,
-  "endMs": 10086.041
+  "text": "চা",
+  "startMs": 7119.2,
+  "endMs": 7287.2
  },
  {
-  "text": "বসে",
-  "startMs": 10110.083,
-  "endMs": 10386.541
+  "text": "ছাড়াও",
+  "startMs": 7300.1,
+  "endMs": 7662.0
  },
  {
-  "text": "ঝিমানোর",
-  "startMs": 10398.541,
-  "endMs": 10843.249
+  "text": "মাথা",
+  "startMs": 7687.8,
+  "endMs": 7959.2
  },
  {
-  "text": "সম্ভাবনা",
-  "startMs": 10843.25,
-  "endMs": 11324.0
+  "text": "পরিষ্কার",
+  "startMs": 7972.1,
+  "endMs": 8437.4
  },
  {
-  "text": "কমবে",
-  "startMs": 11336.041,
-  "endMs": 11684.582
+  "text": "থাকবে",
+  "startMs": 8437.4,
+  "endMs": 8799.3
  }
 ]

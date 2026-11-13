@@ -1,0 +1,19 @@
+jensen_stage1.jpg: File:Jensen huang stanford 2026-04-30 018.jpg | Anders Eidesvik | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_018.jpg
+jensen_stage2.jpg: File:Jensen huang stanford 2026-04-30 019.jpg | Anders Eidesvik | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_019.jpg
+jensen_stage3.jpg: File:Jensen huang stanford 2026-04-30 022.jpg | Anders Eidesvik | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_022.jpg
+jensen_stage4.jpg: File:Jensen huang stanford 2026-04-30 025.jpg | Anders Eidesvik | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_025.jpg
+jensen_portrait.jpg: File:Jensen huang stanford 2026-04-30 005.jpg | Anders Eidesvik | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Jensen_huang_stanford_2026-04-30_005.jpg
+jensen_2010.jpg: File:Jensen Huang at Computex Taipei 20100531.jpg | Masaru Kamikura | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Jensen_Huang_at_Computex_Taipei_20100531.jpg
+jensen_2016.jpg: File:Jensen Huang at Computex Taipei 20160531a.jpg | NVIDIA Taiwan | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Jensen_Huang_at_Computex_Taipei_20160531a.jpg
+hq.jpg: File:NVIDIA Headquarters.jpg | Coolcaesar | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:NVIDIA_Headquarters.jpg
+hq_atrium.jpg: File:Nvdia Endeavor Grand Opening atrium and cocoon Prostak Gensler.jpg | Daniel J. Prostak Crocodiletiger~commonswiki used courtesy of Jessie Shao | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Nvdia_Endeavor_Grand_Opening_atrium_and_cocoon_Prostak_Gensler.jpg
+campus_aerial.jpg: File:Nvidia campus aerial.jpg | Dicklyon | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Nvidia_campus_aerial.jpg
+geforce256.jpg: File:VisionTek GeForce 256.jpg | Hyins | Public domain | https://commons.wikimedia.org/wiki/File:VisionTek_GeForce_256.jpg
+nv10_chip.jpg: File:NVIDIA@220nm@Fixed-pipline@NV10@GeForce 256@T5A3202220008 S1 Taiwan A DSC04149 (30132441301).jpg | Fritzchens Fritz from Berlin | CC0 | https://commons.wikimedia.org/wiki/File:NVIDIA@220nm@Fixed-pipline@NV10@GeForce_256@T5A3202220008_S1_Taiwan_A_DSC04149_(30132441301).jpg
+dgx_gb200.jpg: File:Nvidia DGX GB200.jpg | Pokiiri | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg
+dgx_b200.jpg: File:Nvidia DGX-B200-HGX.jpg | Pokiiri | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg
+h100.png: File:NVIDIA H100 (极客湾Geekerwan) 002.png | 极客湾Geekerwan | CC BY 3.0 | https://commons.wikimedia.org/wiki/File:NVIDIA_H100_(%E6%9E%81%E5%AE%A2%E6%B9%BEGeekerwan)_002.png
+kress.png: File:Colette Kress (1).png | SiliconANGLE theCUBE | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Colette_Kress_(1).png
+rtx3090.jpg: File:Gigabyte GeForce RTX 3090 Eagle OC 24G, 24576 MiB GDDR6X Front 20201114 DSC5880.jpg | PantheraLeo1359531 | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Gigabyte_GeForce_RTX_3090_Eagle_OC_24G,_24576_MiB_GDDR6X_Front_20201114_DSC5880.jpg
+dc_racks.jpg: File:Datacenter Server Racks (22370909788).jpg | Carl Lender from Sunrise, USA | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg
+dc_tech.jpg: File:Technician with laptop working on server rack at NERSC.jpg | Derrick Coetzee from Berkeley, CA, USA | CC0 | https://commons.wikimedia.org/wiki/File:Technician_with_laptop_working_on_server_rack_at_NERSC.jpg

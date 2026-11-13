@@ -226,6 +226,20 @@ def sfx_clock_wind():
     return finish_sfx(out, fout=0.15)
 
 
+def sfx_drowsy():
+    """Getting sleepy: a warm hum that slowly pitches down and muffles, like hearing fade."""
+    dur = 2.0
+    out = buf(dur)
+    t = tt(dur)
+    f = 220 * (0.55 ** (t / dur))
+    y = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.4 * np.sin(2 * np.pi * np.cumsum(f * 1.5) / SR)
+    y = filt(y, "lowpass", 900, 2) * env_ad(t, 0.4, 0.9) * 0.35
+    air = filt(nz(len(t)), "lowpass", 600, 2) * env_ad(t, 0.6, 0.8) * 0.12
+    place(out, pan(y + air, 0.0), 0, 1)
+    out = reverb(out, A.IR_HALL, 0.35)[:, : out.shape[1]]
+    return finish_sfx(out, lp=3000, fout=0.6)
+
+
 EXTRA = {
     "dive": sfx_dive,
     "zoom_in": sfx_zoom_in,
@@ -242,6 +256,7 @@ EXTRA = {
     "ding_2": sfx_ding_2,
     "ding_3": sfx_ding_3,
     "clock_wind": sfx_clock_wind,
+    "drowsy": sfx_drowsy,
 }
 
 if __name__ == "__main__":

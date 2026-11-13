@@ -5,11 +5,17 @@
  *  সরে      caffeine molecules lift off one by one and drift away
  *  একসাথে   the whole amber crowd rushes in at once and docks (low thud), receptors light amber
  *  ~9.6     cut: brain wrapped in amber, its glow dims hard
- *  ঘুম      cut: exam hall, student yawns → nods; title "এজন্যই ঝিমানো" on ঝিমানোর
+ *  ঘুম      cut: POV at the sunny 4 pm desk with no tea: picture blurs, heavy eyelids close, jerk open, close;
+ *           title "এজন্যই ঝিমুনি" on ঝিমুনি
  */
 import { useMemo } from "react";
 import { AbsoluteFill } from "remotion";
-import { Stage } from "../../kit/Stage";
+import { Lens, Stage } from "../../kit/Stage";
+import { PostFX as DeskFX } from "../../kit/PostFX";
+import { interpolate } from "remotion";
+import { clamp } from "../../kit/time";
+import { Desk } from "../three/Desk";
+import { Eyelids } from "../two/Eyelids";
 import { ease, mix, mix3, prog, useSeconds } from "../../kit/time";
 import { Brain } from "../three/Brain";
 import { MolSwarm, type MolItem } from "../three/Molecules";
@@ -19,8 +25,6 @@ import { SciFX as PostFX } from "../three/sci/SciFX";
 import { Cam, SciLights, Specks } from "../three/sci/Scene";
 import { dist3, rnd, snap } from "../three/sci/util";
 import { K, bodyFont } from "../theme";
-import { ExamHall } from "../two/ExamHall";
-import { Student } from "../two/Student";
 import type { Cue } from "../types";
 import { Counter, Title } from "../ui/Text";
 import { shotDuration, wordAt } from "../vo";
@@ -35,13 +39,13 @@ const T = {
   eksathe: w("একসাথে"),
   kaj: w("কাজ"),
   ghum: w("ঘুম"),
-  porikkha: w("পরীক্ষার"),
-  jhim: w("ঝিমানোর"),
+  bikele: w("বিকেলে"),
+  jhim: w("ঝিমুনি"),
 };
 const BRAIN_CUT = T.kaj + 1.15;
 
 /** Caption words (exact VO tokens) to highlight. */
-export const SH6_KEYWORDS: string[] = ["থামে", "একসাথে", "ঘুম", "ঝিমানোর"];
+export const SH6_KEYWORDS: string[] = ["থামে", "একসাথে", "ঘুম", "ঝিমুনি"];
 /** Sound cues for this shot (sparse!). */
 export const SH6_CUES: Cue[] = [
   { at: T.sore, sfx: "release_pluck", volume: 0.5 },
@@ -189,27 +193,49 @@ const CrowdCounter: React.FC = () => {
   );
 };
 
+/** Lid closure for the 4 pm POV ending. */
+const lidsAt = (t: number) =>
+  interpolate(t, [T.ghum + 0.1, T.bikele, T.bikele + 0.3, T.bikele + 0.5, T.jhim, SH6_DURATION], [0.1, 0.6, 0.66, 0.2, 0.8, 0.92], clamp);
+
+/** POV at the sunny study desk (same set as the hook), no tea in sight. */
+const DeskPOV: React.FC = () => {
+  const t = useSeconds();
+  const k = prog(t, T.ghum, SH6_DURATION, ease.inOut);
+  const pos = mix3([0.4, 1.75, 4.2], [0.6, 1.35, 3.6], k);
+  const target = mix3([0.3, 0.55, -0.4], [0.45, 0.3, -0.2], k);
+  return (
+    <>
+      <Lens position={pos} target={target} mm={34} near={0.02} far={80} />
+      <Desk t={t} mood="afternoon" clockHours={16.2} lampOn={0} showCup={false} />
+      <DeskFX focus={Math.hypot(pos[0] - 0.2, pos[1] - 0.6, pos[2] + 0.5)} focusRange={1.2} bokeh={5} bloom={0.6} bloomThreshold={0.85} vignette={0.5} />
+    </>
+  );
+};
+
 export const SH6Crash: React.FC = () => {
   const t = useSeconds();
-  const hall = t >= T.ghum;
+  const pov = t >= T.ghum;
+  const lids = pov ? lidsAt(t) : 0;
   return (
     <AbsoluteFill style={{ background: K.bg }}>
-      {!hall ? (
+      {!pov ? (
         <Stage background="#0f0907">
           <World />
         </Stage>
       ) : (
-        <AbsoluteFill>
-          <ExamHall t={t} />
-          <AbsoluteFill style={{ alignItems: "center", paddingTop: 470 }}>
-            <Student t={t} pose={t < T.porikkha + 0.2 ? "yawn" : "nodding"} poseAt={t < T.porikkha + 0.2 ? T.ghum : T.porikkha + 0.2} width={640} />
+        <>
+          <AbsoluteFill style={{ filter: `blur(${lids * 9}px) saturate(${1 - lids * 0.55})` }}>
+            <Stage background="#2a1c12">
+              <DeskPOV />
+            </Stage>
           </AbsoluteFill>
-        </AbsoluteFill>
+          <Eyelids k={lids} />
+        </>
       )}
-      {!hall ? <CrowdCounter /> : null}
+      {!pov ? <CrowdCounter /> : null}
       <AbsoluteFill style={{ alignItems: "center", paddingTop: 250 }}>
         <Title at={T.jhim} color={K.amber} size={110}>
-          এজন্যই ঝিমানো
+          এজন্যই ঝিমুনি
         </Title>
       </AbsoluteFill>
     </AbsoluteFill>

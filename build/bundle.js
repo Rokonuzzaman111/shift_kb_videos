@@ -20367,7 +20367,7 @@ if (true) {
 
 
 },
-7472(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
+2578(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
 // NAMESPACE OBJECT: ./node_modules/three/build/three.module.js
 var three_module_namespaceObject = {};
 __webpack_require__.r(three_module_namespaceObject);
@@ -29665,9 +29665,9 @@ const outExpo = esm/* .Easing.bezier */.GS.bezier(0.16, 1, 0.3, 1);
  * Dmaj9 | Bm9 | Gmaj9 | A7sus4, mastered ~-16 LUFS, so the volumes below are deliberately low.
  */ 
 
-/** Music level in gaps between VO lines. */ const GAP = 0.12;
-/** Music level while VO is speaking. */ const DUCK = 0.05;
-/** Level at the very start (hook) and after the last VO line (end card). */ const LIFT = 0.15;
+/** Music level in gaps between VO lines. */ const GAP = 0.19;
+/** Music level while VO is speaking. */ const DUCK = 0.06;
+/** Level at the very start (hook) and after the last VO line (end card). */ const LIFT = 0.23;
 const ATTACK = 0.15; // s — duck in (finishes right as the voice starts)
 const RELEASE = 0.4; // s — swell back after the voice stops
 const FADE_OUT = 1.5; // s
@@ -29705,8 +29705,8 @@ const Music = ({ voSpans, total })=>{
     });
 };
 /** Master volume multipliers the assembler applies (audio agent tunes these). */ const MIX = {
-    vo: 1,
-    /** SFX files peak at -1 dBFS; 0.55 (~-5 dB) keeps cues clearly under the voice. */ sfx: 0.55,
+    /** creator's own recording, loudness-normalised to about -16 LUFS */ vo: 0.86,
+    /** SFX files peak at -1 dBFS; balanced against the -16 LUFS voice so cues sit clearly under it. */ sfx: 0.75,
     /** whoosh played by the assembler on every shot cut — a subtle air movement, not an effect */ cutWhoosh: 0.18
 };
 
@@ -153767,6 +153767,204 @@ const shadeGeometry = ()=>{
     });
 };
 
+;// CONCATENATED MODULE: ./src/caffeine/three/props/Afternoon.tsx
+
+/**
+ * Afternoon pieces for the night-study Desk (mood="afternoon"), 1 unit = 10 cm:
+ *  - SUN_POS: low golden sun from the left/back window side.
+ *  - BlindSlats: invisible venetian-blind slats between the sun and the desk. They don't draw
+ *    (colorWrite off) but cast shadows, so the sunlight lands on the desk and wall in soft stripes.
+ *  - DayWindow: bright late-afternoon sky with warm haze and a few drifting clouds.
+ */ 
+
+const SUN_POS = [
+    -14,
+    7.5,
+    2.5
+];
+const BlindSlats = ()=>{
+    const { pos, quat } = (0,react.useMemo)(()=>{
+        const d = new three_core_Vector3(...SUN_POS).normalize(); // toward the sun
+        const p = d.clone().multiplyScalar(5.5); // 5.5 units from the desk centre toward the sun
+        const q = new three_core_Quaternion().setFromUnitVectors(new three_core_Vector3(0, 0, 1), d);
+        return {
+            pos: p,
+            quat: q
+        };
+    }, []);
+    const mat = (0,react.useMemo)(()=>new MeshBasicMaterial({
+            colorWrite: false,
+            depthWrite: false
+        }), []);
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
+        position: pos,
+        quaternion: quat,
+        children: Array.from({
+            length: 34
+        }, (_, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("mesh", {
+                position: [
+                    0,
+                    -6 + i * 0.36,
+                    0
+                ],
+                rotation: [
+                    0.35,
+                    0,
+                    0
+                ],
+                castShadow: true,
+                material: mat,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                    args: [
+                        18,
+                        0.2,
+                        0.02
+                    ]
+                })
+            }, i))
+    });
+};
+const daySky = (()=>{
+    let cached = null;
+    return ()=>{
+        if (cached) return cached;
+        const W = 128;
+        const H = 256;
+        const c = document.createElement("canvas");
+        c.width = W;
+        c.height = H;
+        const g = c.getContext("2d");
+        const gr = g.createLinearGradient(0, 0, 0, H);
+        gr.addColorStop(0, "#7fb2e6");
+        gr.addColorStop(0.55, "#d9c9a8");
+        gr.addColorStop(1, "#ffb874");
+        g.fillStyle = gr;
+        g.fillRect(0, 0, W, H);
+        // sun glare in the lower left
+        const sg = g.createRadialGradient(W * 0.2, H * 0.72, 2, W * 0.2, H * 0.72, H * 0.5);
+        sg.addColorStop(0, "rgba(255,246,220,1)");
+        sg.addColorStop(0.15, "rgba(255,214,150,0.8)");
+        sg.addColorStop(1, "rgba(255,190,120,0)");
+        g.fillStyle = sg;
+        g.fillRect(0, 0, W, H);
+        cached = new CanvasTexture(c);
+        cached.colorSpace = (/* inlined export .SRGBColorSpace */"srgb");
+        return cached;
+    };
+})();
+/** Bright window with blinds half down; same footprint as NightWindow. */ const DayWindow = ({ position, w = 3.2, h = 4 })=>{
+    const sky = daySky();
+    const frame = /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+        color: "#e9dfcf",
+        roughness: 0.6
+    });
+    const bar = 0.12;
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
+        position: position,
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    0,
+                    0.005
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            w,
+                            h
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshBasicMaterial", {
+                        map: sky,
+                        color: new three_core_Color(1.6, 1.5, 1.35),
+                        toneMapped: false
+                    })
+                ]
+            }),
+            Array.from({
+                length: 16
+            }, (_, i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        0,
+                        h / 2 - 0.12 - i * 0.16,
+                        0.12
+                    ],
+                    rotation: [
+                        0.9,
+                        0,
+                        0
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                w - 0.05,
+                                0.11,
+                                0.01
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                            color: "#efe6d6",
+                            roughness: 0.5,
+                            emissive: "#ffcf95",
+                            emissiveIntensity: 0.35
+                        })
+                    ]
+                }, `s${i}`)),
+            [
+                [
+                    0,
+                    h / 2,
+                    w + bar * 2,
+                    bar * 1.6
+                ],
+                [
+                    0,
+                    -h / 2,
+                    w + bar * 2,
+                    bar * 1.6
+                ]
+            ].map(([x, y, ww, hh], i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        x,
+                        y,
+                        0.08
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                ww,
+                                hh,
+                                0.16
+                            ]
+                        }),
+                        frame
+                    ]
+                }, `h${i}`)),
+            [
+                -w / 2,
+                w / 2
+            ].map((x, i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        x,
+                        0,
+                        0.08
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                bar * 1.6,
+                                h,
+                                0.16
+                            ]
+                        }),
+                        frame
+                    ]
+                }, `v${i}`))
+        ]
+    });
+};
+
 ;// CONCATENATED MODULE: ./src/caffeine/theme.ts
 /**
  * Caffeine reel look. Fonts come from the shared src/theme.ts.
@@ -154295,9 +154493,12 @@ const TeaCup = ({ t, position = [
  * book stack, architect desk lamp (warm shadow-casting spot + emissive bulb), twin-bell alarm clock showing
  * `clockHours`, and the TeaCup at CUP_POS.
  *  - lampOn: 0..1 warm lamp; at 0 the room falls to dim moonlight blue.
+ *  - mood: "afternoon" swaps the night rig for low golden sun through venetian blinds (striped light
+ *    on desk and wall), a bright day window and a lighter wall. Lamp stays off.
  *  - steam: passes to the cup. Optional: cupFill, cupGlow, showCup, showClock, env (HDRI reflection strength).
  * CLOCK_POS = centre of the clock dial (feet on the desk). CUP_POS / BOOK_POS = base centres on the desk.
  */ 
+
 
 
 
@@ -154374,7 +154575,7 @@ const DeskTop = ()=>{
         ]
     });
 };
-const Wall = ()=>{
+const Wall = ({ day })=>{
     const tex = (0,react.useMemo)(()=>{
         const t = plasterTexture().clone();
         t.wrapS = t.wrapT = (/* inlined export .RepeatWrapping */1000);
@@ -154398,61 +154599,123 @@ const Wall = ()=>{
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
                 map: tex,
-                color: "#7a6656",
+                color: day ? "#c4ab92" : "#7a6656",
                 roughness: 0.95
             })
         ]
     });
 };
-const Desk = ({ t, clockHours = 2, lampOn = 1, steam = 0.7, cupFill = 0.82, cupGlow = 0, showCup = true, showClock = true, env = 0.22 })=>{
+const Desk = ({ t, clockHours = 2, lampOn = 1, steam = 0.7, cupFill = 0.82, cupGlow = 0, showCup = true, showClock = true, env = 0.22, mood = "night" })=>{
     const moon = 1 - lampOn;
+    const day = mood === "afternoon";
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
         children: [
-            /*#__PURE__*/ (0,jsx_runtime.jsx)(Lighting, {
-                hdri: HDRI.studio,
-                intensity: env * (0.3 + 0.7 * lampOn),
-                rotation: 1.2
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("fog", {
-                attach: "fog",
-                args: [
-                    "#090605",
-                    10,
-                    30
+            day ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(Lighting, {
+                        hdri: HDRI.studio,
+                        intensity: 0.55,
+                        rotation: 1.2
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("fog", {
+                        attach: "fog",
+                        args: [
+                            "#3a2a1e",
+                            14,
+                            40
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("hemisphereLight", {
+                        args: [
+                            "#ffe2c0",
+                            "#3a2516",
+                            0.55
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("directionalLight", {
+                        position: SUN_POS,
+                        color: "#ffc27a",
+                        intensity: 4.2,
+                        castShadow: true,
+                        "shadow-mapSize-width": 2048,
+                        "shadow-mapSize-height": 2048,
+                        "shadow-camera-left": -7,
+                        "shadow-camera-right": 7,
+                        "shadow-camera-top": 7,
+                        "shadow-camera-bottom": -7,
+                        "shadow-camera-far": 40,
+                        "shadow-bias": -0.0004
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(BlindSlats, {}),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
+                        position: [
+                            2,
+                            3,
+                            3
+                        ],
+                        color: "#ffd9b0",
+                        intensity: 1.2,
+                        distance: 12,
+                        decay: 2
+                    })
                 ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("hemisphereLight", {
-                args: [
-                    "#ffd7ae",
-                    "#1a0f08",
-                    0.05 + 0.12 * lampOn
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(Lighting, {
+                        hdri: HDRI.studio,
+                        intensity: env * (0.3 + 0.7 * lampOn),
+                        rotation: 1.2
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("fog", {
+                        attach: "fog",
+                        args: [
+                            "#090605",
+                            10,
+                            30
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("hemisphereLight", {
+                        args: [
+                            "#ffd7ae",
+                            "#1a0f08",
+                            0.05 + 0.12 * lampOn
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("directionalLight", {
+                        position: [
+                            -6,
+                            6,
+                            -2
+                        ],
+                        color: "#86a6ff",
+                        intensity: 0.25 + moon * 0.9
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
+                        position: [
+                            -3.2,
+                            4.2,
+                            -2.4
+                        ],
+                        color: "#5f7fd6",
+                        intensity: 0.6 + moon * 2.5,
+                        distance: 10,
+                        decay: 2
+                    })
                 ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("directionalLight", {
-                position: [
-                    -6,
-                    6,
-                    -2
-                ],
-                color: "#86a6ff",
-                intensity: 0.25 + moon * 0.9
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
-                position: [
-                    -3.2,
-                    4.2,
-                    -2.4
-                ],
-                color: "#5f7fd6",
-                intensity: 0.6 + moon * 2.5,
-                distance: 10,
-                decay: 2
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(DeskTop, {}),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(Wall, {
-                lampOn: lampOn
+                lampOn: lampOn,
+                day: day
             }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)(NightWindow, {
+            day ? /*#__PURE__*/ (0,jsx_runtime.jsx)(DayWindow, {
+                position: [
+                    -3.3,
+                    4.6,
+                    WALL_Z + 0.01
+                ],
+                t: t
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsx)(NightWindow, {
                 position: [
                     -3.3,
                     4.6,
@@ -154471,7 +154734,7 @@ const Desk = ({ t, clockHours = 2, lampOn = 1, steam = 0.7, cupFill = 0.82, cupG
                     0,
                     0.9
                 ],
-                on: lampOn
+                on: day ? 0 : lampOn
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(OpenBook, {
                 position: BOOK_POS,
@@ -154512,1565 +154775,63 @@ const Desk = ({ t, clockHours = 2, lampOn = 1, steam = 0.7, cupFill = 0.82, cupG
     });
 };
 
-;// CONCATENATED MODULE: ./src/caffeine/two/ExamHall.tsx
+;// CONCATENATED MODULE: ./src/caffeine/two/Eyelids.tsx
 
 /**
- * OWNER: motion2d agent.
- * Full-frame (1080x1920) 2D exam hall: back wall with blackboard, wall clock, window light shafts,
- * rotating ceiling fan, invigilator silhouette, rows of desks in perspective with other students as
- * soft silhouettes (depth-blurred). The centre column is left clear from y≈1000 down so a <Student/>
- * can sit in the hero zone (y 520–1250). `t` (shot seconds) drives subtle life: fan, clock, light
- * flicker, invigilator sway and slow parallax.
+ * POV drowsy eyelids: dark upper and lower lids with soft curved edges that close over the frame.
+ * k = 0 fully open … 1 fully closed. Pair with a blur/desaturate filter on the scene underneath.
  */ 
-const VP = {
-    x: 540,
-    y: 640
-}; // vanishing point
-const FLOOR_Y = 770;
-// depth rows (far → near). Near rows keep the centre free for the hero student.
-const ROWS = [
-    {
-        y: 830,
-        s: 0.34,
-        cols: [
-            -3,
-            -2,
-            -1,
-            0,
-            1,
-            2,
-            3
-        ],
-        blur: 2.2,
-        dim: 0.55
-    },
-    {
-        y: 905,
-        s: 0.45,
-        cols: [
-            -3,
-            -2,
-            -1,
-            0,
-            1,
-            2,
-            3
-        ],
-        blur: 1.8,
-        dim: 0.62
-    },
-    {
-        y: 1010,
-        s: 0.6,
-        cols: [
-            -3,
-            -2,
-            -1,
-            1,
-            2,
-            3
-        ],
-        blur: 1.6,
-        dim: 0.7
-    },
-    {
-        y: 1170,
-        s: 0.82,
-        cols: [
-            -2,
-            -1.35,
-            1.35,
-            2
-        ],
-        blur: 2.4,
-        dim: 0.78
-    },
-    {
-        y: 1430,
-        s: 1.12,
-        cols: [
-            -1.45,
-            1.45
-        ],
-        blur: 5,
-        dim: 0.62
-    },
-    {
-        y: 1800,
-        s: 1.5,
-        cols: [
-            -1.2,
-            1.2
-        ],
-        blur: 8,
-        dim: 0.45
-    }
-];
-const ExamHall_hash = (n)=>{
-    const x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
-    return x - Math.floor(x);
-};
-const DeskWithStudent = ({ x, y, s, seed, t, showStudent })=>{
-    const w = 240 * s;
-    const h = 26 * s;
-    const lean = (ExamHall_hash(seed) - 0.5) * 10;
-    const bob = Math.sin(t * (0.6 + ExamHall_hash(seed + 3) * 0.6) + seed) * 2.5 * s;
-    const headR = 30 * s * (0.92 + ExamHall_hash(seed + 7) * 0.16);
-    const hair = ExamHall_hash(seed + 11) > 0.5;
-    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-        children: [
-            showStudent ? /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(${x} ${y}) rotate(${lean}) translate(0 ${bob})`,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${-62 * s} 0 C${-60 * s} ${-60 * s} ${-36 * s} ${-74 * s} 0 ${-76 * s} C${36 * s} ${-74 * s} ${60 * s} ${-60 * s} ${62 * s} 0 Z`,
-                        fill: "#c9cdd2"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -10 * s,
-                        y: -92 * s,
-                        width: 20 * s,
-                        height: 20 * s,
-                        fill: "#6e4a33"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                        cx: 0,
-                        cy: -112 * s,
-                        r: headR,
-                        fill: "#7a4f34"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${-headR} ${-112 * s} A${headR} ${headR} 0 0 1 ${headR} ${-112 * s} Q0 ${-128 * s} ${-headR} ${-112 * s} Z`,
-                        fill: "#16110e"
-                    }),
-                    hair ? /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: 0,
-                        cy: -120 * s,
-                        rx: headR * 1.08,
-                        ry: headR * 0.8,
-                        fill: "#16110e",
-                        opacity: 0.95
-                    }) : null
-                ]
-            }) : null,
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M${x - w / 2} ${y} L${x + w / 2} ${y} L${x + w / 2 + 10 * s} ${y + h} L${x - w / 2 - 10 * s} ${y + h} Z`,
-                fill: "#a06b42"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: x - w / 2 - 10 * s,
-                y: y + h,
-                width: w + 20 * s,
-                height: 70 * s,
-                fill: "#5e3a23"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: x - w / 2 - 4 * s,
-                y: y + h + 70 * s,
-                width: 8 * s,
-                height: 60 * s,
-                fill: "#3c2516"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: x + w / 2 - 4 * s,
-                y: y + h + 70 * s,
-                width: 8 * s,
-                height: 60 * s,
-                fill: "#3c2516"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M${x - 40 * s} ${y + 3 * s} L${x + 36 * s} ${y + 2 * s} L${x + 40 * s} ${y + h - 4 * s} L${x - 44 * s} ${y + h - 3 * s} Z`,
-                fill: "#e9e6de"
-            })
-        ]
-    });
-};
-const ExamHall = ({ t })=>{
-    const uid = (0,react.useId)().replace(/[^a-zA-Z0-9]/g, "");
-    const id = (s)=>`${s}-${uid}`;
-    const par = Math.sin(t * 0.22) * 1; // slow parallax driver
-    const flicker = 0.92 + Math.sin(t * 2.1) * 0.03 + Math.sin(t * 5.3) * 0.02;
-    const fan = t * 300; // deg
-    const minute = (10 * 60 + 10 + t / 6) % 60; // ~10:10, minute hand creeping
-    const hour = 10 + minute / 60;
-    const invX = 300 + Math.sin(t * 0.35) * 24;
-    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
-        width: "100%",
-        height: "100%",
-        viewBox: "0 0 1080 1920",
-        preserveAspectRatio: "xMidYMid slice",
+const Eyelids = ({ k })=>{
+    if (k <= 0.001) return null;
+    const W = 1080;
+    const H = 1920;
+    const reach = (H / 2 + 120) * Math.min(1, k); // how far each lid travels
+    const top = reach - 120;
+    const bot = H - reach + 120;
+    const sag = 260 * (1 - k * 0.6); // curve depth of the lid edge
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
         style: {
-            position: "absolute",
-            inset: 0
+            pointerEvents: "none"
         },
         children: [
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("defs", {
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
+                width: W,
+                height: H,
+                viewBox: `0 0 ${W} ${H}`,
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("wall"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#3c4440"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.55",
-                                stopColor: "#59625a"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#4c534c"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("floor"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#4a3f35"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.5",
-                                stopColor: "#30271f"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#1a1410"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("shaft"),
-                        x1: "1",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#ffe2a8",
-                                stopOpacity: 0.32
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#ffe2a8",
-                                stopOpacity: 0
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("window"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#fff2cf"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#f3c98a"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
-                        id: id("vig"),
-                        cx: "0.5",
-                        cy: "0.45",
-                        r: "0.75",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.5",
-                                stopColor: "#000",
-                                stopOpacity: 0
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#000",
-                                stopOpacity: 0.6
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
-                        id: id("pool"),
-                        cx: "0.5",
-                        cy: "0.5",
-                        r: "0.5",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#ffd9a0",
-                                stopOpacity: 0.22
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#ffd9a0",
-                                stopOpacity: 0
-                            })
-                        ]
-                    }),
-                    [
-                        1.6,
-                        2.2,
-                        2.4,
-                        5,
-                        8,
-                        1.8
-                    ].map((b)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("filter", {
-                            id: id(`b${String(b).replace(".", "_")}`),
-                            x: "-20%",
-                            y: "-20%",
-                            width: "140%",
-                            height: "140%",
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("defs", {
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)("filter", {
+                            id: "lidSoft",
+                            x: "-10%",
+                            y: "-10%",
+                            width: "120%",
+                            height: "120%",
                             children: /*#__PURE__*/ (0,jsx_runtime.jsx)("feGaussianBlur", {
-                                stdDeviation: b
+                                stdDeviation: 38
                             })
-                        }, b)),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("filter", {
-                        id: id("soft"),
-                        x: "-20%",
-                        y: "-20%",
-                        width: "140%",
-                        height: "140%",
-                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)("feGaussianBlur", {
-                            stdDeviation: 3
                         })
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(${par * 6} 0)`,
-                filter: `url(#${id("soft")})`,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -40,
-                        y: 0,
-                        width: 1160,
-                        height: FLOOR_Y,
-                        fill: `url(#${id("wall")})`
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -40,
-                        y: 0,
-                        width: 1160,
-                        height: 140,
-                        fill: "#2a2f2c"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -40,
-                        y: 136,
-                        width: 1160,
-                        height: 8,
-                        fill: "#1f2321"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -40,
-                        y: FLOOR_Y - 26,
-                        width: 1160,
-                        height: 26,
-                        fill: "#2f3430"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 250,
-                        y: 330,
-                        width: 580,
-                        height: 250,
-                        rx: 8,
-                        fill: "#5a3d27"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 264,
-                        y: 344,
-                        width: 552,
-                        height: 222,
-                        rx: 4,
-                        fill: "#1e3a2d"
                     }),
                     /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                        stroke: "#e8efe4",
-                        strokeOpacity: 0.35,
-                        strokeWidth: 5,
-                        strokeLinecap: "round",
-                        fill: "none",
+                        filter: "url(#lidSoft)",
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: "M310 392 L470 392"
+                                d: `M -100 -200 L ${W + 100} -200 L ${W + 100} ${top - sag} Q ${W / 2} ${top + sag} -100 ${top - sag} Z`,
+                                fill: "#050302"
                             }),
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: "M310 432 L560 432"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: "M310 472 L420 472"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: "M610 400 q40 -30 80 0 t80 0"
+                                d: `M -100 ${H + 200} L ${W + 100} ${H + 200} L ${W + 100} ${bot + sag * 0.6} Q ${W / 2} ${bot - sag * 0.6} -100 ${bot + sag * 0.6} Z`,
+                                fill: "#050302"
                             })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 264,
-                        y: 566,
-                        width: 552,
-                        height: 10,
-                        fill: "#3a2718"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                        transform: "translate(150 330)",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                r: 74,
-                                fill: "#1c1f1d"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                r: 64,
-                                fill: "#efe9dc"
-                            }),
-                            Array.from({
-                                length: 12
-                            }).map((_, i)=>{
-                                const a = i / 12 * Math.PI * 2;
-                                return /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                                    x1: Math.sin(a) * 52,
-                                    y1: -Math.cos(a) * 52,
-                                    x2: Math.sin(a) * 58,
-                                    y2: -Math.cos(a) * 58,
-                                    stroke: "#2a2a2a",
-                                    strokeWidth: i % 3 === 0 ? 5 : 2.5
-                                }, i);
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                                x1: 0,
-                                y1: 0,
-                                x2: Math.sin(hour / 12 * Math.PI * 2) * 32,
-                                y2: -Math.cos(hour / 12 * Math.PI * 2) * 32,
-                                stroke: "#1a1a1a",
-                                strokeWidth: 7,
-                                strokeLinecap: "round"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                                x1: 0,
-                                y1: 0,
-                                x2: Math.sin(minute / 60 * Math.PI * 2) * 48,
-                                y2: -Math.cos(minute / 60 * Math.PI * 2) * 48,
-                                stroke: "#1a1a1a",
-                                strokeWidth: 4.5,
-                                strokeLinecap: "round"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                                x1: 0,
-                                y1: 8,
-                                x2: Math.sin(t % 60 / 60 * Math.PI * 2) * 52,
-                                y2: -Math.cos(t % 60 / 60 * Math.PI * 2) * 52,
-                                stroke: "#d23c30",
-                                strokeWidth: 2
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                r: 5,
-                                fill: "#d23c30"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                        opacity: flicker,
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                                x: 890,
-                                y: 210,
-                                width: 190,
-                                height: 430,
-                                fill: "#2a2f2c"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                                x: 902,
-                                y: 222,
-                                width: 178,
-                                height: 406,
-                                fill: `url(#${id("window")})`
-                            }),
-                            [
-                                960,
-                                1020
-                            ].map((x)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                                    x: x,
-                                    y: 222,
-                                    width: 8,
-                                    height: 406,
-                                    fill: "#3a3f3b"
-                                }, x)),
-                            [
-                                320,
-                                420,
-                                520
-                            ].map((y)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                                    x: 902,
-                                    y: y,
-                                    width: 178,
-                                    height: 6,
-                                    fill: "#3a3f3b"
-                                }, y))
                         ]
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: 0,
-                y: FLOOR_Y,
-                width: 1080,
-                height: 1920 - FLOOR_Y,
-                fill: `url(#${id("floor")})`
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                stroke: "#000",
-                strokeOpacity: 0.18,
-                strokeWidth: 2,
-                children: [
-                    Array.from({
-                        length: 13
-                    }).map((_, i)=>{
-                        const x = -1400 + i * 320;
-                        return /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                            x1: VP.x + (x - VP.x) * 0.1,
-                            y1: FLOOR_Y,
-                            x2: x,
-                            y2: 1920
-                        }, i);
-                    }),
-                    [
-                        800,
-                        850,
-                        920,
-                        1020,
-                        1170,
-                        1400,
-                        1760
-                    ].map((y)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                            x1: 0,
-                            y1: y,
-                            x2: 1080,
-                            y2: y
-                        }, y))
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                opacity: flicker,
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
                 style: {
-                    mixBlendMode: "screen"
-                },
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("polygon", {
-                        points: "902,222 1080,222 1080,640 420,1500 120,1500",
-                        fill: `url(#${id("shaft")})`,
-                        opacity: 0.55
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("polygon", {
-                        points: "960,222 1020,222 700,1200 560,1200",
-                        fill: `url(#${id("shaft")})`,
-                        opacity: 0.35
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(540 150)`,
-                filter: `url(#${id("b1_6")})`,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -4,
-                        y: -150,
-                        width: 8,
-                        height: 130,
-                        fill: "#1b1e1c"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                        transform: "translate(0 -14) scale(1 0.22)",
-                        children: [
-                            [
-                                0,
-                                120,
-                                240
-                            ].map((a)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("g", {
-                                    transform: `rotate(${a + fan})`,
-                                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                        d: "M0 -14 L250 -24 Q268 0 250 24 L0 14 Z",
-                                        fill: "#2c302d",
-                                        opacity: 0.85
-                                    })
-                                }, a)),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                r: 262,
-                                fill: "#2c302d",
-                                opacity: 0.18
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: 0,
-                        cy: -14,
-                        rx: 34,
-                        ry: 16,
-                        fill: "#232624"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(${invX} ${FLOOR_Y + 8})`,
-                filter: `url(#${id("b2_2")})`,
-                opacity: 0.9,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M-46 0 L-36 -150 C-56 -160 -66 -200 -60 -250 C-54 -290 -30 -300 0 -302 C30 -300 54 -290 60 -250 C66 -200 56 -160 36 -150 L46 0 Z",
-                        fill: "#20252a"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: -30,
-                        y: -150,
-                        width: 22,
-                        height: 150,
-                        fill: "#181c20"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 8,
-                        y: -150,
-                        width: 22,
-                        height: 150,
-                        fill: "#181c20"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                        cx: 0,
-                        cy: -338,
-                        r: 36,
-                        fill: "#22272b"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 42,
-                        y: -210,
-                        width: 34,
-                        height: 44,
-                        rx: 3,
-                        fill: "#cfcabd",
-                        opacity: 0.7,
-                        transform: "rotate(-12 60 -190)"
-                    })
-                ]
-            }),
-            ROWS.map((row, ri)=>{
-                const spacing = 300 * row.s;
-                const px = par * (4 + ri * 6);
-                return /*#__PURE__*/ (0,jsx_runtime.jsx)("g", {
-                    transform: `translate(${px} 0)`,
-                    filter: `url(#${id(`b${String(row.blur).replace(".", "_")}`)})`,
-                    opacity: 1,
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("g", {
-                        style: {
-                            filter: `brightness(${row.dim})`
-                        },
-                        children: row.cols.map((c)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(DeskWithStudent, {
-                                x: VP.x + c * spacing,
-                                y: row.y,
-                                s: row.s,
-                                seed: ri * 10 + c * 3.1,
-                                t: t,
-                                showStudent: true
-                            }, c))
-                    })
-                }, ri);
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                cx: 560,
-                cy: 980,
-                rx: 520,
-                ry: 420,
-                fill: `url(#${id("pool")})`
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: 0,
-                y: 0,
-                width: 1080,
-                height: 1920,
-                fill: "#1b120c",
-                opacity: 0.18
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: 0,
-                y: 0,
-                width: 1080,
-                height: 1920,
-                fill: `url(#${id("vig")})`
+                    background: "#000",
+                    opacity: k * 0.25
+                }
             })
-        ]
-    });
-};
-
-;// CONCATENATED MODULE: ./src/caffeine/two/Student.tsx
-
-/**
- * OWNER: motion2d agent.
- * 2D illustrated Bangladeshi student (teen, white school shirt, black hair, brown skin), flat illustration
- * with soft shading, sitting at a desk. Rendered inside a box of `width` px (height = width * 1.25),
- * bottom-centred (the desk front sits on the bottom edge).
- * Poses animate on their own from `t` (shot seconds) and blend in over ~0.35 s from `prevPose`
- * (default "study") when `pose` starts at `poseAt`.
- *  - study: head slightly down, writing, normal blinks
- *  - nodding: heavy lids, head slowly drops then jerks back up (cycle ~2.6 s), small "z"s
- *  - yawn: big yawn (eyes shut, head back, mouth wide) every ~4.5 s, drowsy in between
- *  - awake-tired: eyes forced wide open, small pupils, dark circles, slightly bloodshot, tiny tremor
- *  - headache: hand on forehead, squint + frown, red pulse rings at the temple
- */ 
-
-const Student_clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp"
-};
-const Student_mix = (a, b, k)=>a + (b - a) * k;
-const Student_smooth = (x)=>{
-    const c = Math.min(1, Math.max(0, x));
-    return c * c * (3 - 2 * c);
-};
-const SKIN = "#b0754b";
-const SKIN_LIGHT = "#c78a5c";
-const SKIN_SHADE = "#8f5a36";
-const HAIR = "#141010";
-const SHIRT = "#f6f6f3";
-const SHIRT_SHADE = "#d6dbe0";
-const NAVY = "#1f3a68";
-const KEYS = [
-    "tilt",
-    "drop",
-    "look",
-    "lid",
-    "eye",
-    "pupil",
-    "dark",
-    "mouth",
-    "smile",
-    "brow",
-    "raise",
-    "ache",
-    "write",
-    "zz"
-];
-/** Deterministic blink: 0..1 closure, ~every 3.2 s with slight irregularity. */ const blink = (t, period = 3.2, offset = 0.7)=>{
-    const x = t + offset + Math.sin(t * 0.37) * 0.4;
-    const ph = (x % period + period) % period;
-    return (0,esm/* .interpolate */.GW)(ph, [
-        0,
-        0.07,
-        0.16
-    ], [
-        0,
-        1,
-        0
-    ], Student_clamp);
-};
-const poseParams = (pose, t, lt)=>{
-    const base = {
-        tilt: 0,
-        drop: 0,
-        look: 0,
-        lid: 0.2,
-        eye: 1,
-        pupil: 1,
-        dark: 0.15,
-        mouth: 0,
-        smile: 0.1,
-        brow: 0,
-        raise: 0,
-        ache: 0,
-        write: 0,
-        zz: 0
-    };
-    switch(pose){
-        case "study":
-            return {
-                ...base,
-                tilt: Math.sin(t * 0.6) * 1.5 - 2,
-                drop: 5,
-                look: 7,
-                lid: Math.max(0.3, blink(t)),
-                write: 1
-            };
-        case "nodding":
-            {
-                const period = 2.6;
-                const ph = ((lt + 0.4) % period + period) % period;
-                // slow sink 0..1.9 s, quick jerk up 1.9..2.15, settle
-                const sink = ph < 1.9 ? esm/* .Easing["in"] */.GS["in"](esm/* .Easing.quad */.GS.quad)(ph / 1.9) : (0,esm/* .interpolate */.GW)(ph, [
-                    1.9,
-                    2.1,
-                    2.6
-                ], [
-                    1,
-                    -0.12,
-                    0
-                ], Student_clamp);
-                const jerk = (0,esm/* .interpolate */.GW)(ph, [
-                    1.9,
-                    2.0,
-                    2.4
-                ], [
-                    0,
-                    1,
-                    0
-                ], Student_clamp);
-                return {
-                    ...base,
-                    tilt: sink * 9,
-                    drop: sink * 30,
-                    look: sink * 14,
-                    lid: Math.max(Student_mix(0.55, 0.97, Math.max(0, sink)) - jerk * 0.6, ph > 2.1 ? blink(t, 1.3) : 0),
-                    dark: 0.45,
-                    mouth: Math.max(0, sink) * 0.12,
-                    smile: -0.1,
-                    brow: -0.1 + jerk * 0.8,
-                    zz: Student_smooth((sink - 0.4) / 0.4)
-                };
-            }
-        case "yawn":
-            {
-                const period = 4.5;
-                const ph = (lt % period + period) % period;
-                const y = (0,esm/* .interpolate */.GW)(ph, [
-                    0,
-                    0.5,
-                    1.0,
-                    1.6,
-                    2.1
-                ], [
-                    0,
-                    0.55,
-                    1,
-                    0.9,
-                    0
-                ], {
-                    ...Student_clamp,
-                    easing: esm/* .Easing.inOut */.GS.inOut(esm/* .Easing.sin */.GS.sin)
-                });
-                return {
-                    ...base,
-                    tilt: -y * 6,
-                    drop: -y * 8 + (1 - y) * 6,
-                    look: -y * 4 + (1 - y) * 5,
-                    lid: Math.max(Student_mix(0.55, 1, y), blink(t, 2.4)),
-                    dark: 0.4,
-                    mouth: y,
-                    smile: -0.2,
-                    brow: y * 0.9,
-                    zz: 0
-                };
-            }
-        case "awake-tired":
-            {
-                const b = blink(t, 4.6, 2.2);
-                return {
-                    ...base,
-                    tilt: Math.sin(t * 13) * 0.5 + Math.sin(t * 0.8) * 1.2,
-                    drop: -2 + Math.sin(t * 1.1) * 1.5,
-                    look: 0,
-                    lid: Math.max(0.02, b),
-                    eye: 1.2,
-                    pupil: 0.62,
-                    dark: 1,
-                    mouth: 0.05,
-                    smile: -0.25,
-                    brow: 0.7
-                };
-            }
-        case "headache":
-            {
-                const pulse = 0.5 + 0.5 * Math.sin(lt * Math.PI * 2 * 1.25);
-                return {
-                    ...base,
-                    tilt: 7 + pulse * 1.2,
-                    drop: 8,
-                    look: 3,
-                    lid: Math.max(0.62 + pulse * 0.12, blink(t, 3.6)),
-                    dark: 0.5,
-                    mouth: 0.08,
-                    smile: -0.85,
-                    brow: -1,
-                    raise: 1,
-                    ache: 1,
-                    write: 0
-                };
-            }
-    }
-};
-const Student = ({ t, pose, poseAt = 0, prevPose = "study", width = 600, style })=>{
-    const uid = (0,react.useId)().replace(/[^a-zA-Z0-9]/g, "");
-    const id = (s)=>`${s}-${uid}`;
-    const lt = t - poseAt;
-    const k = poseAt > 0 && prevPose !== pose ? (0,esm/* .interpolate */.GW)(lt, [
-        0,
-        0.35
-    ], [
-        0,
-        1
-    ], {
-        ...Student_clamp,
-        easing: esm/* .Easing.inOut */.GS.inOut(esm/* .Easing.cubic */.GS.cubic)
-    }) : 1;
-    const A = poseParams(prevPose, t, lt + poseAt);
-    const B = poseParams(pose, t, lt);
-    const p = {};
-    for (const key of KEYS)p[key] = Student_mix(A[key], B[key], k);
-    // breathing
-    const breath = Math.sin(t * 1.7) * 1.4;
-    // ----- head geometry -----
-    const headCx = 200;
-    const headCy = 176 + p.drop + breath * 0.5;
-    const pivot = `rotate(${p.tilt} 200 ${262 + p.drop})`;
-    // ----- arms -----
-    const writeX = p.write * (Math.sin(t * 8.5) * 5 + Math.sin(t * 2.3) * 7);
-    const writeY = p.write * Math.abs(Math.sin(t * 8.5)) * -2;
-    const lShoulder = [
-        128,
-        304 + breath
-    ];
-    const lElbow = [
-        92,
-        384
-    ];
-    const lHand = [
-        176 + writeX,
-        410 + writeY
-    ];
-    const rShoulder = [
-        272,
-        304 + breath
-    ];
-    const r = p.raise;
-    // forehead point follows the head roughly (rotation around pivot ignored except small x shift)
-    const fx = 222 - p.tilt * 1.2;
-    const fy = 140 + p.drop;
-    const rElbow = [
-        Student_mix(306, 318, r),
-        Student_mix(386, 250, r)
-    ];
-    const rHand = [
-        Student_mix(246, fx + 6, r),
-        Student_mix(412, fy + 6, r)
-    ];
-    const eyeY = 182 + p.look;
-    const eyeRx = 14 * p.eye;
-    const eyeRy = 10 * p.eye;
-    const lidK = Math.min(1, p.lid);
-    const ache = p.ache;
-    const acheP = (lt * 1.25 % 1 + 1) % 1;
-    const eye = (ex, side)=>{
-        const top = eyeY - eyeRy;
-        const ly = top + 2 * eyeRy * lidK; // lid edge
-        const curve = Student_mix(-eyeRy * 1.05, eyeRy * 0.5, lidK); // arc of lash line
-        const look = p.look * 0.12;
-        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("clipPath", {
-                    id: id(`eye${side}`),
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: ex,
-                        cy: eyeY,
-                        rx: eyeRx,
-                        ry: eyeRy
-                    })
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                    clipPath: `url(#${id(`eye${side}`)})`,
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                            x: ex - 20,
-                            y: eyeY - 16,
-                            width: 40,
-                            height: 32,
-                            fill: p.dark > 0.6 ? "#f4e3dd" : "#fbf7f2"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                            d: `M${ex - eyeRx} ${eyeY + 2} q5 -2 8 1 M${ex + eyeRx} ${eyeY - 1} q-6 2 -9 -1`,
-                            stroke: "#d0574d",
-                            strokeWidth: 1.1,
-                            fill: "none",
-                            opacity: Math.max(0, p.dark - 0.5) * 1.4
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                            cx: ex - side * 0.5,
-                            cy: eyeY + 1 + look,
-                            r: 7.2 * Math.max(0.75, p.eye * 0.9),
-                            fill: "#3a2214"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                            cx: ex - side * 0.5,
-                            cy: eyeY + 1 + look,
-                            r: 3.6 * p.pupil,
-                            fill: "#0c0705"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                            cx: ex + 2.5 - side * 0.5,
-                            cy: eyeY - 2.5 + look,
-                            r: 1.9,
-                            fill: "#fff",
-                            opacity: 0.9
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                            d: `M${ex - 20} ${top - 6} L${ex + 20} ${top - 6} L${ex + 20} ${ly} Q${ex} ${ly + curve * 0.6} ${ex - 20} ${ly} Z`,
-                            fill: SKIN
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                            d: `M${ex - 20} ${ly} Q${ex} ${ly + curve * 0.6} ${ex + 20} ${ly} L${ex + 20} ${ly + 3} Q${ex} ${ly + curve * 0.6 + 3} ${ex - 20} ${ly + 3} Z`,
-                            fill: SKIN_SHADE,
-                            opacity: 0.5
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${ex - eyeRx - 1.5} ${ly + (lidK > 0.85 ? 0 : 1)} Q${ex} ${ly + curve} ${ex + eyeRx + 1.5} ${ly + (lidK > 0.85 ? 0 : 1)}`,
-                    stroke: "#1a0f0a",
-                    strokeWidth: 3.4,
-                    strokeLinecap: "round",
-                    fill: "none"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${ex + side * -eyeRx - side * -1} ${ly + 0.5} l${-side * 4} -2.5`,
-                    stroke: "#1a0f0a",
-                    strokeWidth: 2.4,
-                    strokeLinecap: "round",
-                    opacity: 1 - lidK * 0.6
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${ex - eyeRx + 2} ${eyeY + eyeRy + 2} Q${ex} ${eyeY + eyeRy + 6} ${ex + eyeRx - 2} ${eyeY + eyeRy + 2}`,
-                    stroke: SKIN_SHADE,
-                    strokeWidth: 1.6,
-                    fill: "none",
-                    opacity: 0.7
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${ex - eyeRx} ${eyeY + eyeRy + 1} Q${ex} ${eyeY + eyeRy + 13} ${ex + eyeRx} ${eyeY + eyeRy + 1} Q${ex} ${eyeY + eyeRy + 6} ${ex - eyeRx} ${eyeY + eyeRy + 1} Z`,
-                    fill: "#4a2a3a",
-                    opacity: p.dark * 0.55
-                })
-            ]
-        }, ex);
-    };
-    const browY = 158 + p.look * 0.9 - p.brow * 5;
-    const brow = (ex, side)=>{
-        const inner = ex + side * -15; // towards nose
-        const outer = ex + side * 15;
-        const innerY = browY - p.brow * 3 + (p.brow < 0 ? -p.brow * 5 : 0);
-        const outerY = browY + 1 - (p.brow < 0 ? -p.brow * 3 : 0);
-        return /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-            d: `M${inner} ${innerY + 2} Q${ex} ${Math.min(innerY, outerY) - 5} ${outer} ${outerY + 1}`,
-            stroke: HAIR,
-            strokeWidth: 6,
-            strokeLinecap: "round",
-            fill: "none"
-        }, `b${ex}`);
-    };
-    const mouthY = 230 + p.look * 0.8;
-    const mw = Student_mix(12, 13, p.mouth);
-    const mouth = /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-        children: [
-            p.mouth > 0.03 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: 200,
-                        cy: mouthY + p.mouth * 8,
-                        rx: mw + p.mouth * 3,
-                        ry: 2 + p.mouth * 17,
-                        fill: "#4a1a17"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: 200,
-                        cy: mouthY + p.mouth * 8 + p.mouth * 10,
-                        rx: (mw + p.mouth * 3) * 0.6,
-                        ry: p.mouth * 6,
-                        fill: "#c25a55",
-                        opacity: Math.min(1, p.mouth * 2)
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                        x: 200 - mw * 0.7,
-                        y: mouthY + p.mouth * 8 - (2 + p.mouth * 17),
-                        width: mw * 1.4,
-                        height: p.mouth * 4,
-                        rx: 2,
-                        fill: "#f3eee6",
-                        opacity: Math.min(1, p.mouth * 3)
-                    })
-                ]
-            }) : null,
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M${200 - mw} ${mouthY} Q200 ${mouthY + p.smile * 7} ${200 + mw} ${mouthY}`,
-                stroke: "#5a2a20",
-                strokeWidth: 3.4,
-                strokeLinecap: "round",
-                fill: "none",
-                opacity: 1 - Math.min(1, p.mouth * 3)
-            })
-        ]
-    });
-    const arm = (sh, el, hd, key, handOnHead = 0)=>{
-        // short sleeve: tapered polygon from the shoulder to ~60% of the upper arm
-        const sx = Student_mix(sh[0], el[0], 0.6);
-        const sy = Student_mix(sh[1], el[1], 0.6);
-        const dx = sx - sh[0];
-        const dy = sy - sh[1];
-        const len = Math.hypot(dx, dy) || 1;
-        const nx = -dy / len;
-        const ny = dx / len;
-        const sleeve = `M${sh[0] + nx * 20 - dx / len * 6} ${sh[1] + ny * 20 - dy / len * 6} L${sx + nx * 21} ${sy + ny * 21} L${sx - nx * 21} ${sy - ny * 21} L${sh[0] - nx * 20 - dx / len * 6} ${sh[1] - ny * 20 - dy / len * 6} Z`;
-        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${sx} ${sy} L${el[0]} ${el[1]} L${hd[0]} ${hd[1]}`,
-                    stroke: SKIN,
-                    strokeWidth: 23,
-                    strokeLinecap: "round",
-                    strokeLinejoin: "round",
-                    fill: "none"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${el[0]} ${el[1]} L${hd[0]} ${hd[1]}`,
-                    stroke: SKIN_SHADE,
-                    strokeWidth: 7,
-                    strokeLinecap: "round",
-                    fill: "none",
-                    opacity: 0.3,
-                    transform: "translate(0 5)"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: sleeve,
-                    fill: SHIRT,
-                    stroke: SHIRT_SHADE,
-                    strokeWidth: 2.5,
-                    strokeLinejoin: "round"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${sx + nx * 20} ${sy + ny * 20} L${sx - nx * 20} ${sy - ny * 20}`,
-                    stroke: SHIRT_SHADE,
-                    strokeWidth: 5,
-                    strokeLinecap: "round"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                    cx: hd[0],
-                    cy: hd[1],
-                    rx: 16,
-                    ry: handOnHead > 0.5 ? 13 : 12,
-                    fill: SKIN_LIGHT,
-                    stroke: SKIN_SHADE,
-                    strokeWidth: 2,
-                    transform: `rotate(${handOnHead * -30} ${hd[0]} ${hd[1]})`
-                }),
-                handOnHead > 0.6 ? /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M${hd[0] - 14} ${hd[1] - 6} q10 -6 26 -3 M${hd[0] - 14} ${hd[1]} q10 -5 27 -1`,
-                    stroke: SKIN_SHADE,
-                    strokeWidth: 1.8,
-                    fill: "none",
-                    opacity: 0.8
-                }) : null
-            ]
-        }, key);
-    };
-    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
-        width: width,
-        height: width * 1.25,
-        viewBox: "0 0 400 500",
-        style: {
-            overflow: "visible",
-            ...style
-        },
-        children: [
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("defs", {
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("shirt"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "1",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#ffffff"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.55",
-                                stopColor: SHIRT
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: SHIRT_SHADE
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
-                        id: id("face"),
-                        cx: "0.38",
-                        cy: "0.35",
-                        r: "0.75",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: SKIN_LIGHT
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.65",
-                                stopColor: SKIN
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: SKIN_SHADE
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("desk"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#b57a49"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#93603a"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
-                        id: id("deskFront"),
-                        x1: "0",
-                        y1: "0",
-                        x2: "0",
-                        y2: "1",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#6e4428"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#4a2d1b"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
-                        id: id("shadow"),
-                        cx: "0.5",
-                        cy: "0.5",
-                        r: "0.5",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#000",
-                                stopOpacity: 0.45
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#000",
-                                stopOpacity: 0
-                            })
-                        ]
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(0 ${breath * 0.6})`,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M104 440 C100 352 112 312 150 296 C168 290 184 288 200 288 C216 288 232 290 250 296 C288 312 300 352 296 440 Z",
-                        fill: `url(#${id("shirt")})`
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M262 300 C288 316 298 352 296 440 L270 440 C274 380 272 330 262 300 Z",
-                        fill: SHIRT_SHADE,
-                        opacity: 0.75
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M138 302 C120 320 110 360 108 440 L122 440 C122 380 128 336 138 302 Z",
-                        fill: SHIRT_SHADE,
-                        opacity: 0.4
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M200 296 L200 440",
-                        stroke: SHIRT_SHADE,
-                        strokeWidth: 2.5
-                    }),
-                    [
-                        322,
-                        356,
-                        390,
-                        424
-                    ].map((y)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                            cx: 205,
-                            cy: y,
-                            r: 3,
-                            fill: "#c9cfd6"
-                        }, y)),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M222 338 L262 338 L262 376 Q242 384 222 376 Z",
-                        fill: "none",
-                        stroke: SHIRT_SHADE,
-                        strokeWidth: 2.5
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M232 346 L252 346 L252 360 Q242 368 232 360 Z",
-                        fill: NAVY
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                        cx: 242,
-                        cy: 354,
-                        r: 3.5,
-                        fill: "#e9c46a"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M184 ${236 + p.drop * 0.6} L216 ${236 + p.drop * 0.6} L218 296 L182 296 Z`,
-                fill: SKIN_SHADE
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M184 ${250 + p.drop * 0.6} Q200 ${262 + p.drop * 0.6} 216 ${250 + p.drop * 0.6} L216 ${240 + p.drop * 0.6} L184 ${240 + p.drop * 0.6} Z`,
-                fill: "#7a4a2c",
-                opacity: 0.6
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: `translate(0 ${breath * 0.6})`,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M200 300 L172 278 L160 300 L184 316 Z",
-                        fill: "#ffffff",
-                        stroke: SHIRT_SHADE,
-                        strokeWidth: 2.5,
-                        strokeLinejoin: "round"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: "M200 300 L228 278 L240 300 L216 316 Z",
-                        fill: "#ffffff",
-                        stroke: SHIRT_SHADE,
-                        strokeWidth: 2.5,
-                        strokeLinejoin: "round"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                transform: pivot,
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: headCx,
-                        cy: headCy - 16,
-                        rx: 70,
-                        ry: 74,
-                        fill: HAIR
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: headCx - 63,
-                        cy: headCy + 8 + p.look * 0.4,
-                        rx: 11,
-                        ry: 17,
-                        fill: SKIN
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: headCx + 63,
-                        cy: headCy + 8 + p.look * 0.4,
-                        rx: 11,
-                        ry: 17,
-                        fill: SKIN_SHADE
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx - 62} ${headCy - 14} C${headCx - 64} ${headCy + 40} ${headCx - 34} ${headCy + 76} ${headCx} ${headCy + 78} C${headCx + 34} ${headCy + 76} ${headCx + 64} ${headCy + 40} ${headCx + 62} ${headCy - 14} C${headCx + 60} ${headCy - 70} ${headCx - 60} ${headCy - 70} ${headCx - 62} ${headCy - 14} Z`,
-                        fill: `url(#${id("face")})`
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: headCx - 36,
-                        cy: headCy + 30 + p.look * 0.6,
-                        rx: 12,
-                        ry: 7,
-                        fill: "#c9604a",
-                        opacity: 0.18
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                        cx: headCx + 36,
-                        cy: headCy + 30 + p.look * 0.6,
-                        rx: 12,
-                        ry: 7,
-                        fill: "#c9604a",
-                        opacity: 0.18
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                        transform: `translate(0 ${headCy - 176})`,
-                        children: [
-                            eye(176, -1),
-                            eye(224, 1),
-                            brow(176, -1),
-                            brow(224, 1),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: `M195 ${browY - 2} l2 8 M205 ${browY - 2} l-2 8`,
-                                stroke: SKIN_SHADE,
-                                strokeWidth: 2,
-                                strokeLinecap: "round",
-                                opacity: Math.max(0, -p.brow) * 0.9
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                                d: `M199 ${192 + p.look} Q196 ${206 + p.look} 192 ${210 + p.look} Q200 ${215 + p.look} 207 ${210 + p.look}`,
-                                stroke: SKIN_SHADE,
-                                strokeWidth: 3,
-                                strokeLinecap: "round",
-                                strokeLinejoin: "round",
-                                fill: "none"
-                            }),
-                            mouth
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx - 66} ${headCy - 2} C${headCx - 78} ${headCy - 66} ${headCx - 34} ${headCy - 98} ${headCx + 8} ${headCy - 94}
-             C${headCx + 54} ${headCy - 92} ${headCx + 76} ${headCy - 60} ${headCx + 66} ${headCy - 4}
-             C${headCx + 60} ${headCy - 30} ${headCx + 52} ${headCy - 44} ${headCx + 36} ${headCy - 50}
-             C${headCx + 20} ${headCy - 34} ${headCx - 14} ${headCy - 30} ${headCx - 34} ${headCy - 40}
-             C${headCx - 46} ${headCy - 32} ${headCx - 56} ${headCy - 18} ${headCx - 66} ${headCy - 2} Z`,
-                        fill: HAIR
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx - 40} ${headCy - 40} l-6 14 l14 -9 Z M${headCx - 6} ${headCy - 34} l2 14 l10 -14 Z M${headCx + 26} ${headCy - 46} l8 13 l6 -15 Z`,
-                        fill: HAIR
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx - 30} ${headCy - 80} C${headCx - 4} ${headCy - 88} ${headCx + 26} ${headCy - 84} ${headCx + 44} ${headCy - 70}`,
-                        stroke: "#3a3130",
-                        strokeWidth: 5,
-                        strokeLinecap: "round",
-                        fill: "none",
-                        opacity: 0.8
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx - 62} ${headCy - 6} L${headCx - 60} ${headCy + 14} L${headCx - 54} ${headCy - 10} Z`,
-                        fill: HAIR
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                        d: `M${headCx + 62} ${headCy - 6} L${headCx + 60} ${headCy + 14} L${headCx + 54} ${headCy - 10} Z`,
-                        fill: HAIR
-                    })
-                ]
-            }),
-            p.zz > 0.02 ? [
-                0,
-                1,
-                2
-            ].map((i)=>{
-                const ph = ((t * 0.7 + i / 3) % 1 + 1) % 1;
-                return /*#__PURE__*/ (0,jsx_runtime.jsx)("text", {
-                    x: 268 + ph * 40 + i * 4,
-                    y: 120 - ph * 70 + p.drop * 0.5,
-                    fontSize: 18 + ph * 16,
-                    fontWeight: 800,
-                    fontFamily: "sans-serif",
-                    fill: "#cfe2ff",
-                    opacity: p.zz * Math.sin(ph * Math.PI) * 0.9,
-                    children: "z"
-                }, i);
-            }) : null,
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
-                cx: 200,
-                cy: 402,
-                rx: 150,
-                ry: 10,
-                fill: `url(#${id("shadow")})`
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: "M36 396 L364 396 L384 430 L16 430 Z",
-                fill: `url(#${id("desk")})`
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: "M36 396 L364 396",
-                stroke: "#d29a68",
-                strokeWidth: 3,
-                strokeLinecap: "round"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: 16,
-                y: 430,
-                width: 368,
-                height: 70,
-                fill: `url(#${id("deskFront")})`
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
-                x: 16,
-                y: 430,
-                width: 368,
-                height: 6,
-                fill: "#3a2214",
-                opacity: 0.6
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: "M138 400 L262 398 L272 426 L130 428 Z",
-                fill: "#fbfaf6"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: "M146 406 L250 405 M144 412 L232 411 M142 418 L256 417",
-                stroke: "#9fb3c8",
-                strokeWidth: 1.6,
-                strokeLinecap: "round"
-            }),
-            arm(lShoulder, lElbow, lHand, "l"),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                d: `M${lHand[0] + 6} ${lHand[1] + 6} L${lHand[0] + 20} ${lHand[1] - 20}`,
-                stroke: "#2a4f8f",
-                strokeWidth: 4.5,
-                strokeLinecap: "round"
-            }),
-            arm(rShoulder, rElbow, rHand, "r", r),
-            ache > 0.02 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                opacity: ache,
-                children: [
-                    [
-                        0,
-                        0.5
-                    ].map((o)=>{
-                        const q = (acheP + o) % 1;
-                        return /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                            cx: fx + 46,
-                            cy: fy - 6,
-                            r: 14 + q * 46,
-                            fill: "none",
-                            stroke: "#ff5a4d",
-                            strokeWidth: 5 - q * 3,
-                            opacity: (1 - q) * 0.85
-                        }, o);
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                        cx: fx + 46,
-                        cy: fy - 6,
-                        r: 10 + Math.sin(acheP * Math.PI) * 4,
-                        fill: "#ff5a4d",
-                        opacity: 0.35
-                    }),
-                    [
-                        -50,
-                        -10,
-                        30
-                    ].map((a, i)=>{
-                        const rad = a * Math.PI / 180;
-                        const r0 = 64 + Math.sin(acheP * Math.PI * 2 + i) * 4;
-                        const cx = fx + 46;
-                        const cy = fy - 6;
-                        return /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                            d: `M${cx + Math.cos(rad) * r0} ${cy + Math.sin(rad) * r0} l${Math.cos(rad) * 14} ${Math.sin(rad) * 14}`,
-                            stroke: "#ff5a4d",
-                            strokeWidth: 5,
-                            strokeLinecap: "round",
-                            opacity: 0.9
-                        }, a);
-                    })
-                ]
-            }) : null
         ]
     });
 };
@@ -156453,25 +155214,25 @@ const Check = ({ at, children, size = 56, showAt, color = theme_K.green, style }
 };
 
 ;// CONCATENATED MODULE: ./src/caffeine/vo-lengths.json
-var vo_lengths_namespaceObject = /*#__PURE__*/JSON.parse('{"hook":8.09,"adeno":15.32,"caff":13.75,"energy":4.64,"time":11.15,"crash":14.34,"memory":9.14,"tolerance":9.53,"tips":12.03}')
+var vo_lengths_namespaceObject = /*#__PURE__*/JSON.parse('{"hook":5.43,"adeno":14.4,"caff":13.15,"energy":4.84,"time":12.94,"crash":14.19,"memory":8.49,"tolerance":9.84,"tips":9.06}')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/hook.json
-var hook_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"পরীক্ষার","startMs":100.0,"endMs":580.75},{"text":"আগের","startMs":580.75,"endMs":845.166},{"text":"রাতে","startMs":845.208,"endMs":1073.583},{"text":"চা","startMs":1085.583,"endMs":1241.833},{"text":"খেয়ে","startMs":1253.833,"endMs":1446.124},{"text":"জেগে","startMs":1446.166,"endMs":1686.541},{"text":"থাকেন","startMs":1698.541,"endMs":2035.082},{"text":"পরদিন","startMs":2946.625,"endMs":3331.25},{"text":"হলে","startMs":3343.25,"endMs":3559.583},{"text":"বসে","startMs":3583.666,"endMs":3848.082},{"text":"ঝিমানোর","startMs":3860.083,"endMs":4304.791},{"text":"কারণটাও","startMs":4316.833,"endMs":4785.583},{"text":"ওই","startMs":4821.625,"endMs":4941.833},{"text":"চা","startMs":4965.875,"endMs":5146.166},{"text":"কীভাবে","startMs":6106.75,"endMs":6515.416},{"text":"সেটা","startMs":6611.541,"endMs":6887.999},{"text":"সহজ","startMs":6900.0,"endMs":7248.541},{"text":"করে","startMs":7272.583,"endMs":7488.916},{"text":"বলি","startMs":7500.958,"endMs":7741.333}]')
+var hook_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"বিকেল","startMs":60.0,"endMs":365.6},{"text":"চারটা","startMs":399.6,"endMs":727.9},{"text":"বাজলেই","startMs":739.2,"endMs":1101.5},{"text":"এক","startMs":1124.1,"endMs":1260.0},{"text":"কাপ","startMs":1271.3,"endMs":1463.7},{"text":"চা","startMs":1475.0,"endMs":1610.9},{"text":"লাগে","startMs":1622.2,"endMs":1848.6},{"text":"না","startMs":2418.6,"endMs":2528.3},{"text":"পেলে","startMs":2583.1,"endMs":2802.6},{"text":"মাথা","startMs":2813.6,"endMs":3033.0},{"text":"কাজ","startMs":3033.0,"endMs":3230.5},{"text":"করে","startMs":3252.5,"endMs":3439.1},{"text":"না","startMs":3450.0,"endMs":3548.8},{"text":"কারণটা","startMs":4118.8,"endMs":4520.8},{"text":"আপনার","startMs":4543.1,"endMs":4811.1},{"text":"মগজে","startMs":4811.1,"endMs":5168.4}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/adeno.json
-var adeno_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"আমরা","startMs":112.0,"endMs":376.416},{"text":"যতক্ষণ","startMs":388.458,"endMs":821.166},{"text":"জেগে","startMs":833.166,"endMs":1073.541},{"text":"থাকি","startMs":1085.583,"endMs":1386.083},{"text":"মগজে","startMs":1494.25,"endMs":1902.875},{"text":"একটা","startMs":1902.875,"endMs":2095.166},{"text":"জিনিস","startMs":2107.208,"endMs":2419.708},{"text":"জমতে","startMs":2431.75,"endMs":2732.208},{"text":"থাকে","startMs":2732.208,"endMs":2996.624},{"text":"এর","startMs":3944.25,"endMs":4124.541},{"text":"নাম","startMs":4148.541,"endMs":4388.916},{"text":"অ্যাডেনোসিন","startMs":4400.958,"endMs":5013.958},{"text":"সময়","startMs":5963.458,"endMs":6263.958},{"text":"যত","startMs":6324.041,"endMs":6528.374},{"text":"যায়","startMs":6588.458,"endMs":6816.833},{"text":"এটা","startMs":6900.958,"endMs":7153.374},{"text":"তত","startMs":7165.375,"endMs":7369.708},{"text":"বাড়ে","startMs":7429.791,"endMs":7682.207},{"text":"মগজে","startMs":8655.75,"endMs":9052.375},{"text":"এর","startMs":9088.458,"endMs":9208.666},{"text":"বসার","startMs":9220.666,"endMs":9533.166},{"text":"নির্দিষ্ট","startMs":9533.166,"endMs":9953.832},{"text":"জায়গা","startMs":9989.916,"endMs":10290.416},{"text":"আছে","startMs":10302.416,"endMs":10578.874},{"text":"অ্যাডেনোসিন","startMs":11564.416,"endMs":12141.332},{"text":"সেখানে","startMs":12153.375,"endMs":12513.958},{"text":"বসলে","startMs":12525.958,"endMs":12874.499},{"text":"মগজ","startMs":12898.541,"endMs":13211.041},{"text":"বুঝতে","startMs":13235.083,"endMs":13547.583},{"text":"পারে","startMs":13559.625,"endMs":13775.958},{"text":"এবার","startMs":13884.125,"endMs":14208.625},{"text":"ঘুমানো","startMs":14208.666,"endMs":14557.207},{"text":"দরকার","startMs":14569.25,"endMs":14965.875}]')
+var adeno_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"আমরা","startMs":60.0,"endMs":314.0},{"text":"যতক্ষণ","startMs":325.6,"endMs":741.3},{"text":"জেগে","startMs":752.9,"endMs":983.8},{"text":"থাকি","startMs":995.4,"endMs":1284.1},{"text":"মগজে","startMs":1388.0,"endMs":1780.6},{"text":"একটা","startMs":1780.6,"endMs":1965.3},{"text":"জিনিস","startMs":1976.9,"endMs":2277.1},{"text":"জমতে","startMs":2288.7,"endMs":2577.4},{"text":"থাকে","startMs":2577.4,"endMs":2831.4},{"text":"এর","startMs":3401.4,"endMs":3589.5},{"text":"নাম","startMs":3614.5,"endMs":3865.3},{"text":"অ্যাডেনোসিন","startMs":3877.8,"endMs":4517.3},{"text":"সময়","startMs":5087.3,"endMs":5388.1},{"text":"যত","startMs":5448.2,"endMs":5652.8},{"text":"যায়","startMs":5712.9,"endMs":5941.5},{"text":"এটা","startMs":6025.7,"endMs":6278.4},{"text":"তত","startMs":6290.4,"endMs":6494.9},{"text":"বাড়ে","startMs":6555.1,"endMs":6807.8},{"text":"মগজে","startMs":7377.8,"endMs":7899.3},{"text":"এর","startMs":7946.8,"endMs":8104.8},{"text":"বসার","startMs":8120.6,"endMs":8531.6},{"text":"নির্দিষ্ট","startMs":8531.6,"endMs":9084.7},{"text":"জায়গা","startMs":9132.2,"endMs":9527.3},{"text":"আছে","startMs":9543.1,"endMs":9906.7},{"text":"অ্যাডেনোসিন","startMs":10476.7,"endMs":11098.4},{"text":"সেখানে","startMs":11111.4,"endMs":11500.0},{"text":"বসলে","startMs":11512.9,"endMs":11888.5},{"text":"মগজ","startMs":11914.4,"endMs":12251.2},{"text":"বুঝতে","startMs":12277.1,"endMs":12613.9},{"text":"পারে","startMs":12626.8,"endMs":12860.0},{"text":"এবার","startMs":12976.5,"endMs":13326.2},{"text":"ঘুমানো","startMs":13326.3,"endMs":13701.9},{"text":"দরকার","startMs":13714.9,"endMs":14142.3}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/caff.json
-var caff_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"চায়ে","startMs":124.041,"endMs":376.457},{"text":"থাকে","startMs":400.5,"endMs":664.916},{"text":"ক্যাফেইন","startMs":676.916,"endMs":1109.624},{"text":"ক্যাফেইন","startMs":2057.208,"endMs":2453.833},{"text":"দেখতে","startMs":2465.875,"endMs":2778.375},{"text":"প্রায়","startMs":2790.375,"endMs":2994.708},{"text":"অ্যাডেনোসিনের","startMs":3030.75,"endMs":3667.75},{"text":"মতো","startMs":3679.791,"endMs":3956.249},{"text":"তাই","startMs":4869.708,"endMs":5074.041},{"text":"চা","startMs":5086.041,"endMs":5254.291},{"text":"খেলে","startMs":5278.375,"endMs":5518.75},{"text":"ক্যাফেইন","startMs":5530.75,"endMs":5939.416},{"text":"আগে","startMs":5951.458,"endMs":6167.791},{"text":"গিয়ে","startMs":6191.833,"endMs":6420.208},{"text":"ওই","startMs":6444.25,"endMs":6576.458},{"text":"জায়গাগুলোতে","startMs":6600.5,"endMs":7213.5},{"text":"বসে","startMs":7225.5,"endMs":7489.916},{"text":"পড়ে","startMs":7501.916,"endMs":7742.291},{"text":"অ্যাডেনোসিন","startMs":8715.875,"endMs":9280.791},{"text":"তখন","startMs":9304.791,"endMs":9581.249},{"text":"বসার","startMs":9617.291,"endMs":9941.791},{"text":"জায়গা","startMs":9941.833,"endMs":10218.291},{"text":"পায়","startMs":10230.291,"endMs":10398.541},{"text":"না","startMs":10422.583,"endMs":10554.791},{"text":"ফলে","startMs":11480.291,"endMs":11792.791},{"text":"ঘুমের","startMs":11804.791,"endMs":12117.291},{"text":"সংকেত","startMs":12117.291,"endMs":12525.957},{"text":"মগজে","startMs":12538.0,"endMs":12862.5},{"text":"পৌঁছায়","startMs":12874.5,"endMs":13259.125},{"text":"না","startMs":13271.166,"endMs":13403.374}]')
+var caff_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"চায়ে","startMs":60.0,"endMs":365.0},{"text":"থাকে","startMs":394.0,"endMs":713.4},{"text":"ক্যাফেইন","startMs":727.9,"endMs":1250.7},{"text":"ক্যাফেইন","startMs":1820.7,"endMs":2233.5},{"text":"দেখতে","startMs":2246.1,"endMs":2571.4},{"text":"প্রায়","startMs":2583.9,"endMs":2796.5},{"text":"অ্যাডেনোসিনের","startMs":2834.1,"endMs":3497.1},{"text":"মতো","startMs":3509.6,"endMs":3797.4},{"text":"তাই","startMs":4367.4,"endMs":4606.4},{"text":"চা","startMs":4620.4,"endMs":4817.2},{"text":"খেলে","startMs":4845.3,"endMs":5126.4},{"text":"ক্যাফেইন","startMs":5140.5,"endMs":5618.4},{"text":"আগে","startMs":5632.5,"endMs":5885.5},{"text":"গিয়ে","startMs":5913.6,"endMs":6180.7},{"text":"ওই","startMs":6208.8,"endMs":6363.4},{"text":"জায়গাগুলোতে","startMs":6391.5,"endMs":7108.4},{"text":"বসে","startMs":7122.5,"endMs":7431.7},{"text":"পড়ে","startMs":7445.7,"endMs":7726.9},{"text":"অ্যাডেনোসিন","startMs":8296.9,"endMs":8843.2},{"text":"তখন","startMs":8866.4,"endMs":9133.7},{"text":"বসার","startMs":9168.6,"endMs":9482.4},{"text":"জায়গা","startMs":9482.4,"endMs":9749.8},{"text":"পায়","startMs":9761.4,"endMs":9924.1},{"text":"না","startMs":9947.4,"endMs":10075.2},{"text":"ফলে","startMs":10645.2,"endMs":11009.7},{"text":"ঘুমের","startMs":11023.7,"endMs":11388.1},{"text":"সংকেত","startMs":11388.1,"endMs":11864.7},{"text":"মগজে","startMs":11878.8,"endMs":12257.3},{"text":"পৌঁছায়","startMs":12271.2,"endMs":12719.8},{"text":"না","startMs":12733.9,"endMs":12888.1}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/energy.json
-var energy_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"অর্থাৎ","startMs":112.0,"endMs":496.625},{"text":"চা","startMs":508.666,"endMs":664.916},{"text":"আপনাকে","startMs":688.958,"endMs":1061.541},{"text":"এনার্জি","startMs":1073.541,"endMs":1434.124},{"text":"দেয়","startMs":1434.125,"endMs":1590.375},{"text":"না","startMs":1614.416,"endMs":1734.624},{"text":"শুধু","startMs":2706.25,"endMs":2970.666},{"text":"ক্লান্তিটা","startMs":2994.708,"endMs":3487.499},{"text":"টের","startMs":3499.5,"endMs":3727.875},{"text":"পেতে","startMs":3739.916,"endMs":3980.291},{"text":"দেয়","startMs":3980.291,"endMs":4148.541},{"text":"না","startMs":4172.583,"endMs":4292.791}]')
+var energy_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"অর্থাৎ","startMs":60.0,"endMs":559.5},{"text":"চা","startMs":575.1,"endMs":778.0},{"text":"আপনাকে","startMs":809.3,"endMs":1293.1},{"text":"এনার্জি","startMs":1308.7,"endMs":1777.0},{"text":"দেয়","startMs":1777.0,"endMs":1979.9},{"text":"না","startMs":2011.1,"endMs":2167.2},{"text":"শুধু","startMs":2737.2,"endMs":3044.2},{"text":"ক্লান্তিটা","startMs":3072.1,"endMs":3644.2},{"text":"টের","startMs":3658.1,"endMs":3923.2},{"text":"পেতে","startMs":3937.2,"endMs":4216.3},{"text":"দেয়","startMs":4216.3,"endMs":4411.6},{"text":"না","startMs":4439.5,"endMs":4579.1}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/time.json
-var caffeine_time_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"চা","startMs":124.041,"endMs":280.291},{"text":"খাওয়ার","startMs":328.375,"endMs":676.916},{"text":"বিশ","startMs":676.916,"endMs":857.207},{"text":"থেকে","startMs":881.25,"endMs":1121.625},{"text":"ত্রিশ","startMs":1133.666,"endMs":1410.124},{"text":"মিনিট","startMs":1434.125,"endMs":1698.541},{"text":"পর","startMs":1698.541,"endMs":1902.874},{"text":"ক্যাফেইন","startMs":1914.916,"endMs":2311.541},{"text":"কাজ","startMs":2323.541,"endMs":2551.916},{"text":"শুরু","startMs":2563.958,"endMs":2792.333},{"text":"করে","startMs":2804.333,"endMs":3032.708},{"text":"আর","startMs":3980.291,"endMs":4172.582},{"text":"শরীর","startMs":4184.625,"endMs":4509.125},{"text":"থেকে","startMs":4509.125,"endMs":4761.541},{"text":"এর","startMs":4773.541,"endMs":4905.749},{"text":"অর্ধেক","startMs":4917.791,"endMs":5266.332},{"text":"বের","startMs":5266.333,"endMs":5470.666},{"text":"হতে","startMs":5482.708,"endMs":5711.083},{"text":"লাগে","startMs":5723.083,"endMs":5951.458},{"text":"প্রায়","startMs":5975.5,"endMs":6155.791},{"text":"পাঁচ","startMs":6179.791,"endMs":6420.166},{"text":"ঘণ্টা","startMs":6432.208,"endMs":6768.749},{"text":"মানে","startMs":7718.25,"endMs":7958.625},{"text":"রাত","startMs":7994.708,"endMs":8211.041},{"text":"দশটায়","startMs":8211.041,"endMs":8547.582},{"text":"চা","startMs":8559.625,"endMs":8715.875},{"text":"খেলে","startMs":8739.916,"endMs":8992.332},{"text":"রাত","startMs":9112.5,"endMs":9376.916},{"text":"তিনটাতেও","startMs":9376.916,"endMs":9869.707},{"text":"অর্ধেকটা","startMs":9893.75,"endMs":10302.416},{"text":"থেকে","startMs":10314.416,"endMs":10566.832},{"text":"যায়","startMs":10566.833,"endMs":10795.208}]')
+var caffeine_time_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"চা","startMs":60.0,"endMs":237.2},{"text":"খাওয়ার","startMs":291.7,"endMs":687.0},{"text":"বিশ","startMs":687.0,"endMs":891.5},{"text":"থেকে","startMs":918.7,"endMs":1191.3},{"text":"ত্রিশ","startMs":1205.0,"endMs":1518.5},{"text":"মিনিট","startMs":1545.8,"endMs":1845.6},{"text":"পর","startMs":1845.6,"endMs":2077.4},{"text":"ক্যাফেইন","startMs":2091.0,"endMs":2540.8},{"text":"কাজ","startMs":2554.4,"endMs":2813.4},{"text":"শুরু","startMs":2827.1,"endMs":3086.1},{"text":"করে","startMs":3099.7,"endMs":3358.7},{"text":"আর","startMs":3928.7,"endMs":4204.3},{"text":"শরীর","startMs":4221.6,"endMs":4686.8},{"text":"থেকে","startMs":4686.8,"endMs":5048.6},{"text":"এর","startMs":5065.8,"endMs":5255.4},{"text":"অর্ধেক","startMs":5272.6,"endMs":5772.3},{"text":"বের","startMs":5772.3,"endMs":6065.2},{"text":"হতে","startMs":6082.4,"endMs":6409.8},{"text":"লাগে","startMs":6427.0,"endMs":6754.4},{"text":"প্রায়","startMs":6788.9,"endMs":7047.3},{"text":"পাঁচ","startMs":7081.7,"endMs":7426.3},{"text":"ঘণ্টা","startMs":7443.6,"endMs":7926.0},{"text":"মানে","startMs":8496.0,"endMs":8822.7},{"text":"রাত","startMs":8871.8,"endMs":9165.9},{"text":"দশটায়","startMs":9165.9,"endMs":9623.3},{"text":"চা","startMs":9639.7,"endMs":9852.1},{"text":"খেলে","startMs":9884.7,"endMs":10227.9},{"text":"রাত","startMs":10391.2,"endMs":10750.6},{"text":"তিনটাতেও","startMs":10750.6,"endMs":11420.5},{"text":"অর্ধেকটা","startMs":11453.2,"endMs":12008.7},{"text":"থেকে","startMs":12025.0,"endMs":12368.1},{"text":"যায়","startMs":12368.1,"endMs":12678.5}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/crash.json
-var crash_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"কিন্তু","startMs":100.0,"endMs":424.5},{"text":"ক্যাফেইন","startMs":424.5,"endMs":833.166},{"text":"বসে","startMs":845.208,"endMs":1097.624},{"text":"থাকলেও","startMs":1109.625,"endMs":1506.25},{"text":"অ্যাডেনোসিন","startMs":1554.333,"endMs":2107.208},{"text":"জমা","startMs":2119.25,"endMs":2347.625},{"text":"থামে","startMs":2359.625,"endMs":2612.041},{"text":"না","startMs":2624.041,"endMs":2756.249},{"text":"জমতেই","startMs":3715.875,"endMs":4124.541},{"text":"থাকে","startMs":4172.583,"endMs":4473.083},{"text":"ক্যাফেইন","startMs":5398.541,"endMs":5807.207},{"text":"সরে","startMs":5819.25,"endMs":6083.666},{"text":"গেলে","startMs":6095.666,"endMs":6324.041},{"text":"জমে","startMs":6336.041,"endMs":6576.416},{"text":"থাকা","startMs":6576.458,"endMs":6852.916},{"text":"সব","startMs":6864.916,"endMs":7093.291},{"text":"অ্যাডেনোসিন","startMs":7105.291,"endMs":7634.124},{"text":"একসাথে","startMs":7646.166,"endMs":8018.749},{"text":"কাজ","startMs":8030.75,"endMs":8247.083},{"text":"শুরু","startMs":8259.125,"endMs":8475.458},{"text":"করে","startMs":8487.5,"endMs":8715.875},{"text":"তখন","startMs":9641.333,"endMs":9953.833},{"text":"হঠাৎ","startMs":9977.875,"endMs":10314.416},{"text":"অনেক","startMs":10326.458,"endMs":10590.874},{"text":"বেশি","startMs":10590.875,"endMs":10843.291},{"text":"ঘুম","startMs":10855.291,"endMs":11071.624},{"text":"পায়","startMs":11083.666,"endMs":11299.999},{"text":"পরীক্ষার","startMs":12225.5,"endMs":12718.25},{"text":"হলে","startMs":12718.25,"endMs":12934.583},{"text":"ঝিমানোর","startMs":12946.625,"endMs":13391.333},{"text":"কারণ","startMs":13403.375,"endMs":13691.833},{"text":"এটাই","startMs":13715.875,"endMs":13992.333}]')
+var crash_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"কিন্তু","startMs":60.0,"endMs":430.1},{"text":"ক্যাফেইন","startMs":430.1,"endMs":896.1},{"text":"বসে","startMs":909.9,"endMs":1197.7},{"text":"থাকলেও","startMs":1211.4,"endMs":1663.7},{"text":"অ্যাডেনোসিন","startMs":1718.6,"endMs":2349.1},{"text":"জমা","startMs":2362.8,"endMs":2623.2},{"text":"থামে","startMs":2636.9,"endMs":2924.8},{"text":"না","startMs":2938.5,"endMs":3089.2},{"text":"জমতেই","startMs":3659.2,"endMs":3987.3},{"text":"থাকে","startMs":4025.9,"endMs":4267.1},{"text":"ক্যাফেইন","startMs":4837.1,"endMs":5280.9},{"text":"সরে","startMs":5294.0,"endMs":5581.1},{"text":"গেলে","startMs":5594.2,"endMs":5842.2},{"text":"জমে","startMs":5855.2,"endMs":6116.3},{"text":"থাকা","startMs":6116.3,"endMs":6416.5},{"text":"সব","startMs":6429.6,"endMs":6677.6},{"text":"অ্যাডেনোসিন","startMs":6690.6,"endMs":7264.9},{"text":"একসাথে","startMs":7278.0,"endMs":7682.6},{"text":"কাজ","startMs":7695.6,"endMs":7930.6},{"text":"শুরু","startMs":7943.6,"endMs":8178.6},{"text":"করে","startMs":8191.6,"endMs":8439.6},{"text":"তখন","startMs":9009.6,"endMs":9328.1},{"text":"হঠাৎ","startMs":9352.6,"endMs":9695.6},{"text":"অনেক","startMs":9707.9,"endMs":9977.3},{"text":"বেশি","startMs":9977.3,"endMs":10234.6},{"text":"ঘুম","startMs":10246.8,"endMs":10467.2},{"text":"পায়","startMs":10479.5,"endMs":10700.0},{"text":"বিকেলে","startMs":11270.0,"endMs":11759.0},{"text":"চা","startMs":11804.9,"endMs":12018.8},{"text":"না","startMs":12049.4,"endMs":12202.2},{"text":"পেলে","startMs":12232.8,"endMs":12538.4},{"text":"ঝিমুনি","startMs":12553.7,"endMs":13042.7},{"text":"আসে","startMs":13058.0,"endMs":13363.6},{"text":"এজন্যই","startMs":13378.9,"endMs":13929.1}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/memory.json
-var memory_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"আরেকটা","startMs":124.041,"endMs":496.624},{"text":"বিষয়","startMs":532.708,"endMs":881.249},{"text":"দিনে","startMs":1852.875,"endMs":2117.291},{"text":"যা","startMs":2153.375,"endMs":2297.625},{"text":"পড়েন","startMs":2321.625,"endMs":2658.166},{"text":"সেটা","startMs":2742.291,"endMs":3042.791},{"text":"মগজে","startMs":3054.791,"endMs":3403.332},{"text":"ভালোভাবে","startMs":3415.375,"endMs":3896.125},{"text":"জমা","startMs":3908.166,"endMs":4160.582},{"text":"হয়","startMs":4172.583,"endMs":4316.833},{"text":"ঘুমের","startMs":4352.875,"endMs":4629.333},{"text":"সময়","startMs":4629.333,"endMs":4929.833},{"text":"তাই","startMs":5855.291,"endMs":6059.624},{"text":"রাত","startMs":6071.625,"endMs":6300.0},{"text":"জেগে","startMs":6300.0,"endMs":6528.375},{"text":"পড়লে","startMs":6552.416,"endMs":6876.916},{"text":"পড়া","startMs":6900.958,"endMs":7129.333},{"text":"হয়","startMs":7141.333,"endMs":7285.583},{"text":"ঠিকই","startMs":7333.666,"endMs":7622.124},{"text":"কিন্তু","startMs":7742.291,"endMs":8066.791},{"text":"মনে","startMs":8078.833,"endMs":8283.166},{"text":"থাকে","startMs":8283.166,"endMs":8535.582},{"text":"কম","startMs":8547.583,"endMs":8787.958}]')
+var memory_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"আরেকটা","startMs":60.0,"endMs":370.6},{"text":"বিষয়","startMs":400.7,"endMs":691.2},{"text":"দিনে","startMs":1261.2,"endMs":1553.7},{"text":"যা","startMs":1593.6,"endMs":1753.1},{"text":"পড়েন","startMs":1779.6,"endMs":2151.8},{"text":"সেটা","startMs":2244.8,"endMs":2577.2},{"text":"মগজে","startMs":2590.4,"endMs":2975.9},{"text":"ভালোভাবে","startMs":2989.2,"endMs":3520.8},{"text":"জমা","startMs":3534.2,"endMs":3813.3},{"text":"হয়","startMs":3826.6,"endMs":3986.1},{"text":"ঘুমের","startMs":4026.0,"endMs":4331.7},{"text":"সময়","startMs":4331.7,"endMs":4664.0},{"text":"তাই","startMs":5234.0,"endMs":5442.6},{"text":"রাত","startMs":5454.8,"endMs":5688.0},{"text":"জেগে","startMs":5688.0,"endMs":5921.1},{"text":"পড়লে","startMs":5945.7,"endMs":6276.9},{"text":"পড়া","startMs":6301.5,"endMs":6534.6},{"text":"হয়","startMs":6546.8,"endMs":6694.1},{"text":"ঠিকই","startMs":6743.2,"endMs":7037.7},{"text":"কিন্তু","startMs":7160.3,"endMs":7491.6},{"text":"মনে","startMs":7503.9,"endMs":7712.5},{"text":"থাকে","startMs":7712.5,"endMs":7970.2},{"text":"কম","startMs":7982.4,"endMs":8227.8}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/tolerance.json
-var tolerance_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"যারা","startMs":124.041,"endMs":400.499},{"text":"রোজ","startMs":448.541,"endMs":676.916},{"text":"কয়েক","startMs":700.958,"endMs":977.416},{"text":"কাপ","startMs":977.416,"endMs":1181.749},{"text":"চা","startMs":1193.75,"endMs":1338.0},{"text":"খান","startMs":1350.0,"endMs":1590.375},{"text":"তাদের","startMs":1650.5,"endMs":2011.083},{"text":"মগজে","startMs":2023.083,"endMs":2383.666},{"text":"অ্যাডেনোসিনের","startMs":2395.666,"endMs":3020.666},{"text":"বসার","startMs":3020.666,"endMs":3357.207},{"text":"জায়গা","startMs":3357.208,"endMs":3633.666},{"text":"বেড়ে","startMs":3645.666,"endMs":3861.999},{"text":"যায়","startMs":3862.0,"endMs":4090.375},{"text":"তখন","startMs":4953.833,"endMs":5266.333},{"text":"আগের","startMs":5290.375,"endMs":5566.833},{"text":"মতো","startMs":5578.833,"endMs":5795.166},{"text":"চা","startMs":5795.208,"endMs":5951.458},{"text":"খেলে","startMs":5975.5,"endMs":6215.875},{"text":"কাজ","startMs":6227.875,"endMs":6468.25},{"text":"কম","startMs":6492.291,"endMs":6684.582},{"text":"হয়","startMs":6708.666,"endMs":6888.957},{"text":"আর","startMs":7850.5,"endMs":8042.791},{"text":"চা","startMs":8066.833,"endMs":8235.083},{"text":"বাদ","startMs":8259.125,"endMs":8463.458},{"text":"দিলে","startMs":8463.458,"endMs":8667.791},{"text":"মাথা","startMs":8679.791,"endMs":8920.166},{"text":"ধরে","startMs":8932.208,"endMs":9184.624}]')
+var tolerance_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"যারা","startMs":60.0,"endMs":364.6},{"text":"রোজ","startMs":417.5,"endMs":669.2},{"text":"কয়েক","startMs":695.6,"endMs":1000.2},{"text":"কাপ","startMs":1000.2,"endMs":1225.4},{"text":"চা","startMs":1238.6,"endMs":1397.5},{"text":"খান","startMs":1410.8,"endMs":1675.6},{"text":"তাদের","startMs":1741.9,"endMs":2139.1},{"text":"মগজে","startMs":2152.4,"endMs":2549.7},{"text":"অ্যাডেনোসিনের","startMs":2562.9,"endMs":3251.5},{"text":"বসার","startMs":3251.5,"endMs":3622.3},{"text":"জায়গা","startMs":3622.3,"endMs":3926.9},{"text":"বেড়ে","startMs":3940.1,"endMs":4178.5},{"text":"যায়","startMs":4178.5,"endMs":4430.1},{"text":"তখন","startMs":5000.1,"endMs":5373.9},{"text":"আগের","startMs":5402.7,"endMs":5733.4},{"text":"মতো","startMs":5747.8,"endMs":6006.6},{"text":"চা","startMs":6006.6,"endMs":6193.5},{"text":"খেলে","startMs":6222.3,"endMs":6509.8},{"text":"কাজ","startMs":6524.2,"endMs":6811.7},{"text":"কম","startMs":6840.5,"endMs":7070.5},{"text":"হয়","startMs":7099.3,"endMs":7315.0},{"text":"আর","startMs":7885.0,"endMs":8129.4},{"text":"চা","startMs":8160.0,"endMs":8373.8},{"text":"বাদ","startMs":8404.4,"endMs":8664.1},{"text":"দিলে","startMs":8664.1,"endMs":8923.8},{"text":"মাথা","startMs":8939.1,"endMs":9244.6},{"text":"ধরে","startMs":9259.9,"endMs":9580.7}]')
 ;// CONCATENATED MODULE: ./public/vo/caffeine/tips.json
-var tips_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"তাই","startMs":100.0,"endMs":304.333},{"text":"পরীক্ষার","startMs":328.375,"endMs":797.125},{"text":"আগে","startMs":797.125,"endMs":1025.5},{"text":"রাতে","startMs":1037.5,"endMs":1289.916},{"text":"অন্তত","startMs":1313.958,"endMs":1638.458},{"text":"ছয়-সাত","startMs":1650.5,"endMs":2047.125},{"text":"ঘণ্টা","startMs":2047.125,"endMs":2347.625},{"text":"ঘুমান","startMs":2359.625,"endMs":2696.166},{"text":"চা","startMs":3631.75,"endMs":3812.041},{"text":"খেলে","startMs":3848.083,"endMs":4100.499},{"text":"খান","startMs":4112.5,"endMs":4328.833},{"text":"সন্ধ্যার","startMs":4340.875,"endMs":4713.458},{"text":"আগে","startMs":4725.5,"endMs":4953.875},{"text":"আর","startMs":5915.375,"endMs":6119.708},{"text":"দরকার","startMs":6143.75,"endMs":6516.333},{"text":"হলে","startMs":6516.333,"endMs":6720.666},{"text":"পরীক্ষার","startMs":6756.75,"endMs":7189.416},{"text":"দিন","startMs":7189.416,"endMs":7369.707},{"text":"সকালে","startMs":7381.75,"endMs":7754.333},{"text":"এক","startMs":7778.375,"endMs":7946.625},{"text":"কাপ","startMs":7958.666,"endMs":8162.999},{"text":"চা","startMs":8175.0,"endMs":8319.25},{"text":"খান","startMs":8331.25,"endMs":8571.625},{"text":"তাহলে","startMs":9497.125,"endMs":9857.708},{"text":"হলে","startMs":9869.708,"endMs":10086.041},{"text":"বসে","startMs":10110.083,"endMs":10386.541},{"text":"ঝিমানোর","startMs":10398.541,"endMs":10843.249},{"text":"সম্ভাবনা","startMs":10843.25,"endMs":11324.0},{"text":"কমবে","startMs":11336.041,"endMs":11684.582}]')
+var tips_namespaceObject = /*#__PURE__*/JSON.parse('[{"text":"তাই","startMs":60.0,"endMs":268.5},{"text":"রাতে","startMs":280.7,"endMs":562.9},{"text":"অন্তত","startMs":575.1,"endMs":906.2},{"text":"ছয়-সাত","startMs":918.5,"endMs":1323.2},{"text":"ঘণ্টা","startMs":1323.3,"endMs":1629.9},{"text":"ঘুমান","startMs":1642.2,"endMs":1997.8},{"text":"চা","startMs":2567.8,"endMs":2728.8},{"text":"খেলে","startMs":2761.0,"endMs":2986.4},{"text":"খান","startMs":2997.1,"endMs":3190.3},{"text":"সন্ধ্যার","startMs":3201.0,"endMs":3533.7},{"text":"আগে","startMs":3544.5,"endMs":3748.4},{"text":"আর","startMs":4318.4,"endMs":4535.3},{"text":"দিনে","startMs":4576.0,"endMs":4847.1},{"text":"দুই-তিন","startMs":4874.2,"endMs":5281.0},{"text":"কাপের","startMs":5294.5,"endMs":5660.5},{"text":"বেশি","startMs":5660.5,"endMs":5945.3},{"text":"নয়","startMs":5958.8,"endMs":6148.6},{"text":"তাহলে","startMs":6718.6,"endMs":7106.3},{"text":"চা","startMs":7119.2,"endMs":7287.2},{"text":"ছাড়াও","startMs":7300.1,"endMs":7662.0},{"text":"মাথা","startMs":7687.8,"endMs":7959.2},{"text":"পরিষ্কার","startMs":7972.1,"endMs":8437.4},{"text":"থাকবে","startMs":8437.4,"endMs":8799.3}]')
 ;// CONCATENATED MODULE: ./src/caffeine/vo.ts
 /**
  * Voiceover timing contract for the caffeine reel.
@@ -156520,13 +155281,14 @@ const shotDuration = (key, extra = 0)=>+(VO_LEAD + voLength(key) + VO_TAIL + ext
 ;// CONCATENATED MODULE: ./src/caffeine/shots/SH1Hook.tsx
 
 /**
- * OWNER: props3d agent. SH1 · hook (VO "hook", ~9 s).
- *  A  0 → পরদিন   3D night desk. Opens close on the steaming glass of milk tea (book, lamp glow, moon window behind);
- *                 slow push + rack focus from the cup to the alarm clock reading 2:00. Title "রাত ২টা" on চা.
- *  B  পরদিন → কীভাবে  Hard cut: 2D exam hall, student studying → head drops on ঝিমানোর. Title "পরীক্ষার হল".
- *  C  কীভাবে → end  Whip back to the tea glass, then a fast zoom down INTO the tea surface (hands over to SH2's brain).
+ * SH1 · hook (VO "hook", ~7.6 s): "বিকেল চারটা বাজলেই এক কাপ চা লাগে? না পেলে মাথা কাজ করে না? কারণটা আপনার মগজে।"
+ *  A  0 → চা          Study desk at 4 pm: low golden sun through venetian blinds paints stripes over the desk and wall.
+ *                     Slow push to the alarm clock; its minute hand clicks onto 4:00 on চারটা. Title "বিকেল ৪টা".
+ *  B  চা → না         A glass of milk tea slides in from the right and lands (clink) in the sunlight; steam.
+ *  C  না → কারণটা     The tea slides back out of reach. POV gets drowsy: picture blurs and greys, heavy eyelids
+ *                     close, jerk open, close again. Title "মাথা কাজ করে না" on মাথা.
+ *  D  কারণটা → end    Eyes snap open, fast push-in with zoom blur toward the frame centre → hands over to SH2's brain.
  */ 
-
 
 
 
@@ -156538,110 +155300,141 @@ const shotDuration = (key, extra = 0)=>+(VO_LEAD + voLength(key) + VO_TAIL + ext
 
 const SH1_DURATION = shotDuration("hook");
 /** Caption words (exact VO tokens) to highlight. */ const SH1_KEYWORDS = [
-    "রাতে",
+    "চারটা",
     "চা",
-    "ঝিমানোর"
+    "মাথা"
 ];
 const SH1Hook_T = {
-    tea: wordAt("hook", "চা"),
-    cutHall: wordAt("hook", "পরদিন") - 0.08,
-    nod: wordAt("hook", "ঝিমানোর"),
-    cutBack: wordAt("hook", "কীভাবে") - 0.08
+    four: wordAt("hook", "চারটা"),
+    tea: wordAt("hook", "চা", 1),
+    no: wordAt("hook", "না"),
+    head: wordAt("hook", "মাথা"),
+    why: wordAt("hook", "কারণটা")
 };
+const LAND = SH1Hook_T.tea - 0.05; // cup lands on the desk
+const AWAY = SH1Hook_T.no + 0.05; // cup slides back out
 /** Sound cues for this shot (sparse!). */ const SH1_CUES = [
     {
-        at: 0.25,
-        sfx: "clink",
-        volume: 0.8
-    },
-    {
-        at: 2.3,
+        at: SH1Hook_T.four,
         sfx: "tick",
-        volume: 0.45
+        volume: 0.7
     },
     {
-        at: SH1Hook_T.cutBack - 0.12,
+        at: LAND,
+        sfx: "clink",
+        volume: 0.75
+    },
+    {
+        at: SH1Hook_T.no + 0.25,
+        sfx: "drowsy",
+        volume: 0.6
+    },
+    {
+        at: SH1Hook_T.why - 0.1,
         sfx: "whoosh_fast",
-        volume: 0.8
+        volume: 0.6
     }
 ];
+const SH1Hook_dist = (a, b)=>Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 const CUP_C = [
     CUP_POS["0"],
     CUP_POS["1"] + 0.5 * (/* inlined export .CUP_SCALE */0.9),
     CUP_POS["2"]
 ];
-const TEA_Y = CUP_POS["1"] + TEA_TOP(0.82) * (/* inlined export .CUP_SCALE */0.9);
-const SH1Hook_dist = (a, b)=>Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+const CLOCK = [
+    ...CLOCK_POS
+];
+/** Cup x offset: slides in from the right before LAND, back out after AWAY. */ const cupSlide = (t)=>{
+    const inK = prog(t, LAND - 0.55, LAND, ease.outCubic);
+    const outK = prog(t, AWAY, AWAY + 0.6, ease.inOut);
+    return (1 - inK) * 3.2 + outK * 3.6;
+};
 const camAt = (t)=>{
-    if (t < SH1Hook_T.cutBack) {
-        // A: cup → clock push with rack focus
-        const a = prog(t, 0, SH1Hook_T.cutHall + 0.4, ease.cine);
-        const pos = mix3([
-            2.6,
-            2.3,
-            5.0
-        ], [
-            1.75,
-            1.5,
-            3.7
-        ], a);
-        const target = mix3([
-            0.85,
-            0.38,
-            0.35
-        ], [
-            0.3,
-            0.62,
-            -0.75
-        ], a);
-        const rack = prog(t, 1.3, 2.7, ease.inOut);
-        const focus = time_mix(SH1Hook_dist(pos, CUP_C), SH1Hook_dist(pos, CLOCK_POS), rack);
-        return {
-            pos,
-            target,
-            mm: time_mix(35, 40, a),
-            focus,
-            range: 1.1
-        };
-    }
-    // C: whip back then dive into the tea
-    const w = prog(t, SH1Hook_T.cutBack, SH1Hook_T.cutBack + 0.32, ease.outCubic);
-    const d = prog(t, SH1Hook_T.cutBack + 0.2, SH1_DURATION, ease.inOut);
-    const pos = mix3([
-        2.45,
-        1.85,
-        3.0
+    // A: wide → clock
+    const a = prog(t, 0, SH1Hook_T.four + 0.6, ease.cine);
+    let pos = mix3([
+        -0.6,
+        2.3,
+        5.2
     ], [
-        CUP_POS["0"] + 0.02,
-        TEA_Y + 0.72,
-        CUP_POS["2"] + 0.2
+        -0.15,
+        1.45,
+        3.2
+    ], a);
+    let target = mix3([
+        0.4,
+        0.75,
+        -0.4
+    ], [
+        CLOCK[0],
+        CLOCK[1] - 0.05,
+        CLOCK[2]
+    ], a);
+    let focusPt = CLOCK;
+    // B: swing to where the cup lands
+    const b = prog(t, SH1Hook_T.four + 0.7, LAND + 0.4, ease.cine);
+    pos = mix3(pos, [
+        2.5,
+        1.55,
+        3.9
+    ], b);
+    target = mix3(target, [
+        CUP_C[0] - 0.25,
+        0.45,
+        CUP_C[2] - 0.2
+    ], b);
+    focusPt = mix3(focusPt, CUP_C, b);
+    // C: drowsy drift, slight droop
+    const c = prog(t, SH1Hook_T.no, SH1Hook_T.why, ease.inOut);
+    pos = mix3(pos, [
+        2.2,
+        1.3,
+        3.5
+    ], c);
+    target = mix3(target, [
+        CUP_C[0] - 0.6,
+        0.25,
+        CUP_C[2] - 0.6
+    ], c);
+    // D: fast push-in
+    const d = prog(t, SH1Hook_T.why - 0.05, SH1_DURATION, ease.inQuad);
+    pos = mix3(pos, [
+        1.0,
+        0.95,
+        1.4
     ], d);
-    const look = [
-        CUP_POS["0"],
-        TEA_Y - 0.05 * (1 - d),
-        CUP_POS["2"] + 0.1 * d
-    ];
-    const target = mix3([
-        look[0] - 2.4,
-        look[1] + 0.4,
-        look[2] - 0.6
-    ], look, w);
+    const mm = time_mix(time_mix(34, 42, a), 70, d);
     return {
         pos,
         target,
-        mm: time_mix(40, 58, d),
-        focus: SH1Hook_dist(pos, [
-            CUP_POS["0"],
-            TEA_Y,
-            CUP_POS["2"]
-        ]),
-        range: time_mix(0.8, 0.25, d)
+        mm,
+        focus: SH1Hook_dist(pos, focusPt),
+        range: time_mix(1.2, 0.6, c)
     };
 };
+/** Lid closure over time: heavy, jerk open, heavier, snap open on কারণটা. */ const lidsAt = (t)=>(0,esm/* .interpolate */.GW)(t, [
+        SH1Hook_T.no + 0.2,
+        SH1Hook_T.head,
+        SH1Hook_T.head + 0.35,
+        SH1Hook_T.head + 0.55,
+        SH1Hook_T.why - 0.25,
+        SH1Hook_T.why - 0.05,
+        SH1Hook_T.why + 0.08
+    ], [
+        0,
+        0.55,
+        0.62,
+        0.18,
+        0.86,
+        0.9,
+        0
+    ], time_clamp);
 const World = ()=>{
     const t = useSeconds();
     const c = camAt(t);
-    const inC = t >= SH1Hook_T.cutBack;
+    const minuteSnap = prog(t, SH1Hook_T.four - 0.04, SH1Hook_T.four + 0.06, ease.out);
+    const clockHours = 15 + (54 + 6 * minuteSnap) / 60; // 3:54 → 4:00
+    const slide = cupSlide(t);
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(Lens, {
@@ -156653,116 +155446,75 @@ const World = ()=>{
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(Desk, {
                 t: t,
-                clockHours: 2,
-                lampOn: 1,
-                steam: inC ? 0.9 * (1 - prog(t, SH1Hook_T.cutBack + 0.4, SH1_DURATION - 0.7)) : 0.8,
-                cupGlow: inC ? prog(t, SH1_DURATION - 1.2, SH1_DURATION, ease.inQuad) * 0.3 : 0
+                mood: "afternoon",
+                clockHours: clockHours,
+                lampOn: 0,
+                showCup: false
             }),
+            slide < 3.5 ? /*#__PURE__*/ (0,jsx_runtime.jsx)(TeaCup, {
+                t: t,
+                position: [
+                    CUP_POS["0"] + slide,
+                    CUP_POS["1"],
+                    CUP_POS["2"]
+                ],
+                scale: (/* inlined export .CUP_SCALE */0.9),
+                fill: 0.82,
+                steam: 0.75
+            }) : null,
             /*#__PURE__*/ (0,jsx_runtime.jsx)(PostFX, {
                 focus: c.focus,
                 focusRange: c.range,
-                bokeh: inC ? 3 : 5,
-                bloom: 0.7,
-                bloomThreshold: 0.82,
-                vignette: 0.55
+                bokeh: 5,
+                bloom: 0.6,
+                bloomThreshold: 0.85,
+                vignette: 0.5
             })
         ]
     });
 };
-const Hall = ()=>{
-    const t = useSeconds();
-    const p = prog(t, SH1Hook_T.cutHall, SH1Hook_T.cutBack, ease.cine);
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
-        style: {
-            background: theme_K.bg
-        },
-        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
-            style: {
-                scale: 1 + p * 0.06
-            },
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsx)(ExamHall, {
-                    t: t
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
-                    style: {
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                        paddingBottom: 1920 - 1260
-                    },
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Student, {
-                        t: t,
-                        pose: t >= SH1Hook_T.nod ? "nodding" : "study",
-                        poseAt: t >= SH1Hook_T.nod ? SH1Hook_T.nod : SH1Hook_T.cutHall,
-                        width: 720
-                    })
-                })
-            ]
-        })
-    });
-};
 const SH1Hook = ()=>{
     const t = useSeconds();
-    const inHall = t >= SH1Hook_T.cutHall && t < SH1Hook_T.cutBack;
-    const whip = (0,esm/* .interpolate */.GW)(t, [
-        SH1Hook_T.cutBack,
-        SH1Hook_T.cutBack + 0.06,
-        SH1Hook_T.cutBack + 0.34
-    ], [
-        0,
-        60,
-        0
-    ], time_clamp);
+    const lids = lidsAt(t);
+    const push = prog(t, SH1Hook_T.why - 0.05, SH1_DURATION, ease.inQuad);
+    const groggy = lids * 0.9 + push * 0.6;
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
         style: {
             background: theme_K.bg
         },
         children: [
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("svg", {
-                width: 0,
-                height: 0,
-                style: {
-                    position: "absolute"
-                },
-                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("filter", {
-                    id: "sh1whip",
-                    x: "-10%",
-                    y: "0%",
-                    width: "120%",
-                    height: "100%",
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("feGaussianBlur", {
-                        stdDeviation: `${whip} ${whip * 0.08}`
-                    })
-                })
-            }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
                 style: {
-                    filter: whip > 0.5 ? "url(#sh1whip)" : undefined
+                    filter: groggy > 0.02 ? `blur(${groggy * 9}px) saturate(${1 - lids * 0.55}) brightness(${1 - push * 0.55})` : undefined,
+                    scale: 1 + push * 0.12
                 },
                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Stage, {
-                    background: "#070504",
+                    background: "#2a1c12",
                     children: /*#__PURE__*/ (0,jsx_runtime.jsx)(World, {})
                 })
             }),
-            inHall ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Hall, {}) : null,
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Eyelids, {
+                k: lids
+            }),
             /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
                 style: {
                     alignItems: "center",
                     paddingTop: 250
                 },
                 children: [
-                    t < SH1Hook_T.cutHall ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Title, {
-                        at: SH1Hook_T.tea,
-                        until: SH1Hook_T.cutHall - 0.1,
+                    t < SH1Hook_T.no ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Title, {
+                        at: SH1Hook_T.four,
+                        until: SH1Hook_T.no - 0.15,
                         size: 124,
                         color: theme_K.ink,
-                        children: "রাত ২টা"
+                        children: "বিকেল ৪টা"
                     }) : null,
-                    inHall ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Title, {
-                        at: SH1Hook_T.cutHall + 0.05,
-                        size: 110,
+                    t >= SH1Hook_T.no && t < SH1Hook_T.why ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Title, {
+                        at: SH1Hook_T.head,
+                        until: SH1Hook_T.why - 0.15,
+                        size: 108,
                         color: theme_K.amber,
-                        children: "পরীক্ষার হল"
+                        children: "মাথা কাজ করে না"
                     }) : null
                 ]
             })
@@ -158274,112 +157026,443 @@ const Receptor = ({ t, position = [
 
 
 const fadeIO = (t, a, b, f = 0.3)=>prog(t, a, a + f, ease.out) * (1 - prog(t, b - f, b));
-/** Sun → moon travelling over an arc (time passing: morning → night). Title zone. */ const SunMoonArc = ({ a, b, from, to })=>{
+/**
+ * Day → night "sky window" (title zone): realistic sky gradient, soft clouds, a glowing sun that sets
+ * with a warm horizon, then a cratered moon rising with stars, over a Dhaka-like skyline whose
+ * windows light up at night. Same props as before: shown a..b, time runs from..to.
+ */ const SunMoonArc = ({ a, b, from, to })=>{
     const t = useSeconds();
     const o = fadeIO(t, a, b);
     if (o <= 0) return null;
-    const k = prog(t, from, to, ease.inOut);
-    const W = 640;
-    const H = 260;
-    const cx = W / 2;
-    const cy = H - 20;
-    const R = 270;
-    const ang = Math.PI * (1 - k * 0.98) - 0.01;
-    const x = cx + Math.cos(ang) * R * 0.95;
-    const y = cy - Math.sin(ang) * (H - 70);
-    const sun = 1 - prog(k, 0.45, 0.7);
-    const sky = `rgba(${Math.round(255 - 200 * k)}, ${Math.round(190 - 150 * k)}, ${Math.round(110 + 40 * k)}, 0.22)`;
+    const k = prog(t, from, to, ease.inOut); // 0 = morning, 1 = night
+    const W = 760;
+    const H = 300;
+    const HZ = H - 70; // horizon y
+    const id = "skyw";
+    // sky colours through the day
+    const stops = [
+        [
+            0,
+            "#5aa2e6",
+            "#cfe8fb"
+        ],
+        [
+            0.35,
+            "#3f86d6",
+            "#bfe0f7"
+        ],
+        [
+            0.55,
+            "#3c5f9e",
+            "#f6b27a"
+        ],
+        [
+            0.68,
+            "#2a2f63",
+            "#e46a3c"
+        ],
+        [
+            0.82,
+            "#121a40",
+            "#4a2e5c"
+        ],
+        [
+            1,
+            "#060b22",
+            "#17224a"
+        ]
+    ];
+    const sky = (j)=>{
+        let i = 0;
+        while(i < stops.length - 2 && k > stops[i + 1][0])i++;
+        const [k0, ...c0] = stops[i];
+        const [k1, ...c1] = stops[i + 1];
+        const u = Math.min(1, Math.max(0, (k - k0) / (k1 - k0)));
+        return mixHex(c0[j - 1], c1[j - 1], u);
+    };
+    // sun path: rises left-high, sets below horizon around k≈0.7
+    const sk = Math.min(1, k / 0.72);
+    const sx = 120 + sk * 470;
+    const sy = HZ - Math.sin(Math.PI * (0.35 + sk * 0.65)) * 175 + (sk > 0.92 ? (sk - 0.92) * 400 : 0);
+    const sunWarm = Math.min(1, Math.max(0, (sk - 0.55) / 0.4));
+    const sunCore = mixHex("#fffbe8", "#ffb35c", sunWarm);
+    const sunHalo = mixHex("#fff1b8", "#ff6a2b", sunWarm);
+    // moon rises from the right after sunset
+    const mk = Math.min(1, Math.max(0, (k - 0.62) / 0.38));
+    const mx = 610 - mk * 60;
+    const my = HZ + 30 - mk * 175;
+    const night = Math.min(1, Math.max(0, (k - 0.7) / 0.25));
+    const dusk = Math.exp(-(((k - 0.66) / 0.12) ** 2));
+    const stars = Array.from({
+        length: 34
+    }, (_, i)=>({
+            x: (Math.sin(i * 91.7) * 0.5 + 0.5) * W,
+            y: (Math.sin(i * 37.3 + 2) * 0.5 + 0.5) * (HZ - 30),
+            r: 0.8 + (Math.sin(i * 13.1) * 0.5 + 0.5) * 1.6,
+            tw: 0.6 + 0.4 * Math.sin(t * (2 + i % 5) + i)
+        }));
+    // skyline: deterministic building blocks with windows
+    const blds = Array.from({
+        length: 26
+    }, (_, i)=>{
+        const w = 18 + i * 37 % 34;
+        const h = 14 + i * 53 % 34 + (i % 7 === 3 ? 30 : 0) + (i % 11 === 5 ? 18 : 0);
+        return {
+            w,
+            h
+        };
+    });
+    const far = Array.from({
+        length: 30
+    }, (_, i)=>({
+            x: i * 27 - 8,
+            w: 24 + i * 29 % 14,
+            h: 22 + i * 41 % 40
+        }));
+    let bx = -10;
+    const placed = blds.map((d)=>{
+        const x = bx;
+        bx += d.w + (d.w % 3 === 0 ? 6 : 0);
+        return {
+            ...d,
+            x
+        };
+    });
     return /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
         style: {
             alignItems: "center",
-            paddingTop: 175,
-            opacity: o
+            paddingTop: 150,
+            opacity: o,
+            translate: `0 ${(1 - prog(t, a, a + 0.35, ease.out)) * 16}px`
         },
-        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
-            width: W,
-            height: H,
-            viewBox: `0 0 ${W} ${H}`,
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("defs", {
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
-                        id: "sunG",
+        children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+            style: {
+                width: W,
+                height: H,
+                borderRadius: 34,
+                overflow: "hidden",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,240,220,0.18)"
+            },
+            children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
+                width: W,
+                height: H,
+                viewBox: `0 0 ${W} ${H}`,
+                style: {
+                    display: "block"
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("defs", {
                         children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0",
-                                stopColor: "#fff3c4"
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
+                                id: `${id}-sky`,
+                                x1: "0",
+                                y1: "0",
+                                x2: "0",
+                                y2: "1",
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: sky(1)
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0.92",
+                                        stopColor: sky(2)
+                                    })
+                                ]
                             }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "0.6",
-                                stopColor: "#ffc24a"
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                                id: `${id}-sun`,
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: "#ffffff"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0.35",
+                                        stopColor: sunCore
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "1",
+                                        stopColor: sunCore,
+                                        stopOpacity: 0
+                                    })
+                                ]
                             }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
-                                offset: "1",
-                                stopColor: "#ff9a2e"
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                                id: `${id}-halo`,
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: sunHalo,
+                                        stopOpacity: 0.75
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "1",
+                                        stopColor: sunHalo,
+                                        stopOpacity: 0
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                                id: `${id}-glow`,
+                                cx: "0.5",
+                                cy: "1",
+                                r: "0.9",
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: "#ff7a3c",
+                                        stopOpacity: 0.85
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "1",
+                                        stopColor: "#ff7a3c",
+                                        stopOpacity: 0
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                                id: `${id}-moon`,
+                                cx: "0.38",
+                                cy: "0.35",
+                                r: "0.75",
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: "#fbfaf2"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0.7",
+                                        stopColor: "#d9dbe3"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "1",
+                                        stopColor: "#9da3b6"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                                id: `${id}-mglow`,
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "0",
+                                        stopColor: "#c9d8ff",
+                                        stopOpacity: 0.55
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                        offset: "1",
+                                        stopColor: "#c9d8ff",
+                                        stopOpacity: 0
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("filter", {
+                                id: `${id}-craters`,
+                                x: "0",
+                                y: "0",
+                                width: "100%",
+                                height: "100%",
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("feTurbulence", {
+                                        type: "fractalNoise",
+                                        baseFrequency: "0.09",
+                                        numOctaves: 3,
+                                        seed: 7
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("feColorMatrix", {
+                                        values: "0 0 0 0 0.35  0 0 0 0 0.36  0 0 0 0 0.42  0 0 0 -2.2 1.35"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("filter", {
+                                id: `${id}-cloud`,
+                                x: "-20%",
+                                y: "-50%",
+                                width: "140%",
+                                height: "200%",
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("feTurbulence", {
+                                        type: "fractalNoise",
+                                        baseFrequency: "0.012 0.03",
+                                        numOctaves: 4,
+                                        seed: 3
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("feColorMatrix", {
+                                        values: "0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 2.4 -1.25"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("feGaussianBlur", {
+                                        stdDeviation: "2"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("clipPath", {
+                                id: `${id}-moonclip`,
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                    cx: mx,
+                                    cy: my,
+                                    r: 30
+                                })
                             })
                         ]
-                    })
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
-                    d: `M 20 ${cy} Q ${cx} ${-60} ${W - 20} ${cy}`,
-                    fill: sky,
-                    stroke: "rgba(255,240,220,0.35)",
-                    strokeWidth: 5,
-                    strokeDasharray: "4 16",
-                    strokeLinecap: "round"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                    x1: 10,
-                    y1: cy,
-                    x2: W - 10,
-                    y2: cy,
-                    stroke: "rgba(255,240,220,0.4)",
-                    strokeWidth: 6,
-                    strokeLinecap: "round"
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                    transform: `translate(${x} ${y})`,
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                            opacity: sun,
-                            children: [
-                                Array.from({
-                                    length: 8
-                                }, (_, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("line", {
-                                        x1: 0,
-                                        y1: -48,
-                                        x2: 0,
-                                        y2: -64,
-                                        stroke: "#ffc24a",
-                                        strokeWidth: 8,
-                                        strokeLinecap: "round",
-                                        transform: `rotate(${i * 45 + k * 90})`
-                                    }, i)),
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                    r: 38,
-                                    fill: "url(#sunG)"
-                                })
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
-                            opacity: 1 - sun,
-                            children: [
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                    r: 40,
-                                    fill: "#e9eefc"
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
-                                    r: 36,
-                                    cx: 18,
-                                    cy: -12,
-                                    fill: "#1b120c"
-                                })
-                            ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                        width: W,
+                        height: H,
+                        fill: `url(#${id}-sky)`
+                    }),
+                    stars.map((s, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: s.x,
+                            cy: s.y,
+                            r: s.r,
+                            fill: "#fff",
+                            opacity: night * s.tw * 0.9
+                        }, i)),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                        x: 0,
+                        y: HZ - 150,
+                        width: W,
+                        height: 150,
+                        fill: `url(#${id}-glow)`,
+                        opacity: dusk
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                        opacity: 1 - night,
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: sx,
+                                cy: sy,
+                                r: 140,
+                                fill: `url(#${id}-halo)`,
+                                opacity: 0.55 + sunWarm * 0.3
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: sx,
+                                cy: sy,
+                                r: 46,
+                                fill: `url(#${id}-sun)`
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: sx,
+                                cy: sy,
+                                r: 20,
+                                fill: "#fffef6"
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("g", {
+                        style: {
+                            mixBlendMode: "screen"
+                        },
+                        opacity: 0.75 - night * 0.45,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                            x: -200 + t * 6,
+                            y: 30,
+                            width: W + 400,
+                            height: 150,
+                            filter: `url(#${id}-cloud)`,
+                            fill: "#fff"
                         })
-                    ]
-                })
-            ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                        x: 0,
+                        y: 20,
+                        width: W,
+                        height: 170,
+                        fill: mixHex("#ffffff", "#ff9a6a", dusk),
+                        opacity: 0.07 * (1 - night)
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                        opacity: mk,
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: mx,
+                                cy: my,
+                                r: 95,
+                                fill: `url(#${id}-mglow)`
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: mx,
+                                cy: my,
+                                r: 30,
+                                fill: `url(#${id}-moon)`
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                                x: mx - 30,
+                                y: my - 30,
+                                width: 60,
+                                height: 60,
+                                filter: `url(#${id}-craters)`,
+                                clipPath: `url(#${id}-moonclip)`,
+                                opacity: 0.55
+                            })
+                        ]
+                    }),
+                    far.map((d, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                            x: d.x,
+                            y: HZ + 70 - d.h - 18,
+                            width: d.w,
+                            height: d.h + 18,
+                            fill: mixHex(mixHex(sky(2), "#2a3550", 0.45), "#0a1026", night),
+                            opacity: 0.85
+                        }, `f${i}`)),
+                    placed.map((d, i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                            children: [
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                                    x: d.x,
+                                    y: HZ + 70 - d.h - 40,
+                                    width: d.w,
+                                    height: d.h + 40,
+                                    fill: mixHex("#26304a", "#04060c", Math.max(night, k * 0.7))
+                                }),
+                                d.w > 30 ? /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                                    x: d.x + 5,
+                                    y: HZ + 70 - d.h - 48,
+                                    width: 8,
+                                    height: 8,
+                                    fill: mixHex("#26304a", "#04060c", Math.max(night, k * 0.7))
+                                }) : null,
+                                Array.from({
+                                    length: Math.floor(d.h / 12)
+                                }, (_, r)=>Array.from({
+                                        length: Math.floor(d.w / 9)
+                                    }, (_, c)=>{
+                                        const on = Math.sin(i * 7.1 + r * 3.3 + c * 5.7) > 0.15;
+                                        return on ? /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                                            x: d.x + 4 + c * 9,
+                                            y: HZ + 70 - d.h - 34 + r * 12,
+                                            width: 4,
+                                            height: 5,
+                                            fill: "#ffd27a",
+                                            opacity: night * 0.9
+                                        }, `${r}-${c}`) : null;
+                                    }))
+                            ]
+                        }, i)),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                        x: 0,
+                        y: HZ - 20,
+                        width: W,
+                        height: 90,
+                        fill: sky(2),
+                        opacity: 0.25
+                    })
+                ]
+            })
         })
     });
+};
+const mixHex = (a, b, u)=>{
+    const pa = [
+        1,
+        3,
+        5
+    ].map((i)=>parseInt(a.slice(i, i + 2), 16));
+    const pb = [
+        1,
+        3,
+        5
+    ].map((i)=>parseInt(b.slice(i, i + 2), 16));
+    return `#${pa.map((v, i)=>Math.round(v + (pb[i] - v) * u).toString(16).padStart(2, "0")).join("")}`;
 };
 /** Tiredness meter (amber bar, moon icon). Fills between fillA..fillB. */ const TiredMeter = ({ a, b, fillA, fillB, from = 0.15, to = 0.85, top = 440, label = "ক্লান্তি" })=>{
     const t = useSeconds();
@@ -158675,17 +157758,18 @@ const CUT = SH2Adeno_T.seat - 0.25;
 /** Sound cues for this shot (sparse!). */ const SH2_CUES = [
     {
         at: SH2Adeno_T.name - 0.1,
-        sfx: "whoosh_soft",
-        volume: 0.45
+        sfx: "zoom_in",
+        volume: 0.5
     },
     {
         at: CUT - 0.35,
-        sfx: "whoosh_fast",
-        volume: 0.55
+        sfx: "dive",
+        volume: 0.6
     },
     {
         at: SH2Adeno_T.dock,
-        sfx: "click_lock"
+        sfx: "dock_amber",
+        volume: 0.8
     }
 ];
 const HERO = [
@@ -159213,13 +158297,19 @@ const SH3Caff_T = {
 ];
 /** Sound cues for this shot (sparse!). */ const SH3_CUES = [
     {
-        at: SH3Caff_T.see,
-        sfx: "whoosh_soft",
-        volume: 0.4
+        at: 0.3,
+        sfx: "bubble_rise",
+        volume: 0.5
     },
     {
         at: SH3Caff_T.bose,
-        sfx: "click_lock"
+        sfx: "click_lock",
+        volume: 0.8
+    },
+    {
+        at: SH3Caff_T.pay,
+        sfx: "bounce_deny",
+        volume: 0.6
     }
 ];
 // ---------- A: tea, caffeine rising ----------
@@ -159892,6 +158982,870 @@ const SH3Caff = ()=>{
         })
     });
 
+;// CONCATENATED MODULE: ./src/caffeine/two/Student.tsx
+
+/**
+ * OWNER: motion2d agent.
+ * 2D illustrated Bangladeshi student (teen, white school shirt, black hair, brown skin), flat illustration
+ * with soft shading, sitting at a desk. Rendered inside a box of `width` px (height = width * 1.25),
+ * bottom-centred (the desk front sits on the bottom edge).
+ * Poses animate on their own from `t` (shot seconds) and blend in over ~0.35 s from `prevPose`
+ * (default "study") when `pose` starts at `poseAt`.
+ *  - study: head slightly down, writing, normal blinks
+ *  - nodding: heavy lids, head slowly drops then jerks back up (cycle ~2.6 s), small "z"s
+ *  - yawn: big yawn (eyes shut, head back, mouth wide) every ~4.5 s, drowsy in between
+ *  - awake-tired: eyes forced wide open, small pupils, dark circles, slightly bloodshot, tiny tremor
+ *  - headache: hand on forehead, squint + frown, red pulse rings at the temple
+ */ 
+
+const Student_clamp = {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp"
+};
+const Student_mix = (a, b, k)=>a + (b - a) * k;
+const Student_smooth = (x)=>{
+    const c = Math.min(1, Math.max(0, x));
+    return c * c * (3 - 2 * c);
+};
+const SKIN = "#b0754b";
+const SKIN_LIGHT = "#c78a5c";
+const SKIN_SHADE = "#8f5a36";
+const HAIR = "#141010";
+const SHIRT = "#f6f6f3";
+const SHIRT_SHADE = "#d6dbe0";
+const NAVY = "#1f3a68";
+const KEYS = [
+    "tilt",
+    "drop",
+    "look",
+    "lid",
+    "eye",
+    "pupil",
+    "dark",
+    "mouth",
+    "smile",
+    "brow",
+    "raise",
+    "ache",
+    "write",
+    "zz"
+];
+/** Deterministic blink: 0..1 closure, ~every 3.2 s with slight irregularity. */ const blink = (t, period = 3.2, offset = 0.7)=>{
+    const x = t + offset + Math.sin(t * 0.37) * 0.4;
+    const ph = (x % period + period) % period;
+    return (0,esm/* .interpolate */.GW)(ph, [
+        0,
+        0.07,
+        0.16
+    ], [
+        0,
+        1,
+        0
+    ], Student_clamp);
+};
+const poseParams = (pose, t, lt)=>{
+    const base = {
+        tilt: 0,
+        drop: 0,
+        look: 0,
+        lid: 0.2,
+        eye: 1,
+        pupil: 1,
+        dark: 0.15,
+        mouth: 0,
+        smile: 0.1,
+        brow: 0,
+        raise: 0,
+        ache: 0,
+        write: 0,
+        zz: 0
+    };
+    switch(pose){
+        case "study":
+            return {
+                ...base,
+                tilt: Math.sin(t * 0.6) * 1.5 - 2,
+                drop: 5,
+                look: 7,
+                lid: Math.max(0.3, blink(t)),
+                write: 1
+            };
+        case "nodding":
+            {
+                const period = 2.6;
+                const ph = ((lt + 0.4) % period + period) % period;
+                // slow sink 0..1.9 s, quick jerk up 1.9..2.15, settle
+                const sink = ph < 1.9 ? esm/* .Easing["in"] */.GS["in"](esm/* .Easing.quad */.GS.quad)(ph / 1.9) : (0,esm/* .interpolate */.GW)(ph, [
+                    1.9,
+                    2.1,
+                    2.6
+                ], [
+                    1,
+                    -0.12,
+                    0
+                ], Student_clamp);
+                const jerk = (0,esm/* .interpolate */.GW)(ph, [
+                    1.9,
+                    2.0,
+                    2.4
+                ], [
+                    0,
+                    1,
+                    0
+                ], Student_clamp);
+                return {
+                    ...base,
+                    tilt: sink * 9,
+                    drop: sink * 30,
+                    look: sink * 14,
+                    lid: Math.max(Student_mix(0.55, 0.97, Math.max(0, sink)) - jerk * 0.6, ph > 2.1 ? blink(t, 1.3) : 0),
+                    dark: 0.45,
+                    mouth: Math.max(0, sink) * 0.12,
+                    smile: -0.1,
+                    brow: -0.1 + jerk * 0.8,
+                    zz: Student_smooth((sink - 0.4) / 0.4)
+                };
+            }
+        case "yawn":
+            {
+                const period = 4.5;
+                const ph = (lt % period + period) % period;
+                const y = (0,esm/* .interpolate */.GW)(ph, [
+                    0,
+                    0.5,
+                    1.0,
+                    1.6,
+                    2.1
+                ], [
+                    0,
+                    0.55,
+                    1,
+                    0.9,
+                    0
+                ], {
+                    ...Student_clamp,
+                    easing: esm/* .Easing.inOut */.GS.inOut(esm/* .Easing.sin */.GS.sin)
+                });
+                return {
+                    ...base,
+                    tilt: -y * 6,
+                    drop: -y * 8 + (1 - y) * 6,
+                    look: -y * 4 + (1 - y) * 5,
+                    lid: Math.max(Student_mix(0.55, 1, y), blink(t, 2.4)),
+                    dark: 0.4,
+                    mouth: y,
+                    smile: -0.2,
+                    brow: y * 0.9,
+                    zz: 0
+                };
+            }
+        case "awake-tired":
+            {
+                const b = blink(t, 4.6, 2.2);
+                return {
+                    ...base,
+                    tilt: Math.sin(t * 13) * 0.5 + Math.sin(t * 0.8) * 1.2,
+                    drop: -2 + Math.sin(t * 1.1) * 1.5,
+                    look: 0,
+                    lid: Math.max(0.02, b),
+                    eye: 1.2,
+                    pupil: 0.62,
+                    dark: 1,
+                    mouth: 0.05,
+                    smile: -0.25,
+                    brow: 0.7
+                };
+            }
+        case "headache":
+            {
+                const pulse = 0.5 + 0.5 * Math.sin(lt * Math.PI * 2 * 1.25);
+                return {
+                    ...base,
+                    tilt: 7 + pulse * 1.2,
+                    drop: 8,
+                    look: 3,
+                    lid: Math.max(0.62 + pulse * 0.12, blink(t, 3.6)),
+                    dark: 0.5,
+                    mouth: 0.08,
+                    smile: -0.85,
+                    brow: -1,
+                    raise: 1,
+                    ache: 1,
+                    write: 0
+                };
+            }
+    }
+};
+const Student = ({ t, pose, poseAt = 0, prevPose = "study", width = 600, style })=>{
+    const uid = (0,react.useId)().replace(/[^a-zA-Z0-9]/g, "");
+    const id = (s)=>`${s}-${uid}`;
+    const lt = t - poseAt;
+    const k = poseAt > 0 && prevPose !== pose ? (0,esm/* .interpolate */.GW)(lt, [
+        0,
+        0.35
+    ], [
+        0,
+        1
+    ], {
+        ...Student_clamp,
+        easing: esm/* .Easing.inOut */.GS.inOut(esm/* .Easing.cubic */.GS.cubic)
+    }) : 1;
+    const A = poseParams(prevPose, t, lt + poseAt);
+    const B = poseParams(pose, t, lt);
+    const p = {};
+    for (const key of KEYS)p[key] = Student_mix(A[key], B[key], k);
+    // breathing
+    const breath = Math.sin(t * 1.7) * 1.4;
+    // ----- head geometry -----
+    const headCx = 200;
+    const headCy = 176 + p.drop + breath * 0.5;
+    const pivot = `rotate(${p.tilt} 200 ${262 + p.drop})`;
+    // ----- arms -----
+    const writeX = p.write * (Math.sin(t * 8.5) * 5 + Math.sin(t * 2.3) * 7);
+    const writeY = p.write * Math.abs(Math.sin(t * 8.5)) * -2;
+    const lShoulder = [
+        128,
+        304 + breath
+    ];
+    const lElbow = [
+        92,
+        384
+    ];
+    const lHand = [
+        176 + writeX,
+        410 + writeY
+    ];
+    const rShoulder = [
+        272,
+        304 + breath
+    ];
+    const r = p.raise;
+    // forehead point follows the head roughly (rotation around pivot ignored except small x shift)
+    const fx = 222 - p.tilt * 1.2;
+    const fy = 140 + p.drop;
+    const rElbow = [
+        Student_mix(306, 318, r),
+        Student_mix(386, 250, r)
+    ];
+    const rHand = [
+        Student_mix(246, fx + 6, r),
+        Student_mix(412, fy + 6, r)
+    ];
+    const eyeY = 182 + p.look;
+    const eyeRx = 14 * p.eye;
+    const eyeRy = 10 * p.eye;
+    const lidK = Math.min(1, p.lid);
+    const ache = p.ache;
+    const acheP = (lt * 1.25 % 1 + 1) % 1;
+    const eye = (ex, side)=>{
+        const top = eyeY - eyeRy;
+        const ly = top + 2 * eyeRy * lidK; // lid edge
+        const curve = Student_mix(-eyeRy * 1.05, eyeRy * 0.5, lidK); // arc of lash line
+        const look = p.look * 0.12;
+        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("clipPath", {
+                    id: id(`eye${side}`),
+                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: ex,
+                        cy: eyeY,
+                        rx: eyeRx,
+                        ry: eyeRy
+                    })
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                    clipPath: `url(#${id(`eye${side}`)})`,
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                            x: ex - 20,
+                            y: eyeY - 16,
+                            width: 40,
+                            height: 32,
+                            fill: p.dark > 0.6 ? "#f4e3dd" : "#fbf7f2"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                            d: `M${ex - eyeRx} ${eyeY + 2} q5 -2 8 1 M${ex + eyeRx} ${eyeY - 1} q-6 2 -9 -1`,
+                            stroke: "#d0574d",
+                            strokeWidth: 1.1,
+                            fill: "none",
+                            opacity: Math.max(0, p.dark - 0.5) * 1.4
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: ex - side * 0.5,
+                            cy: eyeY + 1 + look,
+                            r: 7.2 * Math.max(0.75, p.eye * 0.9),
+                            fill: "#3a2214"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: ex - side * 0.5,
+                            cy: eyeY + 1 + look,
+                            r: 3.6 * p.pupil,
+                            fill: "#0c0705"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: ex + 2.5 - side * 0.5,
+                            cy: eyeY - 2.5 + look,
+                            r: 1.9,
+                            fill: "#fff",
+                            opacity: 0.9
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                            d: `M${ex - 20} ${top - 6} L${ex + 20} ${top - 6} L${ex + 20} ${ly} Q${ex} ${ly + curve * 0.6} ${ex - 20} ${ly} Z`,
+                            fill: SKIN
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                            d: `M${ex - 20} ${ly} Q${ex} ${ly + curve * 0.6} ${ex + 20} ${ly} L${ex + 20} ${ly + 3} Q${ex} ${ly + curve * 0.6 + 3} ${ex - 20} ${ly + 3} Z`,
+                            fill: SKIN_SHADE,
+                            opacity: 0.5
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${ex - eyeRx - 1.5} ${ly + (lidK > 0.85 ? 0 : 1)} Q${ex} ${ly + curve} ${ex + eyeRx + 1.5} ${ly + (lidK > 0.85 ? 0 : 1)}`,
+                    stroke: "#1a0f0a",
+                    strokeWidth: 3.4,
+                    strokeLinecap: "round",
+                    fill: "none"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${ex + side * -eyeRx - side * -1} ${ly + 0.5} l${-side * 4} -2.5`,
+                    stroke: "#1a0f0a",
+                    strokeWidth: 2.4,
+                    strokeLinecap: "round",
+                    opacity: 1 - lidK * 0.6
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${ex - eyeRx + 2} ${eyeY + eyeRy + 2} Q${ex} ${eyeY + eyeRy + 6} ${ex + eyeRx - 2} ${eyeY + eyeRy + 2}`,
+                    stroke: SKIN_SHADE,
+                    strokeWidth: 1.6,
+                    fill: "none",
+                    opacity: 0.7
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${ex - eyeRx} ${eyeY + eyeRy + 1} Q${ex} ${eyeY + eyeRy + 13} ${ex + eyeRx} ${eyeY + eyeRy + 1} Q${ex} ${eyeY + eyeRy + 6} ${ex - eyeRx} ${eyeY + eyeRy + 1} Z`,
+                    fill: "#4a2a3a",
+                    opacity: p.dark * 0.55
+                })
+            ]
+        }, ex);
+    };
+    const browY = 158 + p.look * 0.9 - p.brow * 5;
+    const brow = (ex, side)=>{
+        const inner = ex + side * -15; // towards nose
+        const outer = ex + side * 15;
+        const innerY = browY - p.brow * 3 + (p.brow < 0 ? -p.brow * 5 : 0);
+        const outerY = browY + 1 - (p.brow < 0 ? -p.brow * 3 : 0);
+        return /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+            d: `M${inner} ${innerY + 2} Q${ex} ${Math.min(innerY, outerY) - 5} ${outer} ${outerY + 1}`,
+            stroke: HAIR,
+            strokeWidth: 6,
+            strokeLinecap: "round",
+            fill: "none"
+        }, `b${ex}`);
+    };
+    const mouthY = 230 + p.look * 0.8;
+    const mw = Student_mix(12, 13, p.mouth);
+    const mouth = /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+        children: [
+            p.mouth > 0.03 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: 200,
+                        cy: mouthY + p.mouth * 8,
+                        rx: mw + p.mouth * 3,
+                        ry: 2 + p.mouth * 17,
+                        fill: "#4a1a17"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: 200,
+                        cy: mouthY + p.mouth * 8 + p.mouth * 10,
+                        rx: (mw + p.mouth * 3) * 0.6,
+                        ry: p.mouth * 6,
+                        fill: "#c25a55",
+                        opacity: Math.min(1, p.mouth * 2)
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                        x: 200 - mw * 0.7,
+                        y: mouthY + p.mouth * 8 - (2 + p.mouth * 17),
+                        width: mw * 1.4,
+                        height: p.mouth * 4,
+                        rx: 2,
+                        fill: "#f3eee6",
+                        opacity: Math.min(1, p.mouth * 3)
+                    })
+                ]
+            }) : null,
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: `M${200 - mw} ${mouthY} Q200 ${mouthY + p.smile * 7} ${200 + mw} ${mouthY}`,
+                stroke: "#5a2a20",
+                strokeWidth: 3.4,
+                strokeLinecap: "round",
+                fill: "none",
+                opacity: 1 - Math.min(1, p.mouth * 3)
+            })
+        ]
+    });
+    const arm = (sh, el, hd, key, handOnHead = 0)=>{
+        // short sleeve: tapered polygon from the shoulder to ~60% of the upper arm
+        const sx = Student_mix(sh[0], el[0], 0.6);
+        const sy = Student_mix(sh[1], el[1], 0.6);
+        const dx = sx - sh[0];
+        const dy = sy - sh[1];
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = -dy / len;
+        const ny = dx / len;
+        const sleeve = `M${sh[0] + nx * 20 - dx / len * 6} ${sh[1] + ny * 20 - dy / len * 6} L${sx + nx * 21} ${sy + ny * 21} L${sx - nx * 21} ${sy - ny * 21} L${sh[0] - nx * 20 - dx / len * 6} ${sh[1] - ny * 20 - dy / len * 6} Z`;
+        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${sx} ${sy} L${el[0]} ${el[1]} L${hd[0]} ${hd[1]}`,
+                    stroke: SKIN,
+                    strokeWidth: 23,
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    fill: "none"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${el[0]} ${el[1]} L${hd[0]} ${hd[1]}`,
+                    stroke: SKIN_SHADE,
+                    strokeWidth: 7,
+                    strokeLinecap: "round",
+                    fill: "none",
+                    opacity: 0.3,
+                    transform: "translate(0 5)"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: sleeve,
+                    fill: SHIRT,
+                    stroke: SHIRT_SHADE,
+                    strokeWidth: 2.5,
+                    strokeLinejoin: "round"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${sx + nx * 20} ${sy + ny * 20} L${sx - nx * 20} ${sy - ny * 20}`,
+                    stroke: SHIRT_SHADE,
+                    strokeWidth: 5,
+                    strokeLinecap: "round"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                    cx: hd[0],
+                    cy: hd[1],
+                    rx: 16,
+                    ry: handOnHead > 0.5 ? 13 : 12,
+                    fill: SKIN_LIGHT,
+                    stroke: SKIN_SHADE,
+                    strokeWidth: 2,
+                    transform: `rotate(${handOnHead * -30} ${hd[0]} ${hd[1]})`
+                }),
+                handOnHead > 0.6 ? /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                    d: `M${hd[0] - 14} ${hd[1] - 6} q10 -6 26 -3 M${hd[0] - 14} ${hd[1]} q10 -5 27 -1`,
+                    stroke: SKIN_SHADE,
+                    strokeWidth: 1.8,
+                    fill: "none",
+                    opacity: 0.8
+                }) : null
+            ]
+        }, key);
+    };
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
+        width: width,
+        height: width * 1.25,
+        viewBox: "0 0 400 500",
+        style: {
+            overflow: "visible",
+            ...style
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("defs", {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
+                        id: id("shirt"),
+                        x1: "0",
+                        y1: "0",
+                        x2: "1",
+                        y2: "1",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0",
+                                stopColor: "#ffffff"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0.55",
+                                stopColor: SHIRT
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "1",
+                                stopColor: SHIRT_SHADE
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                        id: id("face"),
+                        cx: "0.38",
+                        cy: "0.35",
+                        r: "0.75",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0",
+                                stopColor: SKIN_LIGHT
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0.65",
+                                stopColor: SKIN
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "1",
+                                stopColor: SKIN_SHADE
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
+                        id: id("desk"),
+                        x1: "0",
+                        y1: "0",
+                        x2: "0",
+                        y2: "1",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0",
+                                stopColor: "#b57a49"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "1",
+                                stopColor: "#93603a"
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("linearGradient", {
+                        id: id("deskFront"),
+                        x1: "0",
+                        y1: "0",
+                        x2: "0",
+                        y2: "1",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0",
+                                stopColor: "#6e4428"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "1",
+                                stopColor: "#4a2d1b"
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("radialGradient", {
+                        id: id("shadow"),
+                        cx: "0.5",
+                        cy: "0.5",
+                        r: "0.5",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "0",
+                                stopColor: "#000",
+                                stopOpacity: 0.45
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("stop", {
+                                offset: "1",
+                                stopColor: "#000",
+                                stopOpacity: 0
+                            })
+                        ]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                transform: `translate(0 ${breath * 0.6})`,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M104 440 C100 352 112 312 150 296 C168 290 184 288 200 288 C216 288 232 290 250 296 C288 312 300 352 296 440 Z",
+                        fill: `url(#${id("shirt")})`
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M262 300 C288 316 298 352 296 440 L270 440 C274 380 272 330 262 300 Z",
+                        fill: SHIRT_SHADE,
+                        opacity: 0.75
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M138 302 C120 320 110 360 108 440 L122 440 C122 380 128 336 138 302 Z",
+                        fill: SHIRT_SHADE,
+                        opacity: 0.4
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M200 296 L200 440",
+                        stroke: SHIRT_SHADE,
+                        strokeWidth: 2.5
+                    }),
+                    [
+                        322,
+                        356,
+                        390,
+                        424
+                    ].map((y)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: 205,
+                            cy: y,
+                            r: 3,
+                            fill: "#c9cfd6"
+                        }, y)),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M222 338 L262 338 L262 376 Q242 384 222 376 Z",
+                        fill: "none",
+                        stroke: SHIRT_SHADE,
+                        strokeWidth: 2.5
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M232 346 L252 346 L252 360 Q242 368 232 360 Z",
+                        fill: NAVY
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                        cx: 242,
+                        cy: 354,
+                        r: 3.5,
+                        fill: "#e9c46a"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: `M184 ${236 + p.drop * 0.6} L216 ${236 + p.drop * 0.6} L218 296 L182 296 Z`,
+                fill: SKIN_SHADE
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: `M184 ${250 + p.drop * 0.6} Q200 ${262 + p.drop * 0.6} 216 ${250 + p.drop * 0.6} L216 ${240 + p.drop * 0.6} L184 ${240 + p.drop * 0.6} Z`,
+                fill: "#7a4a2c",
+                opacity: 0.6
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                transform: `translate(0 ${breath * 0.6})`,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M200 300 L172 278 L160 300 L184 316 Z",
+                        fill: "#ffffff",
+                        stroke: SHIRT_SHADE,
+                        strokeWidth: 2.5,
+                        strokeLinejoin: "round"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: "M200 300 L228 278 L240 300 L216 316 Z",
+                        fill: "#ffffff",
+                        stroke: SHIRT_SHADE,
+                        strokeWidth: 2.5,
+                        strokeLinejoin: "round"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                transform: pivot,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: headCx,
+                        cy: headCy - 16,
+                        rx: 70,
+                        ry: 74,
+                        fill: HAIR
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: headCx - 63,
+                        cy: headCy + 8 + p.look * 0.4,
+                        rx: 11,
+                        ry: 17,
+                        fill: SKIN
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: headCx + 63,
+                        cy: headCy + 8 + p.look * 0.4,
+                        rx: 11,
+                        ry: 17,
+                        fill: SKIN_SHADE
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx - 62} ${headCy - 14} C${headCx - 64} ${headCy + 40} ${headCx - 34} ${headCy + 76} ${headCx} ${headCy + 78} C${headCx + 34} ${headCy + 76} ${headCx + 64} ${headCy + 40} ${headCx + 62} ${headCy - 14} C${headCx + 60} ${headCy - 70} ${headCx - 60} ${headCy - 70} ${headCx - 62} ${headCy - 14} Z`,
+                        fill: `url(#${id("face")})`
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: headCx - 36,
+                        cy: headCy + 30 + p.look * 0.6,
+                        rx: 12,
+                        ry: 7,
+                        fill: "#c9604a",
+                        opacity: 0.18
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                        cx: headCx + 36,
+                        cy: headCy + 30 + p.look * 0.6,
+                        rx: 12,
+                        ry: 7,
+                        fill: "#c9604a",
+                        opacity: 0.18
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                        transform: `translate(0 ${headCy - 176})`,
+                        children: [
+                            eye(176, -1),
+                            eye(224, 1),
+                            brow(176, -1),
+                            brow(224, 1),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                                d: `M195 ${browY - 2} l2 8 M205 ${browY - 2} l-2 8`,
+                                stroke: SKIN_SHADE,
+                                strokeWidth: 2,
+                                strokeLinecap: "round",
+                                opacity: Math.max(0, -p.brow) * 0.9
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                                d: `M199 ${192 + p.look} Q196 ${206 + p.look} 192 ${210 + p.look} Q200 ${215 + p.look} 207 ${210 + p.look}`,
+                                stroke: SKIN_SHADE,
+                                strokeWidth: 3,
+                                strokeLinecap: "round",
+                                strokeLinejoin: "round",
+                                fill: "none"
+                            }),
+                            mouth
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx - 66} ${headCy - 2} C${headCx - 78} ${headCy - 66} ${headCx - 34} ${headCy - 98} ${headCx + 8} ${headCy - 94}
+             C${headCx + 54} ${headCy - 92} ${headCx + 76} ${headCy - 60} ${headCx + 66} ${headCy - 4}
+             C${headCx + 60} ${headCy - 30} ${headCx + 52} ${headCy - 44} ${headCx + 36} ${headCy - 50}
+             C${headCx + 20} ${headCy - 34} ${headCx - 14} ${headCy - 30} ${headCx - 34} ${headCy - 40}
+             C${headCx - 46} ${headCy - 32} ${headCx - 56} ${headCy - 18} ${headCx - 66} ${headCy - 2} Z`,
+                        fill: HAIR
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx - 40} ${headCy - 40} l-6 14 l14 -9 Z M${headCx - 6} ${headCy - 34} l2 14 l10 -14 Z M${headCx + 26} ${headCy - 46} l8 13 l6 -15 Z`,
+                        fill: HAIR
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx - 30} ${headCy - 80} C${headCx - 4} ${headCy - 88} ${headCx + 26} ${headCy - 84} ${headCx + 44} ${headCy - 70}`,
+                        stroke: "#3a3130",
+                        strokeWidth: 5,
+                        strokeLinecap: "round",
+                        fill: "none",
+                        opacity: 0.8
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx - 62} ${headCy - 6} L${headCx - 60} ${headCy + 14} L${headCx - 54} ${headCy - 10} Z`,
+                        fill: HAIR
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                        d: `M${headCx + 62} ${headCy - 6} L${headCx + 60} ${headCy + 14} L${headCx + 54} ${headCy - 10} Z`,
+                        fill: HAIR
+                    })
+                ]
+            }),
+            p.zz > 0.02 ? [
+                0,
+                1,
+                2
+            ].map((i)=>{
+                const ph = ((t * 0.7 + i / 3) % 1 + 1) % 1;
+                return /*#__PURE__*/ (0,jsx_runtime.jsx)("text", {
+                    x: 268 + ph * 40 + i * 4,
+                    y: 120 - ph * 70 + p.drop * 0.5,
+                    fontSize: 18 + ph * 16,
+                    fontWeight: 800,
+                    fontFamily: "sans-serif",
+                    fill: "#cfe2ff",
+                    opacity: p.zz * Math.sin(ph * Math.PI) * 0.9,
+                    children: "z"
+                }, i);
+            }) : null,
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("ellipse", {
+                cx: 200,
+                cy: 402,
+                rx: 150,
+                ry: 10,
+                fill: `url(#${id("shadow")})`
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: "M36 396 L364 396 L384 430 L16 430 Z",
+                fill: `url(#${id("desk")})`
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: "M36 396 L364 396",
+                stroke: "#d29a68",
+                strokeWidth: 3,
+                strokeLinecap: "round"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                x: 16,
+                y: 430,
+                width: 368,
+                height: 70,
+                fill: `url(#${id("deskFront")})`
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("rect", {
+                x: 16,
+                y: 430,
+                width: 368,
+                height: 6,
+                fill: "#3a2214",
+                opacity: 0.6
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: "M138 400 L262 398 L272 426 L130 428 Z",
+                fill: "#fbfaf6"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: "M146 406 L250 405 M144 412 L232 411 M142 418 L256 417",
+                stroke: "#9fb3c8",
+                strokeWidth: 1.6,
+                strokeLinecap: "round"
+            }),
+            arm(lShoulder, lElbow, lHand, "l"),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                d: `M${lHand[0] + 6} ${lHand[1] + 6} L${lHand[0] + 20} ${lHand[1] - 20}`,
+                stroke: "#2a4f8f",
+                strokeWidth: 4.5,
+                strokeLinecap: "round"
+            }),
+            arm(rShoulder, rElbow, rHand, "r", r),
+            ache > 0.02 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)("g", {
+                opacity: ache,
+                children: [
+                    [
+                        0,
+                        0.5
+                    ].map((o)=>{
+                        const q = (acheP + o) % 1;
+                        return /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                            cx: fx + 46,
+                            cy: fy - 6,
+                            r: 14 + q * 46,
+                            fill: "none",
+                            stroke: "#ff5a4d",
+                            strokeWidth: 5 - q * 3,
+                            opacity: (1 - q) * 0.85
+                        }, o);
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                        cx: fx + 46,
+                        cy: fy - 6,
+                        r: 10 + Math.sin(acheP * Math.PI) * 4,
+                        fill: "#ff5a4d",
+                        opacity: 0.35
+                    }),
+                    [
+                        -50,
+                        -10,
+                        30
+                    ].map((a, i)=>{
+                        const rad = a * Math.PI / 180;
+                        const r0 = 64 + Math.sin(acheP * Math.PI * 2 + i) * 4;
+                        const cx = fx + 46;
+                        const cy = fy - 6;
+                        return /*#__PURE__*/ (0,jsx_runtime.jsx)("path", {
+                            d: `M${cx + Math.cos(rad) * r0} ${cy + Math.sin(rad) * r0} l${Math.cos(rad) * 14} ${Math.sin(rad) * 14}`,
+                            stroke: "#ff5a4d",
+                            strokeWidth: 5,
+                            strokeLinecap: "round",
+                            opacity: 0.9
+                        }, a);
+                    })
+                ]
+            }) : null
+        ]
+    });
+};
+
 ;// CONCATENATED MODULE: ./src/caffeine/shots/SH4Energy.tsx
 
 /**
@@ -159903,7 +159857,6 @@ const SH3Caff = ()=>{
  *     (amber). On "টের" a cyan frosted cover slides down over the meter with a mute icon. Title
  *     "ক্লান্তি চাপা পড়ে".
  */ 
-
 
 
 
@@ -159926,12 +159879,7 @@ const SH4Energy_T = {
 /** Sound cues for this shot (sparse!). */ const SH4_CUES = [
     {
         at: SH4Energy_T.na,
-        sfx: "thud_low",
-        volume: 0.55
-    },
-    {
-        at: SH4Energy_T.ter + 0.15,
-        sfx: "click_lock",
+        sfx: "power_down",
         volume: 0.6
     }
 ];
@@ -160639,15 +160587,31 @@ const SH4Energy = ()=>{
                 fy: 900,
                 drift: 0.5,
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
                             position: "absolute",
                             inset: 0,
                             filter: "blur(3px) brightness(0.55) saturate(0.8)"
                         },
-                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(ExamHall, {
-                            t: t + 3
-                        })
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    position: "absolute",
+                                    inset: 0,
+                                    background: "radial-gradient(ellipse 80% 60% at 30% 35%, #c9935e 0%, #7a5236 45%, #2a1a10 100%)"
+                                }
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    position: "absolute",
+                                    inset: "-20%",
+                                    rotate: "-14deg",
+                                    background: "repeating-linear-gradient(180deg, rgba(255,214,150,0.28) 0px, rgba(255,214,150,0.28) 46px, rgba(0,0,0,0) 46px, rgba(0,0,0,0) 92px)",
+                                    maskImage: "radial-gradient(ellipse 60% 45% at 35% 35%, #000 30%, transparent 75%)",
+                                    WebkitMaskImage: "radial-gradient(ellipse 60% 45% at 35% 35%, #000 30%, transparent 75%)"
+                                }
+                            })
+                        ]
                     }),
                     /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
                         style: {
@@ -160702,6 +160666,898 @@ const SH4Energy = ()=>{
                         children: "ক্লান্তি চাপা পড়ে"
                     })
                 })
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/caffeine/three/props/Bedroom.tsx
+
+/**
+ * Night bedroom for SH5's time-lapse beat (1 unit = 1 m, floor y = 0, camera side = +z).
+ *  - Back wall with a single modern wall clock (WALL_CLOCK) showing `hours` (22 = 10:00 … 27 = 3:00).
+ *  - Left wall window: night sky with a moon that drifts across as `night` (0..1) advances; cool moonlight.
+ *  - Bed with pillow and a duvet over a restless sleeper (the bump shifts as they toss and turn).
+ *  - Nightstand with the half-full tea glass, caffeine still glowing cyan (TeaCup).
+ * Clock face texture comes from the caller (drawn after the Bangla font loads): see makeClockFace().
+ */ 
+
+
+
+
+const BACK_Z = -2.5;
+const WALL_CLOCK = [
+    0.15,
+    2.05,
+    BACK_Z + 0.021
+];
+const CLOCK_R = 0.3;
+const STAND_CUP = [
+    1.38,
+    0.56,
+    -1.95
+];
+const CUP_S = 0.11;
+/** Clock face: white dial, Bangla numerals, minute ticks. Call once the font is loaded. */ const makeClockFace = (font)=>{
+    const S = 512;
+    const cv = document.createElement("canvas");
+    cv.width = S;
+    cv.height = S;
+    const g = cv.getContext("2d");
+    const c = S / 2;
+    const grd = g.createRadialGradient(c, c * 0.8, 10, c, c, c);
+    grd.addColorStop(0, "#fbfaf6");
+    grd.addColorStop(1, "#e4e0d6");
+    g.fillStyle = grd;
+    g.fillRect(0, 0, S, S);
+    for(let i = 0; i < 60; i++){
+        const a = i / 60 * Math.PI * 2;
+        const big = i % 5 === 0;
+        const r1 = c * 0.9;
+        const r2 = big ? c * 0.78 : c * 0.85;
+        g.strokeStyle = "#1d1d1f";
+        g.lineWidth = big ? 9 : 3;
+        g.beginPath();
+        g.moveTo(c + Math.sin(a) * r1, c - Math.cos(a) * r1);
+        g.lineTo(c + Math.sin(a) * r2, c - Math.cos(a) * r2);
+        g.stroke();
+    }
+    const nums = [
+        "১২",
+        "১",
+        "২",
+        "৩",
+        "৪",
+        "৫",
+        "৬",
+        "৭",
+        "৮",
+        "৯",
+        "১০",
+        "১১"
+    ];
+    g.fillStyle = "#1d1d1f";
+    g.font = `700 64px "${font}"`;
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    nums.forEach((n, i)=>{
+        const a = i / 12 * Math.PI * 2;
+        g.fillText(n, c + Math.sin(a) * c * 0.62, c - Math.cos(a) * c * 0.62 + 4);
+    });
+    const tex = new CanvasTexture(cv);
+    tex.colorSpace = (/* inlined export .SRGBColorSpace */"srgb");
+    tex.anisotropy = 8;
+    return tex;
+};
+const skyTexture = (()=>{
+    let cached = null;
+    return ()=>{
+        if (cached) return cached;
+        const W = 256;
+        const H = 384;
+        const cv = document.createElement("canvas");
+        cv.width = W;
+        cv.height = H;
+        const g = cv.getContext("2d");
+        const gr = g.createLinearGradient(0, 0, 0, H);
+        gr.addColorStop(0, "#050a1e");
+        gr.addColorStop(0.75, "#13204a");
+        gr.addColorStop(1, "#2a3260");
+        g.fillStyle = gr;
+        g.fillRect(0, 0, W, H);
+        let s = 7;
+        const rnd = ()=>(s = s * 16807 % 2147483647) / 2147483647;
+        for(let i = 0; i < 160; i++){
+            g.fillStyle = `rgba(255,255,255,${0.3 + rnd() * 0.7})`;
+            const r = rnd() * 1.3 + 0.3;
+            g.beginPath();
+            g.arc(rnd() * W, rnd() * H * 0.8, r, 0, Math.PI * 2);
+            g.fill();
+        }
+        // distant rooftops
+        g.fillStyle = "#03050c";
+        let x = 0;
+        while(x < W){
+            const w = 18 + rnd() * 30;
+            const h = 20 + rnd() * 50;
+            g.fillRect(x, H - h, w, h);
+            for(let k = 0; k < 6; k++){
+                if (rnd() > 0.55) {
+                    g.fillStyle = "#ffcf7a";
+                    g.fillRect(x + 4 + rnd() * (w - 8), H - h + 6 + rnd() * (h - 12), 3, 4);
+                    g.fillStyle = "#03050c";
+                }
+            }
+            x += w + 2;
+        }
+        cached = new CanvasTexture(cv);
+        cached.colorSpace = (/* inlined export .SRGBColorSpace */"srgb");
+        return cached;
+    };
+})();
+const Bedroom_glowTex = (()=>{
+    let cached = null;
+    return ()=>{
+        if (cached) return cached;
+        const cv = document.createElement("canvas");
+        cv.width = cv.height = 128;
+        const g = cv.getContext("2d");
+        const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+        gr.addColorStop(0, "rgba(255,255,255,1)");
+        gr.addColorStop(0.25, "rgba(255,255,255,0.45)");
+        gr.addColorStop(1, "rgba(255,255,255,0)");
+        g.fillStyle = gr;
+        g.fillRect(0, 0, 128, 128);
+        cached = new CanvasTexture(cv);
+        return cached;
+    };
+})();
+const WallClock = ({ hours, face, t })=>{
+    const h12 = (hours % 12 + 12) % 12;
+    const hourA = -(h12 / 12) * Math.PI * 2;
+    const minA = -(hours % 1 * Math.PI * 2);
+    const secA = -(t * 1.0 % 60) / 60 * Math.PI * 2;
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
+        position: WALL_CLOCK,
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0.015,
+                    -0.03,
+                    -0.019
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            CLOCK_R * 3,
+                            CLOCK_R * 3
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshBasicMaterial", {
+                        map: Bedroom_glowTex(),
+                        color: "#000000",
+                        transparent: true,
+                        opacity: 0.55,
+                        depthWrite: false
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                rotation: [
+                    0,
+                    0,
+                    0
+                ],
+                position: [
+                    0,
+                    0,
+                    0.025
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("torusGeometry", {
+                        args: [
+                            CLOCK_R,
+                            0.028,
+                            20,
+                            72
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        color: "#1a1a1c",
+                        roughness: 0.35,
+                        metalness: 0.4,
+                        clearcoat: 0.6
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    0,
+                    0.0
+                ],
+                rotation: [
+                    Math.PI / 2,
+                    0,
+                    0
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("cylinderGeometry", {
+                        args: [
+                            CLOCK_R,
+                            CLOCK_R,
+                            0.04,
+                            72
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        color: "#222",
+                        roughness: 0.6
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    0,
+                    0.021
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circleGeometry", {
+                        args: [
+                            CLOCK_R * 0.97,
+                            72
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        map: face,
+                        roughness: 0.55,
+                        emissive: "#ffffff",
+                        emissiveMap: face,
+                        emissiveIntensity: 0.06
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
+                position: [
+                    0,
+                    0,
+                    0.03
+                ],
+                rotation: [
+                    0,
+                    0,
+                    hourA
+                ],
+                children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        0,
+                        CLOCK_R * 0.24,
+                        0
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                0.022,
+                                CLOCK_R * 0.58,
+                                0.006
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                            color: "#111",
+                            roughness: 0.4
+                        })
+                    ]
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
+                position: [
+                    0,
+                    0,
+                    0.036
+                ],
+                rotation: [
+                    0,
+                    0,
+                    minA
+                ],
+                children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        0,
+                        CLOCK_R * 0.36,
+                        0
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                0.014,
+                                CLOCK_R * 0.82,
+                                0.005
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                            color: "#111",
+                            roughness: 0.4
+                        })
+                    ]
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
+                position: [
+                    0,
+                    0,
+                    0.042
+                ],
+                rotation: [
+                    0,
+                    0,
+                    secA
+                ],
+                children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        0,
+                        CLOCK_R * 0.3,
+                        0
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                0.005,
+                                CLOCK_R * 0.85,
+                                0.003
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                            color: "#d23a2a",
+                            roughness: 0.4
+                        })
+                    ]
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    0,
+                    0.046
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("cylinderGeometry", {
+                        args: [
+                            0.014,
+                            0.014,
+                            0.01,
+                            20
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        color: "#d23a2a"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    0,
+                    0.05
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circleGeometry", {
+                        args: [
+                            CLOCK_R * 0.98,
+                            72
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        color: "#ffffff",
+                        transparent: true,
+                        opacity: 0.08,
+                        roughness: 0.05,
+                        clearcoat: 1
+                    })
+                ]
+            })
+        ]
+    });
+};
+/** Duvet height field over the mattress; a body-shaped bump rolls side to side (tossing). */ const Duvet = ({ t })=>{
+    const geo = (0,react.useMemo)(()=>new PlaneGeometry(1.62, 1.55, 48, 48), []);
+    const roll = Math.sin(t * 0.9) * 0.6 + Math.sin(t * 2.3) * 0.15; // -1..1 side
+    const knees = 0.08 + 0.05 * Math.sin(t * 1.3 + 1);
+    const pos = geo.getAttribute("position");
+    for(let i = 0; i < pos.count; i++){
+        const x = pos.getX(i);
+        const y = pos.getY(i); // along bed length (+y = toward the head)
+        const bodyX = roll * 0.12;
+        const torso = Math.exp(-(((x - bodyX) / 0.22) ** 2)) * Math.exp(-(((y - 0.35) / 0.45) ** 2)) * 0.2;
+        const legs = Math.exp(-(((x - bodyX * 0.6) / 0.2) ** 2)) * Math.exp(-(((y + 0.35) / 0.35) ** 2)) * knees;
+        const wrinkle = 0.012 * Math.sin(x * 23 + y * 7) * Math.sin(y * 17 - x * 5);
+        const edge = Math.min(1, (0.81 - Math.abs(x)) / 0.08);
+        const drop = Math.abs(x) > 0.73 ? -(Math.abs(x) - 0.73) * 2.2 : 0;
+        pos.setZ(i, (torso + legs + wrinkle) * Math.max(0, edge) + drop + 0.04);
+    }
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("mesh", {
+        geometry: geo,
+        rotation: [
+            -Math.PI / 2,
+            0,
+            0
+        ],
+        position: [
+            0.15,
+            0.6,
+            -1.15
+        ],
+        castShadow: true,
+        receiveShadow: true,
+        children: /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+            color: "#2c4a7a",
+            roughness: 0.85,
+            sheen: 1,
+            sheenColor: "#8fb0ff",
+            sheenRoughness: 0.6,
+            side: (/* inlined export .DoubleSide */2)
+        })
+    });
+};
+const Window = ({ night })=>{
+    const sky = skyTexture();
+    const W = 0.8;
+    const H = 1.1;
+    // moon drifts across the window (right to left, rising then setting)
+    const mz = 0.25 - night * 0.5;
+    const my = 0.12 + Math.sin(Math.PI * (0.2 + night * 0.6)) * 0.22;
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
+        position: [
+            -1.5,
+            1.95,
+            BACK_Z + 0.03
+        ],
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            W,
+                            H
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshBasicMaterial", {
+                        map: sky,
+                        toneMapped: false
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("sprite", {
+                position: [
+                    mz,
+                    my,
+                    0.01
+                ],
+                scale: [
+                    0.5,
+                    0.5,
+                    1
+                ],
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("spriteMaterial", {
+                    map: Bedroom_glowTex(),
+                    color: "#c9d8ff",
+                    transparent: true,
+                    opacity: 0.6,
+                    blending: (/* inlined export .AdditiveBlending */2),
+                    depthWrite: false,
+                    toneMapped: false
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    mz,
+                    my,
+                    0.012
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("circleGeometry", {
+                        args: [
+                            0.07,
+                            40
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshBasicMaterial", {
+                        color: "#f1f3ff",
+                        toneMapped: false
+                    })
+                ]
+            }),
+            [
+                [
+                    0,
+                    H / 2 + 0.03,
+                    W + 0.12,
+                    0.06
+                ],
+                [
+                    0,
+                    -H / 2 - 0.03,
+                    W + 0.12,
+                    0.06
+                ],
+                [
+                    W / 2 + 0.03,
+                    0,
+                    0.06,
+                    H
+                ],
+                [
+                    -W / 2 - 0.03,
+                    0,
+                    0.06,
+                    H
+                ],
+                [
+                    0,
+                    0,
+                    0.035,
+                    H
+                ],
+                [
+                    0,
+                    0.1,
+                    W,
+                    0.035
+                ]
+            ].map(([x, y, w, h], i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                    position: [
+                        x,
+                        y,
+                        0.03
+                    ],
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                            args: [
+                                w,
+                                h,
+                                0.06
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                            color: "#d8d2c6",
+                            roughness: 0.6
+                        })
+                    ]
+                }, i)),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    -H / 2 - 0.08,
+                    0.08
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            W + 0.25,
+                            0.04,
+                            0.18
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        color: "#cfc8ba",
+                        roughness: 0.6
+                    })
+                ]
+            })
+        ]
+    });
+};
+const Bedroom = ({ t, hours, night, face, cupGlow = 0.6 })=>{
+    const wood = (0,react.useMemo)(()=>{
+        const w = woodTextures();
+        const m = w.map.clone();
+        m.wrapS = m.wrapT = (/* inlined export .RepeatWrapping */1000);
+        m.repeat.set(3, 3);
+        m.needsUpdate = true;
+        return m;
+    }, []);
+    const plaster = (0,react.useMemo)(()=>{
+        const p = plasterTexture().clone();
+        p.wrapS = p.wrapT = (/* inlined export .RepeatWrapping */1000);
+        p.repeat.set(3, 2);
+        p.needsUpdate = true;
+        return p;
+    }, []);
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Lighting, {
+                hdri: HDRI.studio,
+                intensity: 0.05,
+                rotation: 2
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("hemisphereLight", {
+                args: [
+                    "#6f82c4",
+                    "#1a120c",
+                    0.5
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
+                position: [
+                    0.2,
+                    2.7,
+                    -0.4
+                ],
+                color: "#7d8fd0",
+                intensity: 3,
+                distance: 6,
+                decay: 2
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("directionalLight", {
+                position: [
+                    -3,
+                    3.4,
+                    1.2
+                ],
+                intensity: 1.7,
+                color: "#8fa8ff",
+                castShadow: true,
+                "shadow-mapSize-width": 2048,
+                "shadow-mapSize-height": 2048,
+                "shadow-camera-left": -3,
+                "shadow-camera-right": 3,
+                "shadow-camera-top": 3,
+                "shadow-camera-bottom": -3,
+                "shadow-bias": -0.0004
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
+                position: [
+                    2.4,
+                    1.8,
+                    0.6
+                ],
+                color: "#ffb070",
+                intensity: 0.6,
+                distance: 5,
+                decay: 2
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("pointLight", {
+                position: [
+                    STAND_CUP[0],
+                    STAND_CUP[1] + 0.12,
+                    STAND_CUP[2] + 0.05
+                ],
+                color: "#47d7ff",
+                intensity: 0.5 * cupGlow,
+                distance: 1.4,
+                decay: 2
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                rotation: [
+                    -Math.PI / 2,
+                    0,
+                    0
+                ],
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            10,
+                            10
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        map: wood,
+                        color: "#8a6a52",
+                        roughness: 0.6
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0,
+                    2,
+                    BACK_Z
+                ],
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            10,
+                            4
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        map: plaster,
+                        color: "#a7adc2",
+                        roughness: 0.95
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    -2.2,
+                    2,
+                    0
+                ],
+                rotation: [
+                    0,
+                    Math.PI / 2,
+                    0
+                ],
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("planeGeometry", {
+                        args: [
+                            10,
+                            4
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        map: plaster,
+                        color: "#9aa0b4",
+                        roughness: 0.95
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Window, {
+                night: night
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(WallClock, {
+                hours: hours,
+                face: face,
+                t: t
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0.15,
+                    0.2,
+                    -1.45
+                ],
+                castShadow: true,
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            1.7,
+                            0.36,
+                            2.15
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        map: wood,
+                        color: "#6b4a33",
+                        roughness: 0.45,
+                        clearcoat: 0.4
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0.15,
+                    0.85,
+                    BACK_Z + 0.05
+                ],
+                castShadow: true,
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            1.8,
+                            1.1,
+                            0.08
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        map: wood,
+                        color: "#5a3c28",
+                        roughness: 0.45,
+                        clearcoat: 0.4
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0.15,
+                    0.48,
+                    -1.45
+                ],
+                castShadow: true,
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            1.58,
+                            0.2,
+                            2.05
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        color: "#e9e6df",
+                        roughness: 0.9
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    0.15,
+                    0.66,
+                    BACK_Z + 0.42
+                ],
+                scale: [
+                    0.62,
+                    0.11,
+                    0.25
+                ],
+                castShadow: true,
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("sphereGeometry", {
+                        args: [
+                            1,
+                            40,
+                            24
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        color: "#f3f1ec",
+                        roughness: 0.85,
+                        sheen: 0.6,
+                        sheenColor: "#ffffff"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Duvet, {
+                t: t
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    1.38,
+                    0.27,
+                    -1.95
+                ],
+                castShadow: true,
+                receiveShadow: true,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            0.5,
+                            0.54,
+                            0.42
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshPhysicalMaterial", {
+                        map: wood,
+                        color: "#6b4a33",
+                        roughness: 0.45,
+                        clearcoat: 0.4
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("mesh", {
+                position: [
+                    1.38,
+                    0.3,
+                    -1.735
+                ],
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("boxGeometry", {
+                        args: [
+                            0.42,
+                            0.18,
+                            0.01
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("meshStandardMaterial", {
+                        color: "#4a3222",
+                        roughness: 0.6
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(TeaCup, {
+                t: t,
+                position: STAND_CUP,
+                scale: CUP_S,
+                fill: 0.5,
+                steam: 0,
+                caffeineGlow: cupGlow
             })
         ]
     });
@@ -161036,9 +161892,12 @@ const TUBE_BASE = 0.14;
  *                    appear in the tea; label "ক্যাফেইন কাজ শুরু" on কাজ.
  *  B  অর্ধেক → দশটায়  Cut to a glass cylinder of glowing cyan "caffeine": level drains 100% → 50% (title counter),
  *                    bracket "৫ ঘণ্টা" draws on পাঁচ.
- *  C  দশটায় → end   Two alarm clocks behind the half-full glowing tea: left রাত ১০টা; right spins 10 → 3 and lands on
- *                    তিনটাতেও (label রাত ৩টা). Ticking accelerates during the spin.
+ *  C  দশটায় → end   New place: a dark bedroom at night. One wall clock time-lapses 10:00 → 3:00 (lands on
+ *                    তিনটাতেও) while the moon crosses the window and the sleeper tosses under the duvet; the
+ *                    half-full tea on the nightstand still glows cyan. Live label "রাত ১০টা … ৩টা";
+ *                    on অর্ধেকটা a cyan label "ক্যাফেইন এখনো ৫০%".
  */ 
+
 
 
 
@@ -161065,35 +161924,26 @@ const SH5Time_T = {
     cutB: wordAt("time", "অর্ধেক") - 0.1,
     five: wordAt("time", "পাঁচ"),
     cutC: wordAt("time", "দশটায়") - 0.12,
-    three: wordAt("time", "তিনটাতেও")
+    three: wordAt("time", "তিনটাতেও"),
+    half: wordAt("time", "অর্ধেকটা")
 };
 const SPIN_A = SH5Time_T.cutC + 0.45;
 const SPIN_B = SH5Time_T.three + 0.05;
 /** Sound cues for this shot (sparse!). */ const SH5_CUES = [
     {
         at: SH5Time_T.twenty,
-        sfx: "tick",
-        volume: 0.5
-    },
-    {
-        at: SH5Time_T.work,
-        sfx: "pop",
+        sfx: "timer_wind",
         volume: 0.6
     },
     {
-        at: SH5Time_T.five,
-        sfx: "click_lock",
-        volume: 0.45
+        at: SH5Time_T.cutB + 0.25,
+        sfx: "liquid_drop",
+        volume: 0.5
     },
     {
         at: SPIN_A - 0.05,
         sfx: "tick_fast",
-        volume: 0.6
-    },
-    {
-        at: SPIN_B,
-        sfx: "tick",
-        volume: 0.7
+        volume: 0.55
     }
 ];
 const CUP_TOP_Y = 0.9 * (/* inlined export .CUP_SCALE */0.9);
@@ -161101,16 +161951,6 @@ const TUBE_POS = [
     CUP_POS["0"],
     0,
     CUP_POS["2"]
-];
-const CL_L = [
-    CUP_POS["0"] - 0.7,
-    -(/* inlined export .CLOCK_FOOT_Y */-0.82) * 0.85,
-    CUP_POS["2"] - 1.15
-];
-const CL_R = [
-    CUP_POS["0"] + 0.7,
-    -(/* inlined export .CLOCK_FOOT_Y */-0.82) * 0.85,
-    CUP_POS["2"] - 1.15
 ];
 const SH5Time_camAt = (t)=>{
     const cup = [
@@ -161186,34 +162026,53 @@ const SH5Time_camAt = (t)=>{
             range: 1.2
         };
     }
-    const p = prog(t, SH5Time_T.cutC, SH5_DURATION, ease.cine);
-    const pos = mix3([
-        CUP_POS["0"],
-        2.55,
-        CUP_POS["2"] + 4.1
+    // bedroom (metres): wide on bed + wall clock, slow push to the clock, settle to include the glowing cup
+    const p = prog(t, SH5Time_T.cutC, SH5Time_T.three + 0.3, ease.cine);
+    const q = prog(t, SH5Time_T.three - 0.2, SH5_DURATION, ease.cine);
+    let pos = mix3([
+        0.1,
+        1.45,
+        1.45
     ], [
-        CUP_POS["0"],
-        2.4,
-        CUP_POS["2"] + 3.6
+        0.3,
+        1.75,
+        0.35
     ], p);
-    const target = [
-        CUP_POS["0"],
-        0.42,
-        CUP_POS["2"] - 0.6
-    ];
+    pos = mix3(pos, [
+        1.05,
+        1.4,
+        0.75
+    ], q);
+    let target = mix3([
+        -0.4,
+        1.5,
+        -2.2
+    ], [
+        0.0,
+        1.8,
+        -2.45
+    ], p);
+    target = mix3(target, [
+        0.75,
+        1.55,
+        -2.3
+    ], q);
+    const focusPt = mix3([
+        ...WALL_CLOCK
+    ], [
+        0.9,
+        1.3,
+        -2.2
+    ], q);
     return {
         pos,
         target,
-        mm: 32,
-        focusPt: [
-            CUP_POS["0"],
-            0.6,
-            CUP_POS["2"] - 0.7
-        ],
-        range: 1.6
+        mm: time_mix(24, 30, p),
+        focusPt,
+        range: 2.2
     };
 };
-const SH5Time_World = ()=>{
+const SH5Time_World = ({ face })=>{
     const t = useSeconds();
     const c = SH5Time_camAt(t);
     const seg = t < SH5Time_T.cutB ? 0 : t < SH5Time_T.cutC ? 1 : 2;
@@ -161251,12 +162110,18 @@ const SH5Time_World = ()=>{
                 near: 0.02,
                 far: 80
             }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)(Desk, {
+            seg === 2 ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Bedroom, {
+                t: t,
+                hours: 22 + 5 * spin,
+                night: spin,
+                face: face,
+                cupGlow: 0.75
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsx)(Desk, {
                 t: t,
                 clockHours: 22,
                 lampOn: 1,
-                steam: seg === 2 ? 0.35 : 0.7,
-                cupFill: seg === 2 ? 0.5 : 0.82,
+                steam: 0.7,
+                cupFill: 0.82,
                 cupGlow: seg === 0 ? glowA : 0.6,
                 showCup: seg !== 1,
                 showClock: seg === 0
@@ -161270,25 +162135,6 @@ const SH5Time_World = ()=>{
             seg === 1 ? /*#__PURE__*/ (0,jsx_runtime.jsx)(CaffeineTube, {
                 position: TUBE_POS,
                 level: level
-            }) : null,
-            seg === 2 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
-                children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AlarmClock, {
-                        hours: 22,
-                        t: t,
-                        position: CL_L,
-                        rotationY: 0.12,
-                        scale: 0.85
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AlarmClock, {
-                        hours: 22 + 5 * spin,
-                        t: t,
-                        position: CL_R,
-                        rotationY: -0.12,
-                        scale: 0.85,
-                        body: "#1d3a5c"
-                    })
-                ]
             }) : null,
             /*#__PURE__*/ (0,jsx_runtime.jsx)(PostFX, {
                 focus: focus,
@@ -161374,25 +162220,29 @@ const textStyle = {
         ]
     });
 };
-const ClockLabel = ({ t, at, pos, children, color })=>{
-    const c = SH5Time_camAt(t);
-    const [x] = project(pos, c);
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-        style: {
-            position: "absolute",
-            left: x - 260,
-            width: 520,
-            top: 380,
-            display: "flex",
-            justifyContent: "center"
-        },
-        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Label, {
-            at: at,
-            accent: color,
-            size: 54,
-            children: children
-        })
-    });
+/** Draws the Bangla clock face once the font has loaded (holds the render meanwhile). */ const useClockFace = ()=>{
+    const { delayRender, continueRender } = (0,esm/* .useDelayRender */.dB)();
+    const [face, setFace] = (0,react.useState)(null);
+    (0,react.useEffect)(()=>{
+        const handle = delayRender("SH5 clock face");
+        let done = false;
+        document.fonts.load(`700 64px "${bodyFont}"`, "১২").catch(()=>undefined).then(()=>{
+            if (done) return;
+            setFace(makeClockFace(bodyFont));
+            done = true;
+            continueRender(handle);
+        });
+        return ()=>{
+            if (!done) {
+                done = true;
+                continueRender(handle);
+            }
+        };
+    }, [
+        delayRender,
+        continueRender
+    ]);
+    return face;
 };
 const SH5Time = ()=>{
     const t = useSeconds();
@@ -161409,6 +162259,13 @@ const SH5Time = ()=>{
     }));
     const thirtyIn = prog(t, SH5Time_T.thirty, SH5Time_T.thirty + 0.25, ease.out);
     const pct = Math.round(100 - 50 * prog(t, SH5Time_T.cutB + 0.25, SH5Time_T.five + 0.35, ease.inOut));
+    const hourNow = ((Math.floor(22 + 5 * prog(t, SPIN_A, SPIN_B, ease.inOut) + 0.001) - 1) % 12 + 12) % 12 + 1;
+    const face = useClockFace();
+    if (!face) return /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
+        style: {
+            background: theme_K.bg
+        }
+    });
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
         style: {
             background: theme_K.bg
@@ -161416,7 +162273,9 @@ const SH5Time = ()=>{
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(Stage, {
                 background: "#070504",
-                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(SH5Time_World, {})
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(SH5Time_World, {
+                    face: face
+                })
             }),
             seg === 0 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
                 style: {
@@ -161478,21 +162337,28 @@ const SH5Time = ()=>{
                     })
                 ]
             }) : null,
-            seg === 2 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+            seg === 2 ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
+                style: {
+                    alignItems: "center",
+                    paddingTop: 230,
+                    gap: 26
+                },
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)(ClockLabel, {
-                        t: t,
-                        at: SH5Time_T.cutC + 0.15,
-                        pos: CL_L,
-                        color: theme_K.amber,
-                        children: "রাত ১০টা"
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)(Title, {
+                        at: SH5Time_T.cutC + 0.1,
+                        size: 120,
+                        color: hourNow === 3 ? theme_K.cyan : theme_K.ink,
+                        children: [
+                            "রাত ",
+                            Text_bn(hourNow),
+                            "টা"
+                        ]
                     }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)(ClockLabel, {
-                        t: t,
-                        at: SH5Time_T.three,
-                        pos: CL_R,
-                        color: theme_K.cyan,
-                        children: "রাত ৩টা"
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(Label, {
+                        at: SH5Time_T.half,
+                        accent: theme_K.cyan,
+                        size: 52,
+                        children: "ক্যাফেইন এখনো ৫০%"
                     })
                 ]
             }) : null
@@ -161509,8 +162375,12 @@ const SH5Time = ()=>{
  *  সরে      caffeine molecules lift off one by one and drift away
  *  একসাথে   the whole amber crowd rushes in at once and docks (low thud), receptors light amber
  *  ~9.6     cut: brain wrapped in amber, its glow dims hard
- *  ঘুম      cut: exam hall, student yawns → nods; title "এজন্যই ঝিমানো" on ঝিমানোর
+ *  ঘুম      cut: POV at the sunny 4 pm desk with no tea: picture blurs, heavy eyelids close, jerk open, close;
+ *           title "এজন্যই ঝিমুনি" on ঝিমুনি
  */ 
+
+
+
 
 
 
@@ -161535,25 +162405,26 @@ const SH6Crash_T = {
     eksathe: SH6Crash_w("একসাথে"),
     kaj: SH6Crash_w("কাজ"),
     ghum: SH6Crash_w("ঘুম"),
-    porikkha: SH6Crash_w("পরীক্ষার"),
-    jhim: SH6Crash_w("ঝিমানোর")
+    bikele: SH6Crash_w("বিকেলে"),
+    jhim: SH6Crash_w("ঝিমুনি")
 };
 const BRAIN_CUT = SH6Crash_T.kaj + 1.15;
 /** Caption words (exact VO tokens) to highlight. */ const SH6_KEYWORDS = [
     "থামে",
     "একসাথে",
     "ঘুম",
-    "ঝিমানোর"
+    "ঝিমুনি"
 ];
 /** Sound cues for this shot (sparse!). */ const SH6_CUES = [
     {
         at: SH6Crash_T.sore,
-        sfx: "whoosh_soft",
-        volume: 0.3
+        sfx: "release_pluck",
+        volume: 0.5
     },
     {
         at: SH6Crash_T.eksathe,
-        sfx: "thud_low"
+        sfx: "thud_low",
+        volume: 0.9
     },
     {
         at: SH6Crash_T.ghum,
@@ -161984,37 +162855,98 @@ const CrowdCounter = ()=>{
         })
     });
 };
+/** Lid closure for the 4 pm POV ending. */ const SH6Crash_lidsAt = (t)=>(0,esm/* .interpolate */.GW)(t, [
+        SH6Crash_T.ghum + 0.1,
+        SH6Crash_T.bikele,
+        SH6Crash_T.bikele + 0.3,
+        SH6Crash_T.bikele + 0.5,
+        SH6Crash_T.jhim,
+        SH6_DURATION
+    ], [
+        0.1,
+        0.6,
+        0.66,
+        0.2,
+        0.8,
+        0.92
+    ], time_clamp);
+/** POV at the sunny study desk (same set as the hook), no tea in sight. */ const DeskPOV = ()=>{
+    const t = useSeconds();
+    const k = prog(t, SH6Crash_T.ghum, SH6_DURATION, ease.inOut);
+    const pos = mix3([
+        0.4,
+        1.75,
+        4.2
+    ], [
+        0.6,
+        1.35,
+        3.6
+    ], k);
+    const target = mix3([
+        0.3,
+        0.55,
+        -0.4
+    ], [
+        0.45,
+        0.3,
+        -0.2
+    ], k);
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Lens, {
+                position: pos,
+                target: target,
+                mm: 34,
+                near: 0.02,
+                far: 80
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Desk, {
+                t: t,
+                mood: "afternoon",
+                clockHours: 16.2,
+                lampOn: 0,
+                showCup: false
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(PostFX, {
+                focus: Math.hypot(pos[0] - 0.2, pos[1] - 0.6, pos[2] + 0.5),
+                focusRange: 1.2,
+                bokeh: 5,
+                bloom: 0.6,
+                bloomThreshold: 0.85,
+                vignette: 0.5
+            })
+        ]
+    });
+};
 const SH6Crash = ()=>{
     const t = useSeconds();
-    const hall = t >= SH6Crash_T.ghum;
+    const pov = t >= SH6Crash_T.ghum;
+    const lids = pov ? SH6Crash_lidsAt(t) : 0;
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
         style: {
             background: theme_K.bg
         },
         children: [
-            !hall ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Stage, {
+            !pov ? /*#__PURE__*/ (0,jsx_runtime.jsx)(Stage, {
                 background: "#0f0907",
                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(SH6Crash_World, {})
-            }) : /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .AbsoluteFill */.H1, {
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)(ExamHall, {
-                        t: t
-                    }),
                     /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
                         style: {
-                            alignItems: "center",
-                            paddingTop: 470
+                            filter: `blur(${lids * 9}px) saturate(${1 - lids * 0.55})`
                         },
-                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Student, {
-                            t: t,
-                            pose: t < SH6Crash_T.porikkha + 0.2 ? "yawn" : "nodding",
-                            poseAt: t < SH6Crash_T.porikkha + 0.2 ? SH6Crash_T.ghum : SH6Crash_T.porikkha + 0.2,
-                            width: 640
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Stage, {
+                            background: "#2a1c12",
+                            children: /*#__PURE__*/ (0,jsx_runtime.jsx)(DeskPOV, {})
                         })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(Eyelids, {
+                        k: lids
                     })
                 ]
             }),
-            !hall ? /*#__PURE__*/ (0,jsx_runtime.jsx)(CrowdCounter, {}) : null,
+            !pov ? /*#__PURE__*/ (0,jsx_runtime.jsx)(CrowdCounter, {}) : null,
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .AbsoluteFill */.H1, {
                 style: {
                     alignItems: "center",
@@ -162024,7 +162956,7 @@ const SH6Crash = ()=>{
                     at: SH6Crash_T.jhim,
                     color: theme_K.amber,
                     size: 110,
-                    children: "এজন্যই ঝিমানো"
+                    children: "এজন্যই ঝিমুনি"
                 })
             })
         ]
@@ -162074,18 +163006,18 @@ const SH7Memory_T = {
 /** Sound cues for this shot (sparse!). */ const SH7_CUES = [
     {
         at: SH7Memory_T.ghum + 0.75,
-        sfx: "ding",
+        sfx: "chime_store",
         volume: 0.45
     },
     {
         at: SH7Memory_T.tai - 0.05,
-        sfx: "whoosh_fast",
-        volume: 0.55
+        sfx: "rewind",
+        volume: 0.5
     },
     {
         at: SH7Memory_T.mone + 0.1,
         sfx: "paper",
-        volume: 0.8
+        volume: 0.7
     }
 ];
 const BOOKS = [
@@ -162746,7 +163678,7 @@ const SH8Tolerance_CUT = SH8Tolerance_T.cha2;
     {
         at: SH8Tolerance_T.kap,
         sfx: "pop",
-        volume: 0.35
+        volume: 0.4
     },
     {
         at: SH8Tolerance_T.bere,
@@ -162754,14 +163686,9 @@ const SH8Tolerance_CUT = SH8Tolerance_T.cha2;
         volume: 0.3
     },
     {
-        at: SH8Tolerance_T.kaj + 0.15,
-        sfx: "click_lock",
-        volume: 0.6
-    },
-    {
         at: SH8Tolerance_T.matha,
-        sfx: "thud_low",
-        volume: 0.45
+        sfx: "heartbeat_ache",
+        volume: 0.35
     }
 ];
 const OLD = [
@@ -163157,7 +164084,7 @@ const SH8Tolerance = ()=>{
  *              drifts to the matching prop:
  *                ছয়-সাত  ✅ রাতে ৬–৭ ঘণ্টা ঘুম        → camera settles on the alarm clock
  *                সন্ধ্যার ✅ চা সন্ধ্যার আগে            → camera moves to the tea glass
- *                সকালে   ✅ পরীক্ষার দিন সকালে ১ কাপ  → closer on the tea glass
+ *                দুই-তিন ✅ দিনে ২–৩ কাপের বেশি না   → closer on the tea glass
  *  তাহলে → end  Card slides away; wide on clock + lamp. Clock hands wind back 2:00 → 11:00 ("রাত ১১টা"),
  *              lamp clicks off to moonlight; the reel ends on that calm frame.
  */ 
@@ -163172,15 +164099,15 @@ const SH9_DURATION = shotDuration("tips");
 /** Caption words (exact VO tokens) to highlight. */ const SH9_KEYWORDS = [
     "ছয়-সাত",
     "সন্ধ্যার",
-    "সকালে",
-    "কমবে"
+    "দুই-তিন",
+    "পরিষ্কার"
 ];
 const SH9Tips_T = {
     sleep: wordAt("tips", "ছয়-সাত"),
     evening: wordAt("tips", "সন্ধ্যার"),
-    morning: wordAt("tips", "সকালে"),
+    morning: wordAt("tips", "দুই-তিন"),
     then: wordAt("tips", "তাহলে"),
-    less: wordAt("tips", "কমবে")
+    less: wordAt("tips", "থাকবে")
 };
 const WIND_A = SH9Tips_T.then + 0.35;
 const WIND_B = SH9Tips_T.then + 1.15;
@@ -163189,27 +164116,27 @@ const LAMP_OFF = WIND_B + 0.1;
     {
         at: SH9Tips_T.sleep,
         sfx: "ding",
-        volume: 0.7
+        volume: 0.6
     },
     {
         at: SH9Tips_T.evening,
-        sfx: "ding",
-        volume: 0.7
+        sfx: "ding_2",
+        volume: 0.6
     },
     {
         at: SH9Tips_T.morning,
-        sfx: "ding",
-        volume: 0.7
+        sfx: "ding_3",
+        volume: 0.6
     },
     {
         at: WIND_A,
-        sfx: "tick_fast",
-        volume: 0.4
+        sfx: "clock_wind",
+        volume: 0.45
     },
     {
         at: LAMP_OFF,
         sfx: "lamp_click",
-        volume: 0.9
+        volume: 0.8
     }
 ];
 const SH9Tips_CUP_C = [
@@ -163217,7 +164144,7 @@ const SH9Tips_CUP_C = [
     0.48 * (/* inlined export .CUP_SCALE */0.9),
     CUP_POS["2"]
 ];
-const CLOCK = [
+const SH9Tips_CLOCK = [
     ...CLOCK_POS
 ];
 /** Camera keys: each move starts at `at` and eases (cine) over `dur` to the new framing. */ const SH9Tips_KEYS = [
@@ -163262,12 +164189,12 @@ const CLOCK = [
             3.5
         ],
         target: [
-            CLOCK[0],
-            CLOCK[1] + 0.1,
-            CLOCK[2]
+            SH9Tips_CLOCK[0],
+            SH9Tips_CLOCK[1] + 0.1,
+            SH9Tips_CLOCK[2]
         ],
         mm: 33,
-        focus: CLOCK
+        focus: SH9Tips_CLOCK
     },
     {
         at: SH9Tips_T.evening - 0.1,
@@ -163315,7 +164242,7 @@ const CLOCK = [
             -0.7
         ],
         mm: 34,
-        focus: CLOCK
+        focus: SH9Tips_CLOCK
     },
     {
         at: SH9Tips_T.then + 1.05,
@@ -163331,7 +164258,7 @@ const CLOCK = [
             -0.75
         ],
         mm: 35,
-        focus: CLOCK
+        focus: SH9Tips_CLOCK
     }
 ];
 const SH9Tips_camAt = (t)=>{
@@ -163422,7 +164349,7 @@ const Card = ({ t })=>{
                 }),
                 /*#__PURE__*/ (0,jsx_runtime.jsx)(Check, {
                     at: SH9Tips_T.morning,
-                    children: "পরীক্ষার দিন সকালে ১ কাপ"
+                    children: "দিনে ২–৩ কাপের বেশি না"
                 })
             ]
         })
@@ -163627,7 +164554,7 @@ const Captions_Captions = ({ words, keywords = [] })=>{
 
 /**
  * Caffeine reel assembler (owner: lead). Every shot in script order, each with:
- *  - a short zoom-blur entry transition + soft whoosh on the cut
+ *  - a short zoom-blur entry transition (no sound on cuts: each shot's own cues carry the audio)
  *  - its VO (starting at VO_LEAD) and word-synced captions
  *  - its own sparse SFX cues
  * plus one music bed ducked under the voice, and the film finish overlay.
@@ -163761,7 +164688,7 @@ const shotFrames = (fps)=>{
     });
 };
 const sfx = (name)=>(0,esm/* .staticFile */.dQ)(`sfx/caffeine/${name}.wav`);
-const CaffeineFull = ()=>{
+const CaffeineFull = ({ audioOnly = false })=>{
     const { fps } = (0,esm/* .useVideoConfig */.Bk)();
     const shots = shotFrames(fps);
     const voSpans = shots.map((s)=>[
@@ -163773,7 +164700,7 @@ const CaffeineFull = ()=>{
             background: theme_K.bg
         },
         children: [
-            shots.map((s, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .Sequence */.gd, {
+            audioOnly ? null : shots.map((s, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .Sequence */.gd, {
                     name: s.id,
                     from: s.from,
                     durationInFrames: s.frames,
@@ -163783,7 +164710,7 @@ const CaffeineFull = ()=>{
                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(s.Comp, {})
                     })
                 }, s.id)),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)(Finish, {}),
+            audioOnly ? null : /*#__PURE__*/ (0,jsx_runtime.jsx)(Finish, {}),
             shots.map((s)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)(esm/* .Sequence */.gd, {
                     name: `VO ${s.vo}`,
                     from: s.from + Math.round((/* inlined export .VO_LEAD */0.4) * fps),
@@ -163794,7 +164721,7 @@ const CaffeineFull = ()=>{
                             src: (0,esm/* .staticFile */.dQ)(`vo/caffeine/${s.vo}.mp3`),
                             volume: MIX.vo
                         }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)(Captions_Captions, {
+                        audioOnly ? null : /*#__PURE__*/ (0,jsx_runtime.jsx)(Captions_Captions, {
                             words: VO_WORDS[s.vo],
                             keywords: s.keywords
                         })
@@ -163804,15 +164731,6 @@ const CaffeineFull = ()=>{
                 voSpans: voSpans,
                 total: CAFFEINE_DURATION
             }),
-            shots.slice(1).map((s)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .Sequence */.gd, {
-                    name: `Cut whoosh ${s.id}`,
-                    from: Math.max(0, s.from - Math.round(0.25 * fps)),
-                    durationInFrames: Math.round(1.2 * fps),
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Audio, {
-                        src: sfx("whoosh_soft"),
-                        volume: MIX.cutWhoosh
-                    })
-                }, `wh-${s.id}`)),
             shots.flatMap((s)=>s.cues.map((c, k)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .Sequence */.gd, {
                         name: `SFX ${c.sfx} (${s.id})`,
                         from: s.from + Math.round(c.at * fps),
@@ -163825,6 +164743,9 @@ const CaffeineFull = ()=>{
         ]
     });
 };
+/** Sound only (VO, music, SFX), for rendering the audio track without loading any 3D. */ const CaffeineAudio = ()=>/*#__PURE__*/ (0,jsx_runtime.jsx)(CaffeineFull, {
+        audioOnly: true
+    });
 
 ;// CONCATENATED MODULE: ./src/vo-lengths.json
 var src_vo_lengths_namespaceObject = /*#__PURE__*/JSON.parse('{"s1":4.67,"s2":5.25,"s3":5.05,"hook":7.77,"pellet":7.51,"fission":15.72,"reactor":13.1,"chain":10.75,"myth":14.99,"control":9.91,"scram":6.69,"loop":7.06,"pressure":8.61,"sg":10.84,"turbine":6.0,"generator":8.94,"dynamo":2.81,"city":4.11,"cooling":4.96,"condenser":5.94,"safety":11.4,"catcher":6.71,"ending":7.15}')
@@ -171484,7 +172405,7 @@ const S17Turbine_T = {
     three: vo_wordAt("turbine", "তিন"),
     thousand: vo_wordAt("turbine", "হাজার")
 };
-const S17Turbine_ROWS = [
+const ROWS = [
     {
         x: -1.8,
         hub: 0.62,
@@ -171564,7 +172485,7 @@ const S17Turbine_World = ()=>{
         4,
         2
     ]);
-    const rows = (0,react.useMemo)(()=>S17Turbine_ROWS.map((r)=>bladeRow(r.hub, r.len, r.n)), []);
+    const rows = (0,react.useMemo)(()=>ROWS.map((r)=>bladeRow(r.hub, r.len, r.n)), []);
     const ghostMats = (0,react.useMemo)(()=>[
             0,
             1,
@@ -171686,7 +172607,7 @@ const S17Turbine_World = ()=>{
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
                 "rotation-x": a,
-                children: S17Turbine_ROWS.map((r, i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
+                children: ROWS.map((r, i)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)("group", {
                         position: [
                             r.x,
                             0,
@@ -171716,7 +172637,7 @@ const S17Turbine_World = ()=>{
             }),
             ghostMats.map((m, gi)=>m.opacity > 0.01 ? /*#__PURE__*/ (0,jsx_runtime.jsx)("group", {
                     "rotation-x": a - (gi + 1) * 0.035 * (w / W_MAX) * 3,
-                    children: S17Turbine_ROWS.map((r, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("mesh", {
+                    children: ROWS.map((r, i)=>/*#__PURE__*/ (0,jsx_runtime.jsx)("mesh", {
                             geometry: rows[i],
                             material: m,
                             position: [
@@ -175669,7 +176590,7 @@ var SlidePresentation = ({
     children
   });
 };
-var slide = (props) => {
+var esm_slide = (props) => {
   return {
     component: SlidePresentation,
     props: props ?? {}
@@ -176065,8 +176986,8 @@ var TransitionSeriesChildren = ({
             throw new Error(`The duration of a <TransitionSeries.Sequence /> must not be shorter than the duration of the previous <TransitionSeries.Transition />. The transition is ${prev.props.timing.getDurationInFrames({ fps })} frames long, but the sequence is only ${timelineDurationInFrames} frames long (${debugInfo})`);
           }
           if (next && prev && nextProgress !== null && prevProgress !== null) {
-            const nextPresentation = next.props.presentation ?? slide();
-            const prevPresentation = prev.props.presentation ?? slide();
+            const nextPresentation = next.props.presentation ?? esm_slide();
+            const prevPresentation = prev.props.presentation ?? esm_slide();
             const UppercaseNextPresentation = nextPresentation.component;
             const UppercasePrevPresentation = prevPresentation.component;
             return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
@@ -176114,7 +177035,7 @@ var TransitionSeriesChildren = ({
             }, i));
           }
           if (prevProgress !== null && prev) {
-            const prevPresentation = prev.props.presentation ?? slide();
+            const prevPresentation = prev.props.presentation ?? esm_slide();
             const UppercasePrevPresentation = prevPresentation.component;
             return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
               from: actualStartFrame,
@@ -176141,7 +177062,7 @@ var TransitionSeriesChildren = ({
             }, i));
           }
           if (nextProgress !== null && next) {
-            const nextPresentation = next.props.presentation ?? slide();
+            const nextPresentation = next.props.presentation ?? esm_slide();
             const UppercaseNextPresentation = nextPresentation.component;
             return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
               from: actualStartFrame,
@@ -179882,6 +180803,14 @@ const RemotionRoot = ()=>{
                 component: CaffeineFull,
                 durationInFrames: Math.round(CAFFEINE_DURATION * CINE_FPS),
                 fps: 30,
+                width: (/* inlined export .WIDTH */1080),
+                height: (/* inlined export .HEIGHT */1920)
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm/* .Composition */.BO, {
+                id: "CaffeineAudio",
+                component: CaffeineAudio,
+                durationInFrames: Math.round(CAFFEINE_DURATION * CINE_FPS),
+                fps: CINE_FPS,
                 width: (/* inlined export .WIDTH */1080),
                 height: (/* inlined export .HEIGHT */1920)
             }),
@@ -236771,7 +237700,7 @@ __webpack_require__.u = (chunkId) => {
 })();
 // webpack/runtime/get_full_hash
 (() => {
-__webpack_require__.h = () => ("1d917edb34c4a4ca")
+__webpack_require__.h = () => ("81cd360dc2ce3b86")
 })();
 // webpack/runtime/global
 (() => {
@@ -236989,7 +237918,7 @@ jsonpChunkLoadingGlobal.push = __rspack_jsonp.bind(null, jsonpChunkLoadingGlobal
 // Load entry module and return exports
 __webpack_require__(6507);
 __webpack_require__(3999);
-__webpack_require__(7472);
+__webpack_require__(2578);
 __webpack_require__(3610);
 var __webpack_exports__ = __webpack_require__(3482);
 })()

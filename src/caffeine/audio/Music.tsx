@@ -10,11 +10,11 @@ import { Audio } from "@remotion/media";
 import { staticFile, useVideoConfig } from "remotion";
 
 /** Music level in gaps between VO lines. */
-const GAP = 0.12;
+const GAP = 0.19;
 /** Music level while VO is speaking. */
-const DUCK = 0.05;
+const DUCK = 0.06;
 /** Level at the very start (hook) and after the last VO line (end card). */
-const LIFT = 0.15;
+const LIFT = 0.23;
 const ATTACK = 0.15; // s — duck in (finishes right as the voice starts)
 const RELEASE = 0.4; // s — swell back after the voice stops
 const FADE_OUT = 1.5; // s
@@ -60,9 +60,10 @@ export const Music: React.FC<{ readonly voSpans: ReadonlyArray<readonly [number,
 
 /** Master volume multipliers the assembler applies (audio agent tunes these). */
 export const MIX = {
-  vo: 1,
-  /** SFX files peak at -1 dBFS; 0.55 (~-5 dB) keeps cues clearly under the voice. */
-  sfx: 0.55,
+  /** creator's own recording, loudness-normalised to about -16 LUFS */
+  vo: 0.86,
+  /** SFX files peak at -1 dBFS; balanced against the -16 LUFS voice so cues sit clearly under it. */
+  sfx: 0.75,
   /** whoosh played by the assembler on every shot cut — a subtle air movement, not an effect */
   cutWhoosh: 0.18,
 };

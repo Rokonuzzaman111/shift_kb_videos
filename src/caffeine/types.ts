@@ -27,6 +27,7 @@ export const SFX_NAMES = [
   "ding_2",
   "ding_3",
   "clock_wind",
+  "drowsy",
 ] as const;
 
 export type SfxName = (typeof SFX_NAMES)[number];

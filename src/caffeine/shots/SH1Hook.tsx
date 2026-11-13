@@ -1,18 +1,19 @@
 /**
- * OWNER: props3d agent. SH1 · hook (VO "hook", ~9 s).
- *  A  0 → পরদিন   3D night desk. Opens close on the steaming glass of milk tea (book, lamp glow, moon window behind);
- *                 slow push + rack focus from the cup to the alarm clock reading 2:00. Title "রাত ২টা" on চা.
- *  B  পরদিন → কীভাবে  Hard cut: 2D exam hall, student studying → head drops on ঝিমানোর. Title "পরীক্ষার হল".
- *  C  কীভাবে → end  Whip back to the tea glass, then a fast zoom down INTO the tea surface (hands over to SH2's brain).
+ * SH1 · hook (VO "hook", ~7.6 s): "বিকেল চারটা বাজলেই এক কাপ চা লাগে? না পেলে মাথা কাজ করে না? কারণটা আপনার মগজে।"
+ *  A  0 → চা          Study desk at 4 pm: low golden sun through venetian blinds paints stripes over the desk and wall.
+ *                     Slow push to the alarm clock; its minute hand clicks onto 4:00 on চারটা. Title "বিকেল ৪টা".
+ *  B  চা → না         A glass of milk tea slides in from the right and lands (clink) in the sunlight; steam.
+ *  C  না → কারণটা     The tea slides back out of reach. POV gets drowsy: picture blurs and greys, heavy eyelids
+ *                     close, jerk open, close again. Title "মাথা কাজ করে না" on মাথা.
+ *  D  কারণটা → end    Eyes snap open, fast push-in with zoom blur toward the frame centre → hands over to SH2's brain.
  */
 import { AbsoluteFill, interpolate } from "remotion";
 import { PostFX } from "../../kit/PostFX";
 import { Lens, Stage } from "../../kit/Stage";
 import { clamp, ease, mix, mix3, prog, useSeconds } from "../../kit/time";
 import { CLOCK_POS, CUP_POS, CUP_SCALE, Desk } from "../three/Desk";
-import { TEA_TOP } from "../three/TeaCup";
-import { ExamHall } from "../two/ExamHall";
-import { Student } from "../two/Student";
+import { TeaCup } from "../three/TeaCup";
+import { Eyelids } from "../two/Eyelids";
 import { K } from "../theme";
 import type { Cue } from "../types";
 import { Title } from "../ui/Text";
@@ -20,101 +21,113 @@ import { shotDuration, wordAt } from "../vo";
 
 export const SH1_DURATION = shotDuration("hook");
 /** Caption words (exact VO tokens) to highlight. */
-export const SH1_KEYWORDS: string[] = ["রাতে", "চা", "ঝিমানোর"];
+export const SH1_KEYWORDS: string[] = ["চারটা", "চা", "মাথা"];
 
 const T = {
-  tea: wordAt("hook", "চা"),
-  cutHall: wordAt("hook", "পরদিন") - 0.08,
-  nod: wordAt("hook", "ঝিমানোর"),
-  cutBack: wordAt("hook", "কীভাবে") - 0.08,
+  four: wordAt("hook", "চারটা"),
+  tea: wordAt("hook", "চা", 1), // nth=1: "চারটা" also prefix-matches "চা"
+  no: wordAt("hook", "না"),
+  head: wordAt("hook", "মাথা"),
+  why: wordAt("hook", "কারণটা"),
 };
+const LAND = T.tea - 0.05; // cup lands on the desk
+const AWAY = T.no + 0.05; // cup slides back out
 
 /** Sound cues for this shot (sparse!). */
 export const SH1_CUES: Cue[] = [
-  { at: 0.25, sfx: "clink", volume: 0.8 },
-  { at: T.cutBack - 0.12, sfx: "whoosh_fast", volume: 0.7 },
+  { at: T.four, sfx: "tick", volume: 0.7 },
+  { at: LAND, sfx: "clink", volume: 0.75 },
+  { at: T.no + 0.25, sfx: "drowsy", volume: 0.6 },
+  { at: T.why - 0.1, sfx: "whoosh_fast", volume: 0.6 },
 ];
 
-const CUP_C: [number, number, number] = [CUP_POS[0], CUP_POS[1] + 0.5 * CUP_SCALE, CUP_POS[2]];
-const TEA_Y = CUP_POS[1] + TEA_TOP(0.82) * CUP_SCALE;
+type V3 = [number, number, number];
 const dist = (a: readonly number[], b: readonly number[]) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+const CUP_C: V3 = [CUP_POS[0], CUP_POS[1] + 0.5 * CUP_SCALE, CUP_POS[2]];
+const CLOCK: V3 = [...CLOCK_POS];
 
-type Cam = { pos: [number, number, number]; target: [number, number, number]; mm: number; focus: number; range: number };
-
-const camAt = (t: number): Cam => {
-  if (t < T.cutBack) {
-    // A: cup → clock push with rack focus
-    const a = prog(t, 0, T.cutHall + 0.4, ease.cine);
-    const pos = mix3([2.6, 2.3, 5.0], [1.75, 1.5, 3.7], a);
-    const target = mix3([0.85, 0.38, 0.35], [0.3, 0.62, -0.75], a);
-    const rack = prog(t, 1.3, 2.7, ease.inOut);
-    const focus = mix(dist(pos, CUP_C), dist(pos, CLOCK_POS), rack);
-    return { pos, target, mm: mix(35, 40, a), focus, range: 1.1 };
-  }
-  // C: whip back then dive into the tea
-  const w = prog(t, T.cutBack, T.cutBack + 0.32, ease.outCubic);
-  const d = prog(t, T.cutBack + 0.2, SH1_DURATION, ease.inOut);
-  const pos = mix3([2.45, 1.85, 3.0], [CUP_POS[0] + 0.02, TEA_Y + 0.72, CUP_POS[2] + 0.2], d);
-  const look: [number, number, number] = [CUP_POS[0], TEA_Y - 0.05 * (1 - d), CUP_POS[2] + 0.1 * d];
-  const target = mix3([look[0] - 2.4, look[1] + 0.4, look[2] - 0.6], look, w);
-  return { pos, target, mm: mix(40, 58, d), focus: dist(pos, [CUP_POS[0], TEA_Y, CUP_POS[2]]), range: mix(0.8, 0.25, d) };
+/** Cup x offset: slides in from the right before LAND, back out after AWAY. */
+const cupSlide = (t: number) => {
+  const inK = prog(t, LAND - 0.55, LAND, ease.outCubic);
+  const outK = prog(t, AWAY, AWAY + 0.6, ease.inOut);
+  return (1 - inK) * 3.2 + outK * 3.6;
 };
+
+const camAt = (t: number) => {
+  // A: wide → clock
+  const a = prog(t, 0, T.four + 0.6, ease.cine);
+  let pos = mix3([-0.6, 2.3, 5.2], [-0.15, 1.45, 3.2], a);
+  let target = mix3([0.4, 0.75, -0.4], [CLOCK[0], CLOCK[1] - 0.05, CLOCK[2]], a);
+  let focusPt: V3 = CLOCK;
+  // B: swing to where the cup lands
+  const b = prog(t, T.four + 0.7, LAND + 0.4, ease.cine);
+  pos = mix3(pos, [2.5, 1.55, 3.9], b);
+  target = mix3(target, [CUP_C[0] - 0.25, 0.45, CUP_C[2] - 0.2], b);
+  focusPt = mix3(focusPt, CUP_C, b);
+  // C: drowsy drift, slight droop
+  const c = prog(t, T.no, T.why, ease.inOut);
+  pos = mix3(pos, [2.2, 1.3, 3.5], c);
+  target = mix3(target, [CUP_C[0] - 0.6, 0.25, CUP_C[2] - 0.6], c);
+  // D: fast push-in
+  const d = prog(t, T.why - 0.05, SH1_DURATION, ease.inQuad);
+  pos = mix3(pos, [1.0, 0.95, 1.4], d);
+  const mm = mix(mix(34, 42, a), 70, d);
+  return { pos, target, mm, focus: dist(pos, focusPt), range: mix(1.2, 0.6, c) };
+};
+
+/** Lid closure over time: heavy, jerk open, heavier, snap open on কারণটা. */
+const lidsAt = (t: number) =>
+  interpolate(
+    t,
+    [T.no + 0.2, T.head, T.head + 0.35, T.head + 0.55, T.why - 0.25, T.why - 0.05, T.why + 0.08],
+    [0, 0.55, 0.62, 0.18, 0.86, 0.9, 0],
+    clamp,
+  );
 
 const World: React.FC = () => {
   const t = useSeconds();
   const c = camAt(t);
-  const inC = t >= T.cutBack;
+  const minuteSnap = prog(t, T.four - 0.04, T.four + 0.06, ease.out);
+  const clockHours = 15 + (54 + 6 * minuteSnap) / 60; // 3:54 → 4:00
+  const slide = cupSlide(t);
   return (
     <>
       <Lens position={c.pos} target={c.target} mm={c.mm} near={0.02} far={80} />
-      <Desk t={t} clockHours={2} lampOn={1} steam={inC ? 0.9 * (1 - prog(t, T.cutBack + 0.4, SH1_DURATION - 0.7)) : 0.8} cupGlow={inC ? prog(t, SH1_DURATION - 1.2, SH1_DURATION, ease.inQuad) * 0.3 : 0} />
-      <PostFX focus={c.focus} focusRange={c.range} bokeh={inC ? 3 : 5} bloom={0.7} bloomThreshold={0.82} vignette={0.55} />
+      <Desk t={t} mood="afternoon" clockHours={clockHours} lampOn={0} showCup={false} />
+      {slide < 3.5 ? <TeaCup t={t} position={[CUP_POS[0] + slide, CUP_POS[1], CUP_POS[2]]} scale={CUP_SCALE} fill={0.82} steam={0.75} /> : null}
+      <PostFX focus={c.focus} focusRange={c.range} bokeh={5} bloom={0.6} bloomThreshold={0.85} vignette={0.5} />
     </>
-  );
-};
-
-const Hall: React.FC = () => {
-  const t = useSeconds();
-  const p = prog(t, T.cutHall, T.cutBack, ease.cine);
-  return (
-    <AbsoluteFill style={{ background: K.bg }}>
-      <AbsoluteFill style={{ scale: 1 + p * 0.06 }}>
-        <ExamHall t={t} />
-        <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 1920 - 1260 }}>
-          <Student t={t} pose={t >= T.nod ? "nodding" : "study"} poseAt={t >= T.nod ? T.nod : T.cutHall} width={720} />
-        </AbsoluteFill>
-      </AbsoluteFill>
-    </AbsoluteFill>
   );
 };
 
 export const SH1Hook: React.FC = () => {
   const t = useSeconds();
-  const inHall = t >= T.cutHall && t < T.cutBack;
-  const whip = interpolate(t, [T.cutBack, T.cutBack + 0.06, T.cutBack + 0.34], [0, 60, 0], clamp);
+  const lids = lidsAt(t);
+  const push = prog(t, T.why - 0.05, SH1_DURATION, ease.inQuad);
+  const groggy = lids * 0.9 + push * 0.6;
   return (
     <AbsoluteFill style={{ background: K.bg }}>
-      <svg width={0} height={0} style={{ position: "absolute" }}>
-        <filter id="sh1whip" x="-10%" y="0%" width="120%" height="100%">
-          <feGaussianBlur stdDeviation={`${whip} ${whip * 0.08}`} />
-        </filter>
-      </svg>
-      <AbsoluteFill style={{ filter: whip > 0.5 ? "url(#sh1whip)" : undefined }}>
-        <Stage background="#070504">
+      <AbsoluteFill
+        style={{
+          filter: groggy > 0.02 ? `blur(${groggy * 9}px) saturate(${1 - lids * 0.55}) brightness(${1 - push * 0.55})` : undefined,
+          scale: 1 + push * 0.12,
+        }}
+      >
+        <Stage background="#2a1c12">
           <World />
         </Stage>
       </AbsoluteFill>
-      {inHall ? <Hall /> : null}
+      <Eyelids k={lids} />
 
       <AbsoluteFill style={{ alignItems: "center", paddingTop: 250 }}>
-        {t < T.cutHall ? (
-          <Title at={T.tea} until={T.cutHall - 0.1} size={124} color={K.ink}>
-            রাত ২টা
+        {t < T.no ? (
+          <Title at={T.four} until={T.no - 0.15} size={124} color={K.ink}>
+            বিকেল ৪টা
           </Title>
         ) : null}
-        {inHall ? (
-          <Title at={T.cutHall + 0.05} size={110} color={K.amber}>
-            পরীক্ষার হল
+        {t >= T.no && t < T.why ? (
+          <Title at={T.head} until={T.why - 0.15} size={108} color={K.amber}>
+            মাথা কাজ করে না
           </Title>
         ) : null}
       </AbsoluteFill>

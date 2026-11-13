@@ -10,7 +10,6 @@
 import { AbsoluteFill, Easing, interpolate, spring, useVideoConfig } from "remotion";
 import { useSeconds } from "../../kit/time";
 import { Cam, Motes, WarmBg } from "../two/Kit2D";
-import { ExamHall } from "../two/ExamHall";
 import { Student } from "../two/Student";
 import { K } from "../theme";
 import type { Cue } from "../types";
@@ -328,7 +327,24 @@ export const SH4Energy: React.FC = () => {
     <AbsoluteFill style={{ background: K.bg }}>
       <Cam t={t} scale={push * 1.03} x={-lt * 6} fy={900} drift={0.5}>
         <div style={{ position: "absolute", inset: 0, filter: "blur(3px) brightness(0.55) saturate(0.8)" }}>
-          <ExamHall t={t + 3} />
+          {/* sunny 4 pm room: warm wall with venetian-blind light stripes (same light as the hook) */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(ellipse 80% 60% at 30% 35%, #c9935e 0%, #7a5236 45%, #2a1a10 100%)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: "-20%",
+              rotate: "-14deg",
+              background: "repeating-linear-gradient(180deg, rgba(255,214,150,0.28) 0px, rgba(255,214,150,0.28) 46px, rgba(0,0,0,0) 46px, rgba(0,0,0,0) 92px)",
+              maskImage: "radial-gradient(ellipse 60% 45% at 35% 35%, #000 30%, transparent 75%)",
+              WebkitMaskImage: "radial-gradient(ellipse 60% 45% at 35% 35%, #000 30%, transparent 75%)",
+            }}
+          />
         </div>
         <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(13,8,6,0.55) 0%, rgba(13,8,6,0.1) 35%, rgba(13,8,6,0.2) 65%, rgba(13,8,6,0.85) 100%)" }} />
       </Cam>
