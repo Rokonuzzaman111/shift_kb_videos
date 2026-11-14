@@ -261,7 +261,7 @@ const MarketValue: React.FC<{ readonly share: number; readonly dam: number; read
         <AbsoluteFill style={{ perspective: 1600 }}>
           <Glass style={{ left: 780, top: 130, width: 1050, height: 700, transform: "rotateY(-12deg) rotateX(6deg)", transformOrigin: "100% 50%" }}>
             <div style={{ position: "absolute", left: 36, top: 24, fontFamily: numFont, fontWeight: 900, fontSize: 34, color: N.ink, letterSpacing: 2 }}>
-              NVDA <span style={{ color: N.muted, fontWeight: 500, fontSize: 24 }}>· MARKET VALUE</span>
+              NVIDIA <span style={{ color: N.muted, fontWeight: 600, fontSize: 24, fontFamily: headFont }}>· শেয়ারবাজারে মোট মূল্য</span>
             </div>
             <div style={{ position: "absolute", right: 36, top: 22, fontFamily: headFont, fontWeight: 700, fontSize: 32, color: N.muted, opacity: p01(frame, share - 6, share + 6) }}>অক্টোবর ২০২৬</div>
             <svg viewBox="0 0 1050 700" style={{ position: "absolute", inset: 0 }}>

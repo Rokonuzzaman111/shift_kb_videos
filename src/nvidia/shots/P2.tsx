@@ -18,11 +18,11 @@
  * 15 "২০২২ … চ্যাটজিপিটি"                     chat window opens
  * 16 "সব বড় কোম্পানি … লাইনে দাঁড়াল"          data centre, companies queue for NVIDIA chips
  */
-import { AbsoluteFill, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion";
-import { Atmos, Beats, Cam, Counter, DocBg, Glass, GlitchBars, HitFlash, KText, Marker, PhotoCard, Plate, p01, type Beat } from "../kit";
+import { AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { Atmos, Beats, Cam, Counter, Glass, GlitchBars, HitFlash, KText, Marker, PhotoCard, Plate, p01, type Beat } from "../kit";
 import { GraphicsCard, Studio, orbit, type V3 } from "../three";
 import { N, clamp, ease, headFont, numFont } from "../theme";
-import { Booth, DinerStreet, Film, Staff } from "../two/P2_parts";
+import { Film } from "../two/P2_parts";
 import type { Cue } from "../types";
 import { useAt } from "../vo";
 
@@ -48,78 +48,190 @@ export const P2_CUES: Cue[] = [
 
 const bn = (v: number | string) => String(v).replace(/\d/g, (c) => "০১২৩৪৫৬৭৮৯"[Number(c)]);
 
-/* ---------------------------------------------------------------- 1: 1993 street */
+/* ---------------------------------------------------------------- photo helper (real photos, film-graded) */
+const FullPhoto: React.FC<{ readonly src: string; readonly pos?: string; readonly zoom?: [number, number]; readonly pan?: [number, number]; readonly blur?: number; readonly bright?: number }> = ({
+  src,
+  pos = "center",
+  zoom = [1.05, 1.2],
+  pan = [0, 0],
+  blur = 0,
+  bright = 1,
+}) => {
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const k = interpolate(frame, [0, durationInFrames], [0, 1], { ...clamp, easing: ease.inOut });
+  return (
+    <AbsoluteFill style={{ overflow: "hidden" }}>
+      <Img
+        src={staticFile(src)}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: pos,
+          scale: `${zoom[0] + (zoom[1] - zoom[0]) * k}`,
+          translate: `${pan[0] * k}px ${pan[1] * k}px`,
+          filter: `blur(${blur}px) brightness(${bright}) contrast(1.06)`,
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
+
+/* ---------------------------------------------------------------- 1: 1993 — the diner sign at night */
 const Street: React.FC<{ readonly place: number; readonly diner: number }> = ({ place, diner }) => {
   const frame = useCurrentFrame();
   const k = p01(frame, place - 4, place + 10);
+  // neon flickers on at "রেস্টুরেন্ট"
+  const flick = frame < diner ? 0.55 : frame < diner + 8 ? (random(`nf${frame}`) > 0.4 ? 1.15 : 0.6) : 1.08;
   return (
     <AbsoluteFill>
       <Film>
-        <Cam push={0.22} drift={[-40, -30]} origin="46% 55%" punch={[diner]}>
-          <DinerStreet neon={diner} />
-        </Cam>
-        <Atmos seed="p2a" color="#ff8a4a" color2="#ff3a6a" leak={0.5} bokeh={14} />
+        <FullPhoto src="nvidia/img/dennys_sign.jpg" pos="30% 40%" zoom={[1.15, 1.45]} pan={[90, 30]} bright={flick} />
+        <AbsoluteFill style={{ background: "radial-gradient(ellipse at 28% 42%, rgba(255,190,60,0.22), transparent 45%)", mixBlendMode: "screen", opacity: flick > 1 ? 1 : 0.3 }} />
+        <Atmos seed="p2a" color="#ff8a4a" color2="#ff3a6a" leak={0.55} bokeh={22} />
       </Film>
-      <div style={{ position: "absolute", left: 96, top: 60, opacity: p01(frame, 0, 10), scale: `${1.25 - 0.25 * p01(frame, 0, 14)}`, transformOrigin: "left top" }}>
-        <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 170, color: "#fff4e0", letterSpacing: -4, lineHeight: 1, textShadow: "0 0 40px #ff8a4a88, 0 10px 40px #000" }}>1993</div>
+      <AbsoluteFill style={{ background: "linear-gradient(90deg, transparent 45%, rgba(5,6,7,0.75) 100%)" }} />
+      <div style={{ position: "absolute", right: 96, top: 120, textAlign: "right", opacity: p01(frame, 0, 10), scale: `${1.25 - 0.25 * p01(frame, 0, 14)}`, transformOrigin: "right top" }}>
+        <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 210, color: "#fff4e0", letterSpacing: -6, lineHeight: 1, textShadow: "0 0 50px #ff8a4a88, 0 10px 40px #000" }}>1993</div>
       </div>
-      <Glass style={{ left: 96, top: 260, padding: "10px 30px 16px", opacity: k, translate: `${(1 - k) * -60}px 0` }} accent={N.amber}>
+      <Glass style={{ right: 96, top: 370, padding: "10px 30px 16px", opacity: k, translate: `${(1 - k) * 60}px 0` }} accent={N.amber}>
         <div style={{ fontFamily: headFont, fontWeight: 800, fontSize: 46, color: N.ink, lineHeight: 1.3 }}>📍 স্যান হোসে, আমেরিকা</div>
       </Glass>
+      <div style={{ position: "absolute", right: 100, top: 480, opacity: p01(frame, diner, diner + 12), fontFamily: headFont, fontWeight: 700, fontSize: 38, color: "#ffd9a0", textShadow: "0 4px 18px #000", lineHeight: 1.3 }}>
+        রাস্তার পাশের এক রেস্টুরেন্ট
+      </div>
     </AbsoluteFill>
   );
 };
 
-/* ---------------------------------------------------------------- 2/3: booth */
+/* ---------------------------------------------------------------- 2: the booth — three founders, a napkin sketch */
+const FOUNDERS = [
+  { n: "জেনসেন হুয়াং", r: "চিপ ডিজাইনার" },
+  { n: "ক্রিস ম্যালাকাওস্কি", r: "ইঞ্জিনিয়ার" },
+  { n: "কার্টিস প্রিম", r: "গ্রাফিক্স চিপ ডিজাইনার" },
+];
+const SKETCH = [
+  "M560 300 L860 300 L860 560 L560 560 Z",
+  "M610 350 L810 350 L810 510 L610 510 Z",
+  "M560 340 L520 340 M560 400 L520 400 M560 460 L520 460 M560 520 L520 520",
+  "M860 340 L900 340 M860 400 L900 400 M860 460 L900 460 M860 520 L900 520",
+  "M620 300 L620 260 M700 300 L700 260 M780 300 L780 260",
+  "M640 380 L780 480 M640 480 L780 380",
+];
+const Napkin: React.FC<{ readonly draw: number; readonly glow: number }> = ({ draw, glow }) => (
+  <svg viewBox="0 0 1400 800" style={{ position: "absolute", inset: 0, overflow: "visible" }}>
+    {SKETCH.map((d, i) => {
+      const k = Math.max(0, Math.min(1, draw * SKETCH.length - i));
+      return (
+        <path
+          key={i}
+          d={d}
+          fill="none"
+          stroke={glow > 0 ? N.greenHi : "#2a3a6a"}
+          strokeWidth={glow > 0 ? 7 : 6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength={1}
+          strokeDasharray={1}
+          strokeDashoffset={1 - k}
+          style={{ filter: glow > 0 ? `drop-shadow(0 0 ${14 * glow}px ${N.green})` : undefined }}
+        />
+      );
+    })}
+    <text x={710} y={640} textAnchor="middle" fontFamily="Segoe Print, cursive" fontSize={44} fill={glow > 0 ? N.greenHi : "#2a3a6a"} opacity={Math.max(0, draw * 1.6 - 0.6)}>
+      3D graphics chip?
+    </text>
+  </svg>
+);
+
 const BoothBeat: React.FC<{ readonly three: number; readonly company: number }> = ({ three, company }) => {
   const frame = useCurrentFrame();
-  const sketch = p01(frame, company - 6, company + 30, ease.inOut);
+  const draw = p01(frame, 4, company + 6, ease.inOut);
+  const glow = p01(frame, company, company + 12);
   return (
     <AbsoluteFill>
-      <Film>
-        <Cam push={0.16} drift={[0, 60]} origin="50% 85%" punch={[three, company]}>
-          <Booth pop={[three, three + 5, three + 10]} sketch={sketch} focus={0} />
-        </Cam>
-        <Atmos seed="p2b" color="#ffb060" color2="#ff4a7a" leak={0.4} bokeh={10} />
+      <Film amount={0.85}>
+        <FullPhoto src="nvidia/img/diner_booth.jpg" pos="50% 60%" zoom={[1.1, 1.28]} pan={[-40, 20]} blur={3} bright={0.75} />
+        <Atmos seed="p2b" color="#ffb060" color2="#ff4a7a" leak={0.4} bokeh={14} />
       </Film>
+      <Cam push={0.1} drift={[0, -20]} punch={[three, company]} origin="50% 70%">
+        <AbsoluteFill style={{ perspective: 1300 }}>
+          <div
+            style={{
+              position: "absolute",
+              left: 260,
+              top: 300,
+              width: 1400,
+              height: 800,
+              transform: "rotateX(52deg) rotateZ(-6deg)",
+              transformOrigin: "50% 50%",
+              boxShadow: "0 60px 120px rgba(0,0,0,0.7)",
+              borderRadius: 6,
+              backgroundImage:
+                "repeating-linear-gradient(0deg, rgba(0,0,0,0.025) 0 2px, transparent 2px 12px), repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0 2px, transparent 2px 12px), linear-gradient(135deg, #f7f3ea, #e9e2d2)",
+            }}
+          >
+            <Napkin draw={draw} glow={glow} />
+          </div>
+        </AbsoluteFill>
+      </Cam>
+      <div style={{ position: "absolute", left: 96, top: 150, display: "flex", flexDirection: "column", gap: 18 }}>
+        {FOUNDERS.map((fd, i) => {
+          const kk = p01(frame, three + i * 5, three + i * 5 + 12);
+          return (
+            <Glass key={fd.n} style={{ position: "relative", padding: "10px 26px 14px", opacity: kk, translate: `${(1 - kk) * -80}px 0`, width: 470 }} accent={i === 0 ? N.green : N.amber}>
+              <div style={{ fontFamily: headFont, fontWeight: 800, fontSize: 38, color: N.ink, lineHeight: 1.3 }}>{fd.n}</div>
+              <div style={{ fontFamily: headFont, fontWeight: 600, fontSize: 26, color: N.muted, lineHeight: 1.3 }}>{fd.r}</div>
+            </Glass>
+          );
+        })}
+      </div>
       <div style={{ position: "absolute", left: 96, top: 46, width: 900 }}>
-        <KText text="৩ জন ইঞ্জিনিয়ার" at={three} size={66} align="left" color="#fff4e0" />
+        <KText text="৩ জন ইঞ্জিনিয়ার" at={three} size={62} align="left" color="#fff4e0" />
       </div>
-      <div style={{ position: "absolute", right: 96, top: 46, width: 820 }}>
-        {frame >= company - 4 ? <KText text="ঠিক হলো: কোম্পানি খুলবেন" at={company - 4} size={52} align="right" color={N.greenHi} /> : null}
+      <div style={{ position: "absolute", right: 96, top: 60 }}>
+        {frame >= company - 4 ? (
+          <Glass style={{ position: "relative", padding: "8px 28px 14px", opacity: glow, scale: `${0.8 + 0.2 * glow}` }} accent={N.green} sheenAt={company}>
+            <div style={{ fontFamily: headFont, fontWeight: 800, fontSize: 48, color: N.greenHi, lineHeight: 1.3 }}>ঠিক হলো: কোম্পানি খুলবেন</div>
+          </Glass>
+        ) : null}
       </div>
+      <HitFlash at={company} color="#fff0c0" />
     </AbsoluteFill>
   );
 };
 
+/* ---------------------------------------------------------------- 3: one of them — Jensen Huang */
 const JensenBeat: React.FC<{ readonly one: number; readonly name: number }> = ({ one, name }) => {
   const frame = useCurrentFrame();
-  const focus = p01(frame, one - 6, one + 14);
   return (
     <AbsoluteFill>
-      <Film>
-        <Cam push={0.5} drift={[0, 40]} origin="50% 42%" punch={[name]}>
-          <Booth pop={[-50, -50, -50]} sketch={1} focus={focus} />
-        </Cam>
-        <Atmos seed="p2c" color="#ffd090" leak={0.35} bokeh={8} />
+      <Film amount={0.7}>
+        <FullPhoto src="nvidia/img/diner_booth.jpg" pos="50% 55%" zoom={[1.3, 1.45]} blur={10} bright={0.55} />
+        <Atmos seed="p2c" color="#ffd090" leak={0.4} bokeh={16} />
       </Film>
-      <div style={{ position: "absolute", left: 96, top: 60, width: 700 }}>
-        <KText text="তাদের একজন…" at={one - 6} size={64} align="left" color="#fff4e0" />
+      <AbsoluteFill style={{ background: "radial-gradient(ellipse at 62% 45%, transparent 20%, rgba(5,6,7,0.7) 70%)" }} />
+      <Cam push={0.08} drift={[-10, 0]} punch={[name]}>
+        <PhotoCard src="nvidia/img/jensen_2010.jpg" x={940} y={120} w={640} h={520} at={Math.max(0, one - 4)} rot={4} pos="50% 25%" caption="জেনসেন হুয়াং · প্রতিষ্ঠাতা" zoom={0.12} />
+      </Cam>
+      <div style={{ position: "absolute", left: 96, top: 300, width: 760 }}>
+        <KText text="তাদের একজন" at={Math.max(0, one - 4)} size={70} align="left" color="#fff4e0" />
+        {frame >= name - 2 ? <KText text="জেনসেন হুয়াং" at={name - 2} size={96} align="left" color={N.greenHi} glow={`${N.green}88`} /> : null}
       </div>
-      <PhotoCard src="nvidia/img/jensen_2010.jpg" x={1240} y={130} w={520} h={420} at={name - 6} rot={6} pos="50% 25%" caption="জেনসেন হুয়াং" />
-      <Marker d="M1250 640 Q1500 620 1760 650" at={name + 10} color={N.greenHi} width={8} />
+      <Marker d="M110 640 Q380 620 700 640" at={name + 8} color={N.greenHi} width={8} />
       <HitFlash at={name} />
     </AbsoluteFill>
   );
 };
 
-/* ---------------------------------------------------------------- 4: 1996 dive */
+/* ---------------------------------------------------------------- 4: 1996 dive (over a real 3D data-centre plate, red) */
 const CASH: [number, number][] = [
   [0, 120], [120, 150], [240, 130], [360, 200], [480, 230], [600, 300], [720, 290], [840, 380], [960, 430], [1080, 470], [1200, 520],
 ];
 const Dive: React.FC<{ readonly y96: number }> = ({ y96 }) => {
   const frame = useCurrentFrame();
-  const draw = p01(frame, 0, y96 + 10, ease.in);
+  const draw = p01(frame, 0, y96 + 10, ease.out);
   const upto = draw * (CASH.length - 1);
   const i = Math.floor(upto);
   const pts = CASH.slice(0, i + 1);
@@ -132,39 +244,37 @@ const Dive: React.FC<{ readonly y96: number }> = ({ y96 }) => {
   const st = p01(frame, y96, y96 + 7);
   return (
     <AbsoluteFill>
-      <Film red>
-        <DocBg tint="#2a1412" spot={[55, 40]} />
-        <Atmos seed="p2d" color={N.red} color2="#ff8a4a" leak={0.4} bokeh={12} />
-        <Cam push={0.12} drift={[-40, 20]} rot={-1} shakeAt={[y96]}>
-          <AbsoluteFill style={{ perspective: 1500 }}>
-            <Glass style={{ left: 260, top: 220, width: 1400, height: 600, transform: "rotateX(14deg) rotateY(-8deg)", transformOrigin: "50% 100%" }} accent={N.red}>
-              <div style={{ position: "absolute", left: 36, top: 22, fontFamily: headFont, fontWeight: 700, fontSize: 36, color: N.muted }}>কোম্পানির হাতে টাকা</div>
-              <svg viewBox="0 0 1400 600" style={{ position: "absolute", inset: 0 }}>
-                <defs>
-                  <linearGradient id="p2ra" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor={N.red} stopOpacity="0.45" />
-                    <stop offset="1" stopColor={N.red} stopOpacity="0" />
-                  </linearGradient>
-                  <filter id="p2gl">
-                    <feGaussianBlur stdDeviation="7" />
-                  </filter>
-                </defs>
-                <g transform="translate(90 20)">
-                  {[150, 270, 390, 510].map((y) => (
-                    <line key={y} x1={0} x2={1220} y1={y} y2={y} stroke="rgba(255,255,255,0.06)" />
-                  ))}
-                  {pts.length > 1 ? <path d={`${d} L${head[0]} 560 L0 560 Z`} fill="url(#p2ra)" /> : null}
-                  <path d={d} fill="none" stroke={N.red} strokeWidth={12} filter="url(#p2gl)" />
-                  <path d={d} fill="none" stroke="#ff8080" strokeWidth={5} />
-                  <circle cx={head[0]} cy={head[1]} r={12} fill={N.red} />
-                  <circle cx={head[0]} cy={head[1]} r={30 + 8 * Math.sin(frame / 3)} fill={N.red} opacity={0.25} />
-                </g>
-              </svg>
-            </Glass>
-          </AbsoluteFill>
-        </Cam>
-      </Film>
-      <div style={{ position: "absolute", left: 96, top: 60, width: 1000 }}>
+      <Plate id="dc" from={3} rate={0.5} blur={8} dim={0.55} tint="#ff4a3a" drift={0.12} />
+      <Atmos seed="p2d" color={N.red} color2="#ff8a4a" leak={0.4} bokeh={14} />
+      <Cam push={0.12} drift={[-40, 20]} rot={-1} shakeAt={[y96]}>
+        <AbsoluteFill style={{ perspective: 1500 }}>
+          <Glass style={{ left: 260, top: 230, width: 1400, height: 580, transform: "rotateX(14deg) rotateY(-8deg)", transformOrigin: "50% 100%" }} accent={N.red}>
+            <div style={{ position: "absolute", left: 36, top: 22, fontFamily: headFont, fontWeight: 700, fontSize: 36, color: N.ink, lineHeight: 1.3 }}>কোম্পানির হাতে টাকা</div>
+            <svg viewBox="0 0 1400 580" style={{ position: "absolute", inset: 0 }}>
+              <defs>
+                <linearGradient id="p2ra" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor={N.red} stopOpacity="0.45" />
+                  <stop offset="1" stopColor={N.red} stopOpacity="0" />
+                </linearGradient>
+                <filter id="p2gl">
+                  <feGaussianBlur stdDeviation="7" />
+                </filter>
+              </defs>
+              <g transform="translate(90 20)">
+                {[150, 270, 390, 510].map((y) => (
+                  <line key={y} x1={0} x2={1220} y1={y} y2={y} stroke="rgba(255,255,255,0.06)" />
+                ))}
+                {pts.length > 1 ? <path d={`${d} L${head[0]} 540 L0 540 Z`} fill="url(#p2ra)" /> : null}
+                <path d={d} fill="none" stroke={N.red} strokeWidth={12} filter="url(#p2gl)" />
+                <path d={d} fill="none" stroke="#ff8080" strokeWidth={5} />
+                <circle cx={head[0]} cy={head[1]} r={12} fill={N.red} />
+                <circle cx={head[0]} cy={head[1]} r={30 + 8 * Math.sin(frame / 3)} fill={N.red} opacity={0.25} />
+              </g>
+            </svg>
+          </Glass>
+        </AbsoluteFill>
+      </Cam>
+      <div style={{ position: "absolute", left: 96, top: 60, width: 1100 }}>
         <KText text="শুরুটা সহজ ছিল না" at={2} size={68} align="left" />
       </div>
       {frame >= y96 ? (
@@ -183,7 +293,7 @@ const Dive: React.FC<{ readonly y96: number }> = ({ y96 }) => {
             fontWeight: 900,
             fontSize: 120,
             color: N.red,
-            background: "rgba(40,0,0,0.35)",
+            background: "rgba(40,0,0,0.45)",
             textShadow: `0 0 30px ${N.red}aa`,
           }}
         >
@@ -195,41 +305,60 @@ const Dive: React.FC<{ readonly y96: number }> = ({ y96 }) => {
   );
 };
 
-/* ---------------------------------------------------------------- 5: layoffs */
+/* ---------------------------------------------------------------- 5: layoffs — wall of employee ID badges */
 const STAFF = Array.from({ length: 40 }, (_, i) => ({ c: i % 10, r: Math.floor(i / 10), cut: random(`cut${i}`) < 0.55, j: random(`sj${i}`) }));
+const Badge: React.FC<{ readonly x: number; readonly y: number; readonly i: number; readonly red: boolean; readonly o: number; readonly rot: number }> = ({ x, y, i, red, o, rot }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: x,
+      top: y,
+      width: 92,
+      height: 118,
+      borderRadius: 10,
+      opacity: o,
+      rotate: `${rot}deg`,
+      background: red ? "linear-gradient(160deg, #4a1212, #200808)" : "linear-gradient(160deg, #2a3138, #14191d)",
+      border: `1.5px solid ${red ? N.red : "rgba(255,255,255,0.16)"}`,
+      boxShadow: red ? `0 0 18px ${N.red}66` : "0 8px 18px rgba(0,0,0,0.5)",
+      overflow: "hidden",
+    }}
+  >
+    <div style={{ height: 14, background: red ? N.red : N.green, opacity: 0.85 }} />
+    <div style={{ width: 44, height: 44, borderRadius: 22, margin: "12px auto 6px", background: red ? "#6a2a2a" : "linear-gradient(160deg,#9aa5ad,#59636b)" }} />
+    <div style={{ width: 60, height: 6, borderRadius: 3, margin: "0 auto 5px", background: "rgba(255,255,255,0.35)" }} />
+    <div style={{ textAlign: "center", fontFamily: numFont, fontWeight: 700, fontSize: 13, color: red ? "#ff9a9a" : N.muted }}>ID {String(1000 + i * 7)}</div>
+  </div>
+);
 const Layoff: React.FC<{ readonly cut: number }> = ({ cut }) => {
   const frame = useCurrentFrame();
+  const gone = STAFF.filter((s) => s.cut && frame >= cut + s.j * 8 + 16).length;
   return (
     <AbsoluteFill>
-      <Film red amount={0.8}>
-        <DocBg tint="#22100e" spot={[50, 45]} />
-        <Atmos seed="p2e" color={N.red} leak={0.35} bokeh={10} />
-        <Cam push={0.1} drift={[30, 0]} punch={[cut]} shakeAt={[cut]}>
-          <AbsoluteFill style={{ perspective: 1500 }}>
-            <Glass style={{ left: 360, top: 200, width: 1200, height: 580, transform: "rotateY(10deg)" }} accent={N.red} sheenAt={cut}>
-              <svg viewBox="0 0 1200 580" style={{ position: "absolute", inset: 0 }}>
-                {STAFF.map((s, i) => {
-                  const show = p01(frame, i * 0.6, i * 0.6 + 8);
-                  const fall = s.cut ? p01(frame, cut + s.j * 8, cut + s.j * 8 + 16, ease.in) : 0;
-                  const red = s.cut && frame >= cut + s.j * 8;
-                  return (
-                    <Staff
-                      key={i}
-                      x={150 + s.c * 100}
-                      y={150 + s.r * 120 + fall * 300}
-                      color={red ? N.red : "#e8e2d6"}
-                      o={show * (1 - fall)}
-                    />
-                  );
-                })}
-              </svg>
-            </Glass>
-          </AbsoluteFill>
-        </Cam>
-      </Film>
+      <Plate id="chipmacro" from={4} rate={0.4} blur={12} dim={0.6} tint="#ff4a3a" />
+      <Atmos seed="p2e" color={N.red} leak={0.35} bokeh={12} />
+      <Cam push={0.1} drift={[30, 0]} punch={[cut]} shakeAt={[cut]}>
+        <AbsoluteFill style={{ perspective: 1500 }}>
+          <Glass style={{ left: 380, top: 190, width: 1160, height: 600, transform: "rotateY(10deg) rotateX(6deg)" }} accent={N.red} sheenAt={cut}>
+            {STAFF.map((s, i) => {
+              const show = p01(frame, i * 0.6, i * 0.6 + 8);
+              const fall = s.cut ? p01(frame, cut + s.j * 8, cut + s.j * 8 + 16, ease.in) : 0;
+              const red = s.cut && frame >= cut + s.j * 6;
+              return <Badge key={i} i={i} x={40 + s.c * 110} y={40 + s.r * 136 + fall * 420} red={red} o={show * (1 - fall)} rot={fall * (s.j - 0.5) * 60} />;
+            })}
+          </Glass>
+        </AbsoluteFill>
+      </Cam>
       <div style={{ position: "absolute", top: 50, width: "100%" }}>
         <KText text="অর্ধেকের বেশি কর্মী" at={0} size={64} />
       </div>
+      <Glass style={{ right: 96, top: 210, padding: "10px 26px 16px", opacity: p01(frame, cut, cut + 10) }} accent={N.red}>
+        <div style={{ fontFamily: headFont, fontWeight: 700, fontSize: 30, color: N.muted, lineHeight: 1.3 }}>কর্মী</div>
+        <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 64, color: N.ink, fontVariantNumeric: "tabular-nums" }}>
+          {40 - gone}
+          <span style={{ fontSize: 34, color: N.muted }}>/40</span>
+        </div>
+      </Glass>
       {frame >= cut ? (
         <div style={{ position: "absolute", top: 790, width: "100%", textAlign: "center", fontFamily: headFont, fontWeight: 800, fontSize: 64, color: N.red, scale: `${1 + 0.4 * Math.exp(-(frame - cut) / 4)}`, textShadow: "0 0 30px #ff3b3b88, 0 6px 26px #000", lineHeight: 1.3 }}>
           ছাঁটাই
@@ -248,7 +377,7 @@ const Meetings: React.FC<{ readonly years: number; readonly word: number }> = ({
   return (
     <AbsoluteFill>
       <Film amount={0.5}>
-        <DocBg tint="#1e2420" spot={[40, 40]} />
+        <Plate id="dc" from={6} rate={0.4} blur={14} dim={0.62} />
         <Atmos seed="p2f" color={N.amber} leak={0.35} />
         <Cam push={0.12} drift={[-40, -10]} rot={0.6}>
           <AbsoluteFill style={{ perspective: 1400 }}>
@@ -433,7 +562,17 @@ const FirstGpu: React.FC<{ readonly turns: number; readonly y99: number; readonl
       <Timeline draw={draw * 0.33} lit={[y99, 1e9, 1e9]} />
       {frame < y99 ? (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-          <KText text="তারপর তিনটা মোড়" at={turns - 8} size={92} />
+          <KText text="তারপর তিনটা মোড়" at={0} size={92} />
+          <div style={{ display: "flex", gap: 40, marginTop: 30 }}>
+            {["1999", "2006", "2012"].map((y, i) => {
+              const kk = p01(frame, 6 + i * 5, 18 + i * 5);
+              return (
+                <Glass key={y} style={{ position: "relative", padding: "10px 40px 14px", opacity: kk, translate: `0 ${(1 - kk) * 40}px` }} accent={N.green}>
+                  <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 64, color: N.ink }}>{y}</div>
+                </Glass>
+              );
+            })}
+          </div>
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>
@@ -520,7 +659,7 @@ const SCI = [
 ];
 const Science: React.FC<{ readonly game: number; readonly sci: number }> = ({ game, sci }) => {
   const frame = useCurrentFrame();
-  const g = p01(frame, game - 4, game + 10);
+  const g = p01(frame, 0, 10);
   return (
     <AbsoluteFill>
       <Plate id="chipmacro" blur={8} dim={0.5} from={4} drift={0.12} />
@@ -534,7 +673,7 @@ const Science: React.FC<{ readonly game: number; readonly sci: number }> = ({ ga
           </Glass>
         </AbsoluteFill>
         {SCI.map((s, i) => {
-          const k = p01(frame, sci + i * 5, sci + i * 5 + 16);
+          const k = p01(frame, sci - 4 + i * 3, sci + 6 + i * 3);
           const ang = -Math.PI / 2 + (i - 2) * 0.95 + Math.PI;
           const x = 960 + Math.cos(ang) * 620 * k;
           const y = 500 + Math.sin(ang) * 290 * k;
@@ -546,7 +685,7 @@ const Science: React.FC<{ readonly game: number; readonly sci: number }> = ({ ga
           );
         })}
       </Cam>
-      <div style={{ position: "absolute", top: 760, width: "100%" }}>
+      <div style={{ position: "absolute", top: 40, width: "100%" }}>
         {frame >= sci - 4 ? <KText text="বিজ্ঞানীদের অন্য হিসাবও" at={sci - 4} size={58} color={N.cyan} /> : null}
       </div>
     </AbsoluteFill>
@@ -590,15 +729,15 @@ const TwoCards: React.FC<{ readonly res: number; readonly two: number }> = ({ re
 
 /* ---------------------------------------------------------------- 13: AI recognises images */
 const TILES = [
-  { e: "🐱", t: "বিড়াল" },
-  { e: "🚗", t: "গাড়ি" },
-  { e: "🐶", t: "কুকুর" },
-  { e: "🌻", t: "ফুল" },
-  { e: "🚢", t: "জাহাজ" },
-  { e: "🐦", t: "পাখি" },
-  { e: "🍎", t: "আপেল" },
-  { e: "✈️", t: "বিমান" },
-  { e: "🐘", t: "হাতি" },
+  { src: "nvidia/img/professor.jpg", t: "মানুষ", pos: "75% 30%" },
+  { src: "nvidia/img/rtx3090.jpg", t: "গ্রাফিক্স কার্ড", pos: "center" },
+  { src: "nvidia/img/hq.jpg", t: "ভবন", pos: "center" },
+  { src: "nvidia/img/dennys_sign.jpg", t: "সাইনবোর্ড", pos: "30% 40%" },
+  { src: "nvidia/img/dc_racks.jpg", t: "সার্ভার", pos: "center" },
+  { src: "nvidia/img/campus_aerial.jpg", t: "শহর", pos: "center 70%" },
+  { src: "nvidia/img/diner_booth.jpg", t: "টেবিল", pos: "center" },
+  { src: "nvidia/img/geforce256.jpg", t: "সার্কিট বোর্ড", pos: "center" },
+  { src: "nvidia/img/jensen_stage1.jpg", t: "ভিড়", pos: "center" },
 ];
 const AiEye: React.FC<{ readonly ai: number; readonly pic: number; readonly win: number }> = ({ ai, pic, win }) => {
   const frame = useCurrentFrame();
@@ -610,46 +749,53 @@ const AiEye: React.FC<{ readonly ai: number; readonly pic: number; readonly win:
       <Plate id="dc" blur={16} dim={0.6} from={2} />
       <Atmos seed="p2m" color2={N.cyan} />
       <Cam push={0.1} drift={[-30, 0]} punch={[pic]} shakeAt={[win]}>
-        {/* eye */}
-        <svg viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
-          <defs>
-            <radialGradient id="p2iris">
-              <stop offset="0" stopColor="#000" />
-              <stop offset="0.35" stopColor="#0a1a00" />
-              <stop offset="0.6" stopColor={N.green} />
-              <stop offset="1" stopColor={N.greenHi} />
-            </radialGradient>
-            <filter id="p2eg">
-              <feGaussianBlur stdDeviation="14" />
-            </filter>
-            <clipPath id="p2lid">
-              <ellipse cx={420} cy={470} rx={250} ry={150 * open + 2} />
-            </clipPath>
-          </defs>
-          <ellipse cx={420} cy={470} rx={260} ry={160 * open + 2} fill={N.green} opacity={0.35} filter="url(#p2eg)" />
-          <g clipPath="url(#p2lid)">
-            <ellipse cx={420} cy={470} rx={250} ry={150} fill="#e9efe6" />
-            <circle cx={420 + Math.sin(frame / 8) * 40} cy={470} r={110} fill="url(#p2iris)" />
-            <circle cx={420 + Math.sin(frame / 8) * 40} cy={470} r={40} fill="#000" />
-            {Array.from({ length: 12 }).map((_, i) => (
-              <line key={i} x1={420 + Math.sin(frame / 8) * 40} y1={470} x2={420 + Math.sin(frame / 8) * 40 + Math.cos(i * 0.52) * 110} y2={470 + Math.sin(i * 0.52) * 110} stroke={N.greenHi} strokeWidth={2} opacity={0.6} />
-            ))}
-            <circle cx={380} cy={430} r={16} fill="#fff" opacity={0.8} />
-          </g>
-          <ellipse cx={420} cy={470} rx={250} ry={150 * open + 2} fill="none" stroke={N.greenHi} strokeWidth={4} />
-          {/* beam */}
-          <path d={`M640 470 L1010 ${scanY - 60} L1010 ${scanY + 60} Z`} fill={N.greenHi} opacity={0.12 * open} />
-        </svg>
-        <div style={{ position: "absolute", left: 440, top: 670, width: 0 }}>
-          <div style={{ translate: "-50% 0", whiteSpace: "nowrap", fontFamily: numFont, fontWeight: 900, fontSize: 44, color: N.greenHi, opacity: open, textShadow: "0 4px 18px #000" }}>AI</div>
+        {/* glass AI core with spinning rings */}
+        <div style={{ position: "absolute", left: 240, top: 290, width: 360, height: 360, opacity: open, scale: `${0.7 + 0.3 * open}` }}>
+          {[0, 1, 2].map((r) => (
+            <div
+              key={r}
+              style={{
+                position: "absolute",
+                inset: -r * 46,
+                borderRadius: "50%",
+                border: `${3 - r}px ${r === 1 ? "dashed" : "solid"} ${N.greenHi}`,
+                opacity: 0.7 - r * 0.2,
+                rotate: `${(r % 2 ? -1 : 1) * frame * (2 + r)}deg`,
+                boxShadow: r === 0 ? `0 0 40px ${N.green}88, inset 0 0 40px ${N.green}55` : undefined,
+              }}
+            />
+          ))}
+          <div
+            style={{
+              position: "absolute",
+              inset: 30,
+              borderRadius: "50%",
+              background: `radial-gradient(circle at 35% 30%, ${N.greenHi}, ${N.green} 45%, #0a1a00 100%)`,
+              boxShadow: `0 0 80px ${N.green}, inset 0 -20px 40px rgba(0,0,0,0.5)`,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontFamily: numFont,
+              fontWeight: 900,
+              fontSize: 110,
+              color: "#0a1200",
+              scale: `${1 + 0.04 * Math.sin(frame / 4)}`,
+            }}
+          >
+            AI
+          </div>
         </div>
+        <svg viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
+          <path d={`M600 470 L1010 ${scanY - 60} L1010 ${scanY + 60} Z`} fill={N.greenHi} opacity={0.12 * open} />
+        </svg>
         <AbsoluteFill style={{ perspective: 1500 }}>
           <div style={{ position: "absolute", left: 1010, top: 160, width: 760, transform: "rotateY(-14deg)", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 18 }}>
             {TILES.map((tl, i) => {
               const tag = frame >= pic + i * 3;
               return (
-                <div key={tl.t} style={{ position: "relative", height: 186, borderRadius: 16, background: "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03))", border: `2px solid ${tag ? N.greenHi : "rgba(255,255,255,0.15)"}`, boxShadow: tag ? `0 0 24px ${N.green}88` : "0 20px 40px rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", fontSize: 96, opacity: p01(frame, i * 2, i * 2 + 10) }}>
-                  {tl.e}
+                <div key={tl.t} style={{ position: "relative", height: 186, borderRadius: 16, background: "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03))", border: `2px solid ${tag ? N.greenHi : "rgba(255,255,255,0.15)"}`, boxShadow: tag ? `0 0 24px ${N.green}88` : "0 20px 40px rgba(0,0,0,0.5)", overflow: "hidden", opacity: p01(frame, i * 2, i * 2 + 10) }}>
+                  <Img src={staticFile(tl.src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: tl.pos, filter: tag ? "none" : "grayscale(0.6) brightness(0.7)" }} />
+                  {tag ? <div style={{ position: "absolute", inset: 10, border: `3px solid ${N.greenHi}`, borderRadius: 8 }} /> : null}
                   {tag ? (
                     <div style={{ position: "absolute", left: 8, top: 8, background: N.green, color: "#081000", fontFamily: headFont, fontWeight: 800, fontSize: 26, padding: "0 12px 4px", borderRadius: 8, lineHeight: 1.35 }}>
                       {tl.t} ✓
@@ -708,7 +854,7 @@ const REPLY = "হ্যালো! আমি ChatGPT। কী জানতে �
 const ChatGpt: React.FC<{ readonly gpt: number }> = ({ gpt }) => {
   const frame = useCurrentFrame();
   const k = p01(frame, 0, 14);
-  const n = Math.floor(interpolate(frame, [gpt, gpt + 24], [0, REPLY.length], clamp));
+  const n = Math.floor(interpolate(frame, [6, 34], [0, REPLY.length], clamp));
   return (
     <AbsoluteFill>
       <Plate id="dc" blur={14} dim={0.55} from={4} />

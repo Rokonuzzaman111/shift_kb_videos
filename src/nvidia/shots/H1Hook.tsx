@@ -35,7 +35,7 @@ export const H1_CUES: Cue[] = [
 /* ------------------------------------------------------------------ shared bits */
 const Ticker: React.FC<{ readonly red?: boolean }> = ({ red = true }) => {
   const frame = useCurrentFrame();
-  const items = ["NVDA ▼ 4.3%", "AI CHIPS", "$5.8T → $4.2T", "NASDAQ", "NVDA ▼ 13% AT OPEN", "CEO RESIGNS", "AMD ▲", "AVGO ▲"];
+  const items = ["NVIDIA ▼ 4.3%", "AI CHIPS", "$5.8T → $4.2T", "NASDAQ", "NVIDIA ▼ 13% AT OPEN", "CEO RESIGNS", "AMD ▲", "BROADCOM ▲"];
   const line = [...items, ...items, ...items].join("   •   ");
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 54, background: "rgba(0,0,0,0.72)", borderBottom: `2px solid ${red ? N.red : N.green}`, overflow: "hidden" }}>
@@ -53,7 +53,7 @@ const PEAK = 13;
 
 const Market: React.FC<{ readonly crashAt: number; readonly hit: number }> = ({ crashAt, hit }) => {
   const frame = useCurrentFrame();
-  const climb = p01(frame, 0, crashAt, ease.inOut);
+  const climb = p01(frame, 0, 12, ease.out);
   const fall = p01(frame, crashAt, hit + 8, ease.in);
   const upto = climb * PEAK + fall * (CH.length - 1 - PEAK);
   const i = Math.floor(upto);
@@ -76,7 +76,7 @@ const Market: React.FC<{ readonly crashAt: number; readonly hit: number }> = ({ 
         <AbsoluteFill style={{ perspective: 1600 }}>
           <Glass style={{ left: 170, top: 140, width: 1580, height: 660, transform: "rotateX(12deg) rotateY(-9deg)", transformOrigin: "50% 100%" }} accent={red ? N.red : N.green}>
             <div style={{ position: "absolute", left: 40, top: 26, fontFamily: numFont, fontWeight: 900, fontSize: 40, color: N.ink, letterSpacing: 2 }}>
-              NVDA <span style={{ color: N.muted, fontWeight: 500, fontSize: 26 }}>· NASDAQ · MARKET VALUE</span>
+              NVIDIA <span style={{ color: N.muted, fontWeight: 600, fontSize: 28, fontFamily: headFont }}>· শেয়ারবাজারে মোট মূল্য</span>
             </div>
             <div style={{ position: "absolute", right: 40, top: 18, fontFamily: numFont, fontWeight: 900, fontSize: 64, color: red ? N.red : N.greenHi, fontVariantNumeric: "tabular-nums" }}>
               ${val.toFixed(2)}T {red ? "▼" : "▲"}
@@ -111,7 +111,7 @@ const Market: React.FC<{ readonly crashAt: number; readonly hit: number }> = ({ 
                 ) : null}
                 <circle cx={head[0]} cy={head[1]} r={12} fill={red ? N.red : N.greenHi} />
                 <circle cx={head[0]} cy={head[1]} r={30 + 8 * Math.sin(frame / 3)} fill={red ? N.red : N.greenHi} opacity={0.25} />
-                <g opacity={p01(frame, crashAt - 10, crashAt + 2)}>
+                <g opacity={p01(frame, 6, 16)}>
                   <line x1={CH[PEAK][0]} x2={CH[PEAK][0]} y1={CH[PEAK][1]} y2={580} stroke="#fff" strokeDasharray="6 8" opacity={0.4} />
                   <text x={CH[PEAK][0] - 18} y={CH[PEAK][1] - 22} textAnchor="end" fill={N.ink} fontFamily={headFont} fontWeight={700} fontSize={30}>
                     অক্টোবরের চূড়া · $5.8T
@@ -145,7 +145,7 @@ const Market: React.FC<{ readonly crashAt: number; readonly hit: number }> = ({ 
 };
 
 /* ------------------------------------------------------------------ beat 2: dive onto Bangladesh, ×3 years */
-const BdMap: React.FC<{ readonly i: number; readonly split: number }> = ({ i, split }) => {
+const BdMap: React.FC<{ readonly i: number; readonly split: number; readonly eq: number }> = ({ i, split, eq }) => {
   const on = i === 1 ? 1 : split;
   const x = (i - 1) * 470 * split;
   const lift = i === 1 ? 0 : (1 - split) * 60;
@@ -163,7 +163,7 @@ const BdMap: React.FC<{ readonly i: number; readonly split: number }> = ({ i, sp
         ))}
         <path d={BD_PATH} fill={`url(#bdg${i})`} stroke={N.greenHi} strokeWidth={4} style={{ filter: `drop-shadow(0 0 24px ${N.green}aa)` }} />
       </svg>
-      <div style={{ position: "absolute", bottom: -92, width: "100%", textAlign: "center" }}>
+      <div style={{ position: "absolute", bottom: -92, width: "100%", textAlign: "center", opacity: i === 1 ? 1 - eq : 1 }}>
         <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 46, color: N.ink, textShadow: "0 4px 18px #000" }}>$0.51T</div>
         <div style={{ fontFamily: headFont, fontWeight: 700, fontSize: 28, color: N.muted, marginTop: -4 }}>{["১ম বছর", "২য় বছর", "৩য় বছর"][i === 1 ? 0 : i === 0 ? 1 : 2]}</div>
       </div>
@@ -182,9 +182,9 @@ const Bangladesh: React.FC<{ readonly three: number; readonly sum: number }> = (
       <Atmos seed="b" leak={0.45} />
       <Cam push={0.06} drift={[0, -20]}>
         <AbsoluteFill style={{ scale: `${3.4 - 2.4 * fly}`, filter: fly < 1 ? `blur(${(1 - fly) * 14}px)` : undefined, transformOrigin: "50% 42%", rotate: `${(1 - fly) * -12}deg` }}>
-          <BdMap i={0} split={split} />
-          <BdMap i={2} split={split} />
-          <BdMap i={1} split={split} />
+          <BdMap i={0} split={split} eq={eq} />
+          <BdMap i={2} split={split} eq={eq} />
+          <BdMap i={1} split={split} eq={eq} />
         </AbsoluteFill>
       </Cam>
       <div style={{ position: "absolute", top: 50, width: "100%" }}>
@@ -292,7 +292,7 @@ const BehindIt: React.FC<{ readonly chip: number }> = ({ chip }) => {
   const k = p01(frame, chip - 4, chip + 10);
   return (
     <AbsoluteFill>
-      <Plate id="tray" from={1} rate={1.3} drift={0.14} />
+      <Plate id="chipexplode" from={5} rate={0.5} drift={0.16} dim={0.25} />
       <Atmos seed="e" bokeh={10} leak={0.35} />
       <svg viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
         {Array.from({ length: 18 }).map((_, i) => {
@@ -323,7 +323,7 @@ const Resign: React.FC<{ readonly founder: number; readonly years: number; reado
     <AbsoluteFill>
       <DocBg tint="#1d2321" spot={[62, 35]} />
       <Atmos seed="f" leak={0.25} bokeh={10} color="#ffcf8a" />
-      <Cam push={0.1} drift={[-50, 10]} rot={0.8} punch={[stamp]} shakeAt={[stamp]} origin="62% 45%">
+      <Cam push={0.05} drift={[12, 0]} rot={0.5} shakeAt={[stamp]} origin="50% 45%">
         <div style={{ position: "absolute", left: 96, top: 100 }}>
           <div style={{ display: "inline-block", background: N.red, color: "#fff", fontFamily: numFont, fontWeight: 900, fontSize: 28, padding: "6px 18px", letterSpacing: 5, opacity: 0.75 + 0.25 * Math.sin(frame / 4) }}>● BREAKING</div>
           <KText text="গত বৃহস্পতিবার" at={2} size={78} align="left" />
@@ -387,7 +387,7 @@ const WhyRewind: React.FC<{ readonly q2: number; readonly back: number }> = ({ q
       <Plate id="dc" from={5} rate={0.6} blur={6 + rw * 18} dim={0.55} drift={0.2} />
       <Atmos seed="g" color={N.amber} leak={0.35} />
       <Cam push={0.12} punch={[0, q2]}>
-        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: Math.max(0, 1 - rw * 3) }}>
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: Math.max(0, 1 - rw * 7) }}>
           <KText text="কেন?" at={0} size={230} stagger={0} glow={`${N.ink}55`} />
           <div style={{ marginTop: -40 }}>
             <KText text="এখন কী হবে?" at={q2} size={86} color={N.amber} stagger={3} />
@@ -397,8 +397,8 @@ const WhyRewind: React.FC<{ readonly q2: number; readonly back: number }> = ({ q
       {rw > 0 ? (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
           <AbsoluteFill style={{ background: "repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 6px)", opacity: rw }} />
-          <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 280, color: "#fff", opacity: Math.min(1, rw * 4), textShadow: `0 0 70px ${N.green}`, letterSpacing: -6 }}>{year}</div>
-          <div style={{ position: "absolute", top: 110, left: 120, fontFamily: numFont, fontWeight: 700, fontSize: 44, color: "#fff", letterSpacing: 6, opacity: Math.min(1, rw * 4) }}>◀◀ REWIND</div>
+          <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 280, color: "#fff", opacity: Math.min(1, Math.max(0, (rw - 0.12) * 5)), textShadow: `0 0 70px ${N.green}`, letterSpacing: -6 }}>{year}</div>
+          <div style={{ position: "absolute", top: 110, left: 120, fontFamily: numFont, fontWeight: 700, fontSize: 44, color: "#fff", letterSpacing: 6, opacity: Math.min(1, Math.max(0, (rw - 0.12) * 5)) }}>◀◀ REWIND</div>
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>

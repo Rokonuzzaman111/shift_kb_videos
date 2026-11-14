@@ -13,10 +13,10 @@
  * 10 "চলে এনভিডিয়ার চিপে"                     AI apps fly into the glowing die
  * 11 "৭৫ থেকে ৯০ শতাংশ"                      glass donut 75 → 90 %
  */
-import { AbsoluteFill, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion";
-import { Atmos, Beats, Cam, Counter, DocBg, Glass, GlitchBars, HitFlash, KText, Marker, Plate, p01, type Beat } from "../kit";
+import { AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { Atmos, Beats, Cam, Counter, Glass, GlitchBars, HitFlash, KText, Marker, Plate, p01, type Beat } from "../kit";
 import { N, clamp, ease, headFont, numFont } from "../theme";
-import { Pad, Professor, Student } from "../two/P1_figs";
+import { Pad, Student } from "../two/P1_figs";
 import type { Cue } from "../types";
 import { useAt } from "../vo";
 
@@ -120,93 +120,114 @@ const CpuBrain: React.FC<{ readonly brain: number; readonly cpu: number }> = ({ 
 /* ---------------------------------------------------------------- 2: professor */
 const SUMS = ["27 × 43 = 1161", "318 ÷ 6 = 53", "√784 = 28", "45 × 19 = 855"];
 
-const Chalk: React.FC<{ readonly frame: number; readonly start: number; readonly per: number; readonly fs: number }> = ({ frame, start, per, fs }) => (
-  <>
-    {SUMS.map((s, k) => {
-      const a = start + k * per;
-      const n = Math.floor(interpolate(frame, [a, a + per * 0.7], [0, s.length], clamp));
-      return n > 0 ? (
-        <div key={k} style={{ fontFamily: numFont, fontWeight: 700, fontSize: fs, color: "#eef2e6", lineHeight: 1.45, whiteSpace: "nowrap", textShadow: "0 0 6px rgba(255,255,255,0.35)" }}>
-          {s.slice(0, n)}
-          {frame > a + per * 0.75 ? <span style={{ color: N.greenHi, marginLeft: fs * 0.4 }}>✓</span> : null}
-        </div>
-      ) : null;
-    })}
-  </>
-);
-
 const ProfessorBeat: React.FC<{ readonly prof: number; readonly wise: number; readonly one: number }> = ({ prof, wise, one }) => {
   const frame = useCurrentFrame();
-  const per = 30;
-  const done = Math.max(0, Math.min(4, Math.floor((frame - 6 - per * 0.75) / per) + 1));
+  const { durationInFrames } = useVideoConfig();
+  const per = 26; // one sum at a time
+  const start = 8;
+  const idx = Math.floor((frame - start) / per); // which sum is being solved
+  const done = Math.max(0, Math.min(SUMS.length, idx));
   const w = p01(frame, wise, wise + 10);
+  const kb = interpolate(frame, [0, durationInFrames], [1.08, 1.22], clamp);
+  const pan = interpolate(frame, [0, durationInFrames], [0, -60], clamp);
   return (
     <AbsoluteFill>
-      <DocBg tint="#2a2416" spot={[45, 35]} />
-      <Atmos seed="p1b" color={N.amber} color2="#ffcf8a" leak={0.4} bokeh={16} />
-      <Cam push={0.12} drift={[-40, -10]} rot={-0.6} punch={[one]} origin="55% 45%">
-        <AbsoluteFill style={{ perspective: 1600 }}>
-          <div
-            style={{
-              position: "absolute",
-              left: 620,
-              top: 190,
-              width: 1120,
-              height: 560,
-              transform: "rotateY(-14deg) rotateX(4deg)",
-              transformOrigin: "0% 50%",
-              background: "radial-gradient(ellipse at 40% 40%, #24463a, #0f2219 80%)",
-              border: "20px solid #6a4526",
-              borderRadius: 10,
-              boxShadow: "0 50px 100px rgba(0,0,0,0.8), inset 0 0 90px rgba(0,0,0,0.55)",
-              padding: "34px 60px",
-            }}
-          >
-            <Chalk frame={frame} start={6} per={per} fs={66} />
-            <div style={{ position: "absolute", right: 36, top: 24, textAlign: "right" }}>
-              <div style={{ fontFamily: headFont, fontWeight: 600, fontSize: 30, color: "#c5d6c5", lineHeight: 1.3 }}>বাকি হিসাব</div>
-              <div style={{ fontFamily: numFont, fontWeight: 900, fontSize: 60, color: N.amber, fontVariantNumeric: "tabular-nums" }}>{(10000 - done).toLocaleString("en-US")}</div>
-            </div>
-          </div>
-        </AbsoluteFill>
-        <svg viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
-          <defs>
-            <radialGradient id="p1sh">
-              <stop offset="0" stopColor="#000" stopOpacity="0.7" />
-              <stop offset="1" stopColor="#000" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          <ellipse cx={440} cy={850} rx={220} ry={30} fill="url(#p1sh)" />
-          <Professor x={440} y={845} s={1.15} arm={frame / 18} />
-        </svg>
-        <div
+      {/* real documentary photo: a professor at his blackboard, slow push toward him */}
+      <AbsoluteFill style={{ overflow: "hidden" }}>
+        <Img
+          src={staticFile("nvidia/img/professor.jpg")}
           style={{
             position: "absolute",
-            left: 150,
-            top: 200,
-            opacity: w,
-            scale: `${0.6 + 0.4 * w}`,
-            rotate: "-7deg",
-            background: `linear-gradient(135deg, ${N.greenHi}, ${N.green})`,
-            color: "#081000",
-            fontFamily: headFont,
-            fontWeight: 800,
-            fontSize: 40,
-            padding: "4px 24px 10px",
-            borderRadius: 12,
-            boxShadow: "0 14px 30px rgba(0,0,0,0.5)",
+            right: -40,
+            top: 0,
+            height: "100%",
+            width: 1560,
+            objectFit: "cover",
+            objectPosition: "85% 30%",
+            scale: `${kb}`,
+            translate: `${pan}px 0px`,
+            transformOrigin: "75% 30%",
+            filter: "contrast(1.08) saturate(0.9) sepia(0.18) brightness(0.92)",
           }}
-        >
-          খুব জ্ঞানী
+        />
+      </AbsoluteFill>
+      <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(5,6,7,0.96) 0%, rgba(5,6,7,0.82) 34%, rgba(5,6,7,0.15) 62%, transparent 80%)" }} />
+      <AbsoluteFill style={{ background: "linear-gradient(0deg, rgba(5,6,7,0.85) 0%, transparent 30%)" }} />
+      <Atmos seed="p1b" color={N.amber} color2="#ffcf8a" leak={0.35} bokeh={12} />
+
+      {/* glass task queue: the sums are solved strictly one after another */}
+      <Cam push={0.05} drift={[10, -6]} punch={[one]} origin="25% 50%">
+        <div style={{ position: "absolute", left: 96, top: 190, perspective: 1400 }}>
+          <Glass style={{ position: "relative", width: 640, padding: "26px 30px 22px", transform: "rotateY(10deg)", transformOrigin: "0% 50%" }} accent={N.amber}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
+              <div style={{ fontFamily: headFont, fontWeight: 700, fontSize: 32, color: N.ink, lineHeight: 1.3 }}>কাজের লাইন</div>
+              <div style={{ fontFamily: headFont, fontWeight: 600, fontSize: 26, color: N.muted, lineHeight: 1.3 }}>
+                বাকি <span style={{ fontFamily: numFont, fontWeight: 900, fontSize: 40, color: N.amber }}>{(10000 - done).toLocaleString("en-US")}</span>
+              </div>
+            </div>
+            {SUMS.map((q, k) => {
+              const active = k === idx;
+              const ok = k < done;
+              const prog = active ? Math.max(0, Math.min(1, (frame - start - k * per) / (per * 0.85))) : ok ? 1 : 0;
+              return (
+                <div
+                  key={k}
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "10px 18px",
+                    marginBottom: 10,
+                    borderRadius: 14,
+                    background: active ? "rgba(255,176,32,0.16)" : "rgba(255,255,255,0.04)",
+                    border: `1.5px solid ${active ? N.amber : ok ? "rgba(166,242,42,0.35)" : "rgba(255,255,255,0.08)"}`,
+                    opacity: ok || active ? 1 : 0.45,
+                    scale: active ? "1.03" : "1",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${prog * 100}%`, background: active ? "rgba(255,176,32,0.14)" : "transparent" }} />
+                  <span style={{ position: "relative", fontFamily: numFont, fontWeight: 700, fontSize: 40, color: N.ink, fontVariantNumeric: "tabular-nums" }}>{q}</span>
+                  <span style={{ position: "relative", fontFamily: numFont, fontWeight: 900, fontSize: 34, color: ok ? N.greenHi : active ? N.amber : N.muted }}>{ok ? "✓" : active ? "…" : "⏳"}</span>
+                </div>
+              );
+            })}
+          </Glass>
         </div>
       </Cam>
-      <div style={{ position: "absolute", top: 50, width: "100%" }}>
-        <KText text="CPU = একজন প্রফেসর" at={prof - 4} size={70} />
+
+      {/* "very wise" tag near his head with a hand-drawn ring */}
+      <div
+        style={{
+          position: "absolute",
+          left: 1530,
+          top: 96,
+          opacity: w,
+          scale: `${0.6 + 0.4 * w}`,
+          rotate: "-5deg",
+          background: `linear-gradient(135deg, ${N.greenHi}, ${N.green})`,
+          color: "#081000",
+          fontFamily: headFont,
+          fontWeight: 800,
+          fontSize: 42,
+          padding: "4px 26px 10px",
+          borderRadius: 12,
+          boxShadow: "0 14px 30px rgba(0,0,0,0.6)",
+          lineHeight: 1.3,
+        }}
+      >
+        খুব জ্ঞানী
       </div>
-      <div style={{ position: "absolute", left: 700, top: 770 }}>
-        <KText text="একটা → একটা করে…" at={one} size={60} color={N.amber} align="left" />
+      <Marker d="M1445 150 C1535 200 1525 350 1425 385 C1315 420 1235 340 1250 250 C1265 165 1365 125 1455 165" at={wise + 4} color={N.greenHi} width={6} />
+
+      <div style={{ position: "absolute", top: 54, left: 96 }}>
+        <KText text="CPU = একজন প্রফেসর" at={prof - 4} size={70} align="left" />
       </div>
-      <Marker d="M710 860 Q930 845 1180 858" at={one + 8} color={N.amber} width={7} />
+      <div style={{ position: "absolute", left: 96, top: 740 }}>
+        <KText text="একটা → একটা করে…" at={one} size={58} color={N.amber} align="left" />
+      </div>
+      <Marker d="M110 850 Q330 836 560 848" at={one + 8} color={N.amber} width={7} />
     </AbsoluteFill>
   );
 };
@@ -255,7 +276,7 @@ const Thousand: React.FC<{ readonly gpu: number; readonly thousand: number }> = 
             sheenAt={thousand}
           >
             <div style={{ position: "absolute", left: 40, top: 10 }}>
-              <Grid frame={frame} appear={thousand} cards={false} solved={1e9} />
+              <Grid frame={frame} appear={Math.min(thousand, 4)} cards={false} solved={1e9} />
             </div>
           </Glass>
         </AbsoluteFill>
@@ -542,7 +563,9 @@ const Koti: React.FC<{ readonly once: number }> = ({ once }) => {
 const PROMPT = "এনভিডিয়া কী বানায়?";
 const ChatToday: React.FC<{ readonly gpt: number }> = ({ gpt }) => {
   const frame = useCurrentFrame();
-  const n = Math.floor(interpolate(frame, [gpt, gpt + 24], [0, PROMPT.length], clamp));
+  const n = Math.floor(interpolate(frame, [2, 24], [0, PROMPT.length], clamp));
+  const ANS = "বেশিরভাগ বড় AI চলে এনভিডিয়ার GPU চিপে।";
+  const an = Math.floor(interpolate(frame, [40, 80], [0, ANS.length], clamp));
   const tilt = interpolate(frame, [0, 80], [24, 10], { ...clamp, easing: ease.out });
   const others = ["AI চ্যাট", "AI ছবি", "AI ভিডিও", "AI কোড"];
   return (
@@ -558,14 +581,18 @@ const ChatToday: React.FC<{ readonly gpt: number }> = ({ gpt }) => {
             <div style={{ position: "absolute", right: 36, top: 120, background: `linear-gradient(135deg, ${N.greenHi}, ${N.green})`, color: "#081000", fontFamily: headFont, fontWeight: 700, fontSize: 40, padding: "10px 26px 16px", borderRadius: "26px 26px 6px 26px", opacity: n ? 1 : 0, lineHeight: 1.3 }}>
               {PROMPT.slice(0, n)}
             </div>
-            <div style={{ position: "absolute", left: 36, top: 250, display: "flex", gap: 12, opacity: p01(frame, gpt + 26, gpt + 34) }}>
+            <div style={{ position: "absolute", left: 36, top: 250, display: "flex", gap: 12, opacity: frame >= 26 && frame < 40 ? 1 : 0 }}>
               {[0, 1, 2].map((i) => (
                 <div key={i} style={{ width: 18, height: 18, borderRadius: 9, background: N.ink, opacity: 0.3 + 0.7 * Math.abs(Math.sin(frame / 5 + i)) }} />
               ))}
             </div>
+            <div style={{ position: "absolute", left: 36, top: 250, maxWidth: 640, background: "#1d242a", color: N.ink, fontFamily: headFont, fontWeight: 700, fontSize: 38, lineHeight: 1.45, padding: "12px 24px 18px", borderRadius: "26px 26px 26px 6px", opacity: an ? 1 : 0, border: "1px solid rgba(255,255,255,0.1)" }}>
+              {ANS.slice(0, an)}
+              {an > 0 && an < ANS.length ? <span style={{ color: N.greenHi }}>▍</span> : null}
+            </div>
           </Glass>
           {others.map((o, i) => {
-            const k = p01(frame, gpt + 8 + i * 5, gpt + 20 + i * 5);
+            const k = p01(frame, 8 + i * 6, 20 + i * 6);
             return (
               <Glass key={o} style={{ left: 1230 + (i % 2) * 40, top: 180 + i * 130, padding: "12px 34px 16px", opacity: k, translate: `${(1 - k) * 120}px 0`, transform: `rotateY(${-tilt * 0.6}deg)` }} accent={N.cyan}>
                 <div style={{ fontFamily: headFont, fontWeight: 800, fontSize: 40, color: N.ink, lineHeight: 1.3 }}>{o}</div>
@@ -575,7 +602,7 @@ const ChatToday: React.FC<{ readonly gpt: number }> = ({ gpt }) => {
         </AbsoluteFill>
       </Cam>
       <div style={{ position: "absolute", top: 40, width: "100%" }}>
-        <KText text="আজকের বড় বড় AI" at={gpt - 4} size={60} />
+        <KText text="আজকের বড় বড় AI" at={Math.min(2, gpt)} size={60} />
       </div>
     </AbsoluteFill>
   );

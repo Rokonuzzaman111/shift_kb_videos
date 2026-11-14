@@ -248,7 +248,7 @@ const Y = (v: number) => 120 + (-v / 14) * 460;
 const Chart: React.FC<{ readonly drawn: (i: number) => number; readonly l13: number; readonly l4: number; readonly day: number; readonly accent: string }> = ({ drawn, l13, l4, day, accent }) => (
   <Glass accent={accent} style={{ left: 0, top: 0, width: CW, height: 680 }}>
     <div style={{ position: "absolute", left: 36, top: 22, fontFamily: numFont, fontWeight: 900, fontSize: 38, color: N.ink, letterSpacing: 2 }}>
-      NVDA <span style={{ color: N.muted, fontWeight: 500, fontSize: 26 }}>· ১২ নভেম্বর · INTRADAY</span>
+      NVIDIA <span style={{ color: N.muted, fontWeight: 600, fontSize: 26, fontFamily: headFont }}>· ১২ নভেম্বরের শেয়ার</span>
     </div>
     <svg viewBox={`0 0 ${CW} 680`} style={{ position: "absolute", inset: 0 }}>
       <defs>

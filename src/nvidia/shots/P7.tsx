@@ -760,9 +760,9 @@ const Rivals: React.FC<{ readonly amd: number; readonly avgo: number; readonly r
       <Cam push={0.1} drift={[-40, -10]} punch={[amd, avgo, rose]}>
         <RiskTitle idx={3} />
         <AbsoluteFill style={{ perspective: 1800 }}>
-          <Ticker sym="NVDA" name="এনভিডিয়া" up={false} t={6} x={96} ry={14} />
+          <Ticker sym="NVIDIA" name="এনভিডিয়া" up={false} t={6} x={96} ry={14} />
           <Ticker sym="AMD" name="এএমডি" up t={amd} x={700} ry={0} />
-          <Ticker sym="AVGO" name="ব্রডকম" up t={avgo} x={1304} ry={-14} />
+          <Ticker sym="BROADCOM" name="ব্রডকম" up t={avgo} x={1304} ry={-14} />
         </AbsoluteFill>
         <div style={{ position: "absolute", left: 0, right: 0, top: 712 }}>
           <KText text="প্রতিযোগীদের শেয়ার উল্টো বেড়েছে ▲" at={rose - 6} size={64} color="#fff" glow={`${N.green}88`} />

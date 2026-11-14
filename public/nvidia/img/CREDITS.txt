@@ -16,4 +16,6 @@ h100.png: File:NVIDIA H100 (极客湾Geekerwan) 002.png | 极客湾Geekerwan | C
 kress.png: File:Colette Kress (1).png | SiliconANGLE theCUBE | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Colette_Kress_(1).png
 rtx3090.jpg: File:Gigabyte GeForce RTX 3090 Eagle OC 24G, 24576 MiB GDDR6X Front 20201114 DSC5880.jpg | PantheraLeo1359531 | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Gigabyte_GeForce_RTX_3090_Eagle_OC_24G,_24576_MiB_GDDR6X_Front_20201114_DSC5880.jpg
 dc_racks.jpg: File:Datacenter Server Racks (22370909788).jpg | Carl Lender from Sunrise, USA | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg
-dc_tech.jpg: File:Technician with laptop working on server rack at NERSC.jpg | Derrick Coetzee from Berkeley, CA, USA | CC0 | https://commons.wikimedia.org/wiki/File:Technician_with_laptop_working_on_server_rack_at_NERSC.jpg
+dc_tech.jpg: File:Technician with laptop working on server rack at NERSC.jpg | Derrick Coetzee from Berkeley, CA, USA | CC0 | https://commons.wikimedia.org/wiki/File:Technician_with_laptop_working_on_server_rack_at_NERSC.jpgprofessor.jpg: File:Professor Vladimir Lotov.jpg | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Professor_Vladimir_Lotov.jpg
+dennys_sign.jpg: File:Dallas Dennys Diner sign.jpg | Public domain | https://commons.wikimedia.org/wiki/File:Dallas_Dennys_Diner_sign.jpg
+diner_booth.jpg: File:Annette's Diner- Table.jpg | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Annette%27s_Diner-_Table.jpg
