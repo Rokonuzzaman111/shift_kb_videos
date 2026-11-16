@@ -1,0 +1,2 @@
+earth_day.jpg: File:Whole world - land and oceans 12000.jpg | NASA/Goddard Space Flight Center | Public domain | https://commons.wikimedia.org/wiki/File:Whole_world_-_land_and_oceans_12000.jpg
+earth_night.jpg: File:Solarsystemscope texture 8k earth nightmap.jpg | Solar System Scope | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Solarsystemscope_texture_8k_earth_nightmap.jpg

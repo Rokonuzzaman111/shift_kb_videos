@@ -1,0 +1,368 @@
+[
+ {
+  "text": "পৃথিবীর",
+  "startMs": 270.0,
+  "endMs": 862.8,
+  "line": 0
+ },
+ {
+  "text": "সব",
+  "startMs": 862.8,
+  "endMs": 1054.0,
+  "line": 0
+ },
+ {
+  "text": "ফসল",
+  "startMs": 1073.1,
+  "endMs": 1474.7,
+  "line": 0
+ },
+ {
+  "text": "একদিন",
+  "startMs": 1685.0,
+  "endMs": 1761.5,
+  "line": 0
+ },
+ {
+  "text": "হারিয়ে",
+  "startMs": 1761.5,
+  "endMs": 2144.0,
+  "line": 0
+ },
+ {
+  "text": "গেলে,",
+  "startMs": 2144.0,
+  "endMs": 2354.3,
+  "line": 0
+ },
+ {
+  "text": "আবার",
+  "startMs": 2354.3,
+  "endMs": 2794.1,
+  "line": 0
+ },
+ {
+  "text": "শুরু",
+  "startMs": 2794.1,
+  "endMs": 3004.5,
+  "line": 0
+ },
+ {
+  "text": "হবে",
+  "startMs": 3004.5,
+  "endMs": 3214.8,
+  "line": 0
+ },
+ {
+  "text": "এই",
+  "startMs": 3214.8,
+  "endMs": 3635.5,
+  "line": 0
+ },
+ {
+  "text": "পাহাড়ের",
+  "startMs": 3635.5,
+  "endMs": 4037.1,
+  "line": 0
+ },
+ {
+  "text": "ভেতর",
+  "startMs": 4037.1,
+  "endMs": 4247.4,
+  "line": 0
+ },
+ {
+  "text": "থেকে।",
+  "startMs": 4247.4,
+  "endMs": 4515.3,
+  "line": 0
+ },
+ {
+  "text": "নরওয়ের",
+  "startMs": 5314.3,
+  "endMs": 6542.6,
+  "line": 1
+ },
+ {
+  "text": "স্‌ভালবার্ড",
+  "startMs": 6560.8,
+  "endMs": 7180.1,
+  "line": 1
+ },
+ {
+  "text": "দ্বীপপুঞ্জে,",
+  "startMs": 7198.3,
+  "endMs": 7817.6,
+  "line": 1
+ },
+ {
+  "text": "উত্তর",
+  "startMs": 7835.8,
+  "endMs": 8273.0,
+  "line": 1
+ },
+ {
+  "text": "মেরুর",
+  "startMs": 8291.2,
+  "endMs": 8637.2,
+  "line": 1
+ },
+ {
+  "text": "কাছাকাছি,",
+  "startMs": 8655.4,
+  "endMs": 9092.6,
+  "line": 1
+ },
+ {
+  "text": "একটা",
+  "startMs": 9110.8,
+  "endMs": 9456.9,
+  "line": 1
+ },
+ {
+  "text": "বরফ-ঢাকা",
+  "startMs": 9475.1,
+  "endMs": 10003.3,
+  "line": 1
+ },
+ {
+  "text": "পাহাড়ের",
+  "startMs": 10021.5,
+  "endMs": 10458.7,
+  "line": 1
+ },
+ {
+  "text": "গভীরে",
+  "startMs": 10476.9,
+  "endMs": 10823.0,
+  "line": 1
+ },
+ {
+  "text": "আছে,",
+  "startMs": 10841.2,
+  "endMs": 11291.6,
+  "line": 1
+ },
+ {
+  "text": "স্‌ভালবার্ড",
+  "startMs": 11309.8,
+  "endMs": 11929.1,
+  "line": 1
+ },
+ {
+  "text": "গ্লোবাল",
+  "startMs": 11947.3,
+  "endMs": 12384.4,
+  "line": 1
+ },
+ {
+  "text": "সিড",
+  "startMs": 12402.7,
+  "endMs": 12657.7,
+  "line": 1
+ },
+ {
+  "text": "ভল্ট।",
+  "startMs": 12675.9,
+  "endMs": 13022.0,
+  "line": 1
+ },
+ {
+  "text": "দরজা",
+  "startMs": 13459.0,
+  "endMs": 14593.9,
+  "line": 2
+ },
+ {
+  "text": "পেরিয়ে,",
+  "startMs": 14613.0,
+  "endMs": 14976.2,
+  "line": 2
+ },
+ {
+  "text": "পাহাড়ের",
+  "startMs": 14995.3,
+  "endMs": 15454.2,
+  "line": 2
+ },
+ {
+  "text": "ভেতর",
+  "startMs": 15473.3,
+  "endMs": 15836.6,
+  "line": 2
+ },
+ {
+  "text": "দিয়ে",
+  "startMs": 15855.7,
+  "endMs": 16123.4,
+  "line": 2
+ },
+ {
+  "text": "একশো",
+  "startMs": 16142.5,
+  "endMs": 16505.7,
+  "line": 2
+ },
+ {
+  "text": "মিটারেরও",
+  "startMs": 16524.8,
+  "endMs": 17079.3,
+  "line": 2
+ },
+ {
+  "text": "বেশি",
+  "startMs": 17098.4,
+  "endMs": 17366.1,
+  "line": 2
+ },
+ {
+  "text": "লম্বা",
+  "startMs": 17385.2,
+  "endMs": 17748.5,
+  "line": 2
+ },
+ {
+  "text": "সুড়ঙ্গ,",
+  "startMs": 17767.6,
+  "endMs": 18226.4,
+  "line": 2
+ },
+ {
+  "text": "তারপর",
+  "startMs": 18245.5,
+  "endMs": 18925.0,
+  "line": 2
+ },
+ {
+  "text": "বরফ-শীতল",
+  "startMs": 18944.1,
+  "endMs": 19797.3,
+  "line": 2
+ },
+ {
+  "text": "তিনটা",
+  "startMs": 19816.4,
+  "endMs": 20353.9,
+  "line": 2
+ },
+ {
+  "text": "কক্ষ।",
+  "startMs": 20373.0,
+  "endMs": 20736.2,
+  "line": 2
+ },
+ {
+  "text": "ভেতরে",
+  "startMs": 21160.7,
+  "endMs": 21863.1,
+  "line": 3
+ },
+ {
+  "text": "মাইনাস",
+  "startMs": 21881.3,
+  "endMs": 22318.4,
+  "line": 3
+ },
+ {
+  "text": "আঠারো",
+  "startMs": 22336.6,
+  "endMs": 22682.7,
+  "line": 3
+ },
+ {
+  "text": "ডিগ্রি",
+  "startMs": 22700.9,
+  "endMs": 23046.9,
+  "line": 3
+ },
+ {
+  "text": "সেলসিয়াসে",
+  "startMs": 23065.1,
+  "endMs": 23593.3,
+  "line": 3
+ },
+ {
+  "text": "রাখা",
+  "startMs": 23611.5,
+  "endMs": 23866.4,
+  "line": 3
+ },
+ {
+  "text": "আছে,",
+  "startMs": 23884.6,
+  "endMs": 24048.4,
+  "line": 3
+ },
+ {
+  "text": "চৌদ্দ",
+  "startMs": 24048.4,
+  "endMs": 24467.0,
+  "line": 3
+ },
+ {
+  "text": "লাখেরও",
+  "startMs": 24467.0,
+  "endMs": 25104.0,
+  "line": 3
+ },
+ {
+  "text": "বেশি",
+  "startMs": 25231.4,
+  "endMs": 25504.4,
+  "line": 3
+ },
+ {
+  "text": "বীজের",
+  "startMs": 25504.4,
+  "endMs": 25795.6,
+  "line": 3
+ },
+ {
+  "text": "নমুনা।",
+  "startMs": 25795.6,
+  "endMs": 26177.8,
+  "line": 3
+ },
+ {
+  "text": "আর",
+  "startMs": 26639.1,
+  "endMs": 27197.9,
+  "line": 4
+ },
+ {
+  "text": "এর",
+  "startMs": 27197.9,
+  "endMs": 27402.8,
+  "line": 4
+ },
+ {
+  "text": "ধারণক্ষমতা?",
+  "startMs": 27402.8,
+  "endMs": 28092.0,
+  "line": 4
+ },
+ {
+  "text": "প্রায়",
+  "startMs": 28110.7,
+  "endMs": 29358.7,
+  "line": 4
+ },
+ {
+  "text": "পঁয়তাল্লিশ",
+  "startMs": 29358.7,
+  "endMs": 29787.2,
+  "line": 4
+ },
+ {
+  "text": "লাখ",
+  "startMs": 29787.2,
+  "endMs": 30327.4,
+  "line": 4
+ },
+ {
+  "text": "জাত।",
+  "startMs": 30327.4,
+  "endMs": 30662.7,
+  "line": 4
+ }
+]

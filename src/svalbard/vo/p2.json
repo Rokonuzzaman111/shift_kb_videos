@@ -1,0 +1,404 @@
+[
+ {
+  "text": "দুই",
+  "startMs": 219.1,
+  "endMs": 573.3,
+  "line": 0
+ },
+ {
+  "text": "হাজার",
+  "startMs": 573.3,
+  "endMs": 927.5,
+  "line": 0
+ },
+ {
+  "text": "আট",
+  "startMs": 927.5,
+  "endMs": 1281.7,
+  "line": 0
+ },
+ {
+  "text": "সালে",
+  "startMs": 1281.7,
+  "endMs": 2114.1,
+  "line": 0
+ },
+ {
+  "text": "চালু",
+  "startMs": 2114.1,
+  "endMs": 2326.6,
+  "line": 0
+ },
+ {
+  "text": "হওয়া",
+  "startMs": 2326.6,
+  "endMs": 2556.9,
+  "line": 0
+ },
+ {
+  "text": "এই",
+  "startMs": 2556.9,
+  "endMs": 2857.9,
+  "line": 0
+ },
+ {
+  "text": "ভল্ট,",
+  "startMs": 2857.9,
+  "endMs": 3371.5,
+  "line": 0
+ },
+ {
+  "text": "আসলে",
+  "startMs": 3371.5,
+  "endMs": 3832.0,
+  "line": 0
+ },
+ {
+  "text": "পৃথিবীর",
+  "startMs": 3832.0,
+  "endMs": 4239.3,
+  "line": 0
+ },
+ {
+  "text": "কৃষির",
+  "startMs": 4239.3,
+  "endMs": 4699.8,
+  "line": 0
+ },
+ {
+  "text": "একটা",
+  "startMs": 4699.8,
+  "endMs": 5000.8,
+  "line": 0
+ },
+ {
+  "text": "ব্যাকআপ।",
+  "startMs": 5000.8,
+  "endMs": 5390.4,
+  "line": 0
+ },
+ {
+  "text": "বিভিন্ন",
+  "startMs": 5829.3,
+  "endMs": 6781.1,
+  "line": 1
+ },
+ {
+  "text": "দেশের",
+  "startMs": 6781.1,
+  "endMs": 7053.0,
+  "line": 1
+ },
+ {
+  "text": "গবেষণা",
+  "startMs": 7053.0,
+  "endMs": 7430.7,
+  "line": 1
+ },
+ {
+  "text": "প্রতিষ্ঠান",
+  "startMs": 7445.8,
+  "endMs": 7823.4,
+  "line": 1
+ },
+ {
+  "text": "আর",
+  "startMs": 7823.4,
+  "endMs": 7989.6,
+  "line": 1
+ },
+ {
+  "text": "জিন-ব্যাংকে,",
+  "startMs": 7989.6,
+  "endMs": 8446.6,
+  "line": 1
+ },
+ {
+  "text": "ধান,",
+  "startMs": 8461.7,
+  "endMs": 8682.7,
+  "line": 1
+ },
+ {
+  "text": "গম,",
+  "startMs": 8697.8,
+  "endMs": 8918.8,
+  "line": 1
+ },
+ {
+  "text": "ভুট্টাসহ",
+  "startMs": 8933.9,
+  "endMs": 9390.9,
+  "line": 1
+ },
+ {
+  "text": "হাজারো",
+  "startMs": 9406.0,
+  "endMs": 9705.6,
+  "line": 1
+ },
+ {
+  "text": "জাতের",
+  "startMs": 9720.7,
+  "endMs": 10020.4,
+  "line": 1
+ },
+ {
+  "text": "বীজ",
+  "startMs": 10035.5,
+  "endMs": 10450.0,
+  "line": 1
+ },
+ {
+  "text": "রাখা",
+  "startMs": 10465.1,
+  "endMs": 10686.0,
+  "line": 1
+ },
+ {
+  "text": "হয়।",
+  "startMs": 10701.1,
+  "endMs": 10922.1,
+  "line": 1
+ },
+ {
+  "text": "কোনো",
+  "startMs": 11239.8,
+  "endMs": 11548.4,
+  "line": 2
+ },
+ {
+  "text": "জাত",
+  "startMs": 11569.5,
+  "endMs": 11878.1,
+  "line": 2
+ },
+ {
+  "text": "খরা",
+  "startMs": 11899.2,
+  "endMs": 13118.1,
+  "line": 2
+ },
+ {
+  "text": "সহ্য",
+  "startMs": 13139.2,
+  "endMs": 13557.6,
+  "line": 2
+ },
+ {
+  "text": "করে,",
+  "startMs": 13578.7,
+  "endMs": 13887.3,
+  "line": 2
+ },
+ {
+  "text": "কোনোটা",
+  "startMs": 13908.4,
+  "endMs": 14834.0,
+  "line": 2
+ },
+ {
+  "text": "নির্দিষ্ট",
+  "startMs": 14855.1,
+  "endMs": 15493.3,
+  "line": 2
+ },
+ {
+  "text": "রোগ",
+  "startMs": 15514.4,
+  "endMs": 15823.0,
+  "line": 2
+ },
+ {
+  "text": "ঠেকায়,",
+  "startMs": 15844.1,
+  "endMs": 16262.6,
+  "line": 2
+ },
+ {
+  "text": "আবার",
+  "startMs": 16283.6,
+  "endMs": 16702.1,
+  "line": 2
+ },
+ {
+  "text": "কোনোটা",
+  "startMs": 16723.2,
+  "endMs": 17141.7,
+  "line": 2
+ },
+ {
+  "text": "কঠিন",
+  "startMs": 17162.8,
+  "endMs": 17581.2,
+  "line": 2
+ },
+ {
+  "text": "পরিবেশেও",
+  "startMs": 17602.3,
+  "endMs": 18240.6,
+  "line": 2
+ },
+ {
+  "text": "ভালো",
+  "startMs": 18261.7,
+  "endMs": 18570.2,
+  "line": 2
+ },
+ {
+  "text": "ফলন",
+  "startMs": 18591.3,
+  "endMs": 19009.8,
+  "line": 2
+ },
+ {
+  "text": "দেয়।",
+  "startMs": 19030.9,
+  "endMs": 19693.8,
+  "line": 2
+ },
+ {
+  "text": "কিন্তু",
+  "startMs": 20126.1,
+  "endMs": 20500.8,
+  "line": 3
+ },
+ {
+  "text": "যুদ্ধ,",
+  "startMs": 20519.7,
+  "endMs": 20894.4,
+  "line": 3
+ },
+ {
+  "text": "বন্যা,",
+  "startMs": 20913.3,
+  "endMs": 21288.0,
+  "line": 3
+ },
+ {
+  "text": "আগুন,",
+  "startMs": 21306.9,
+  "endMs": 21681.6,
+  "line": 3
+ },
+ {
+  "text": "বা",
+  "startMs": 21700.4,
+  "endMs": 21878.3,
+  "line": 3
+ },
+ {
+  "text": "যান্ত্রিক",
+  "startMs": 21897.2,
+  "endMs": 22672.8,
+  "line": 3
+ },
+ {
+  "text": "সমস্যায়,",
+  "startMs": 22691.7,
+  "endMs": 23263.2,
+  "line": 3
+ },
+ {
+  "text": "এই",
+  "startMs": 23282.1,
+  "endMs": 23558.4,
+  "line": 3
+ },
+ {
+  "text": "সংগ্রহ",
+  "startMs": 23577.3,
+  "endMs": 24050.4,
+  "line": 3
+ },
+ {
+  "text": "ধ্বংস",
+  "startMs": 24069.3,
+  "endMs": 24444.0,
+  "line": 3
+ },
+ {
+  "text": "হয়ে",
+  "startMs": 24462.8,
+  "endMs": 24739.1,
+  "line": 3
+ },
+ {
+  "text": "যেতে",
+  "startMs": 24758.0,
+  "endMs": 25034.3,
+  "line": 3
+ },
+ {
+  "text": "পারে।",
+  "startMs": 25053.2,
+  "endMs": 25587.1,
+  "line": 3
+ },
+ {
+  "text": "আর",
+  "startMs": 25908.9,
+  "endMs": 26211.0,
+  "line": 4
+ },
+ {
+  "text": "একটা",
+  "startMs": 26231.7,
+  "endMs": 26641.5,
+  "line": 4
+ },
+ {
+  "text": "জাত",
+  "startMs": 26662.1,
+  "endMs": 26964.3,
+  "line": 4
+ },
+ {
+  "text": "হারালে,",
+  "startMs": 26985.0,
+  "endMs": 27394.8,
+  "line": 4
+ },
+ {
+  "text": "তার",
+  "startMs": 27415.4,
+  "endMs": 27717.6,
+  "line": 4
+ },
+ {
+  "text": "বিশেষ",
+  "startMs": 27738.3,
+  "endMs": 28148.1,
+  "line": 4
+ },
+ {
+  "text": "জিনগত",
+  "startMs": 28168.7,
+  "endMs": 28686.1,
+  "line": 4
+ },
+ {
+  "text": "গুণও,",
+  "startMs": 28706.8,
+  "endMs": 29116.6,
+  "line": 4
+ },
+ {
+  "text": "চিরতরে",
+  "startMs": 29137.3,
+  "endMs": 29654.7,
+  "line": 4
+ },
+ {
+  "text": "হারিয়ে",
+  "startMs": 29675.3,
+  "endMs": 30085.1,
+  "line": 4
+ },
+ {
+  "text": "যায়।",
+  "startMs": 30105.8,
+  "endMs": 30408.0,
+  "line": 4
+ }
+]
